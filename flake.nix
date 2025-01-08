@@ -29,18 +29,32 @@
         src = pkgs.lib.cleanSource ./.;
       };
 
-      devShells.default =
-        pkgs.mkShell
-        {
-          name = "env-shell";
+      devShells.default = pkgs.mkShell rec {
+        nativeBuildInputs = with pkgs; [
+          cargo
+          rustc
+          rustfmt
+          pkg-config
+        ];
 
-          nativeBuildInputs = with pkgs; [
-            cargo
-            rustc
-          ];
+        buildInputs = with pkgs; [
+          udev
+          alsa-lib-with-plugins
+          vulkan-loader
+          xorg.libX11
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXrandr # To use the x11 feature
+          libxkbcommon
+          wayland # To use the wayland feature
+        ];
 
-          RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
-        };
+        LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath buildInputs;
+
+        RUST_BACKTRACE = 1;
+
+        RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+      };
     })
   );
 }
