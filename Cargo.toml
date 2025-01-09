@@ -41,4 +41,6 @@ dev = [
 [dependencies]
 bevy = "0.15.1"
 bevy_asset_loader = "0.22.0"
+bytemuck = "1.21.0"
 rand = "0.8.5"
+rapier3d = "0.23.0"

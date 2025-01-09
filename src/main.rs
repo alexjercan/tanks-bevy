@@ -13,12 +13,31 @@ enum GameStates {
 struct GameAssets {
     #[asset(path = "models/tank.glb#Scene0")]
     tank: Handle<Scene>,
+    #[asset(
+        paths(
+            "prototype/prototype-aqua.png",
+            "prototype/prototype-orange.png",
+            "prototype/prototype-yellow.png",
+            "prototype/prototype-blue.png",
+            "prototype/prototype-purple.png",
+            "prototype/prototype-green.png",
+            "prototype/prototype-red.png",
+        ),
+        collection(typed)
+    )]
+    pub prototype_textures: Vec<Handle<Image>>,
+}
+
+#[derive(Component, Clone, Copy, Debug)]
+struct TankController {
+
 }
 
 fn main() {
     App::new()
         .add_plugins(DefaultPlugins)
         .add_plugins(TankCameraPlugin)
+        .add_plugins(GridMaterialPlugin)
         .init_state::<GameStates>()
         .add_loading_state(
             LoadingState::new(GameStates::AssetLoading)
@@ -29,7 +48,22 @@ fn main() {
         .run();
 }
 
-fn setup(mut commands: Commands, game_assets: Res<GameAssets>) {
+fn setup(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<GridBindlessMaterial>>,
+    game_assets: Res<GameAssets>
+) {
+    // Ground
+    let size = 32;
+    let mesh = Plane3d::default().mesh().size(size as f32, size as f32).build();
+    let material = GridBindlessMaterial::new(UVec2::new(size, size), game_assets.prototype_textures.clone());
+    commands.spawn((
+        Mesh3d(meshes.add(mesh)),
+        MeshMaterial3d(materials.add(material)),
+        Transform::from_translation(Vec3::ZERO),
+    ));
+
     // light
     commands.spawn((
         DirectionalLight::default(),

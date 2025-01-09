@@ -5,6 +5,10 @@ use bevy::{
 use std::f32::consts::PI;
 use crate::meth::prelude::*;
 
+pub mod prelude {
+    pub use super::{TankCamera, TankCameraTarget, TankCameraSet, TankCameraPlugin};
+}
+
 #[derive(Component, Clone, Copy, Debug)]
 pub struct TankCameraTarget {
     /// Offset from the center of the transform
