@@ -1,4 +1,7 @@
-use std::f32::EPSILON;
+use std::f32::{
+    consts::{FRAC_PI_2, PI},
+    EPSILON,
+};
 
 use bevy::{
     input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel},
@@ -19,6 +22,8 @@ enum GameStates {
 struct GameAssets {
     #[asset(path = "models/tank.glb#Scene0")]
     tank: Handle<Scene>,
+    #[asset(path = "models/shell.glb#Scene0")]
+    shell: Handle<Scene>,
     #[asset(
         paths(
             "prototype/prototype-aqua.png",
@@ -35,79 +40,174 @@ struct GameAssets {
 }
 
 #[derive(Component, Clone, Copy, Debug)]
-pub struct TankController {
-    /// The movement speed of the tank
-    pub move_speed: f32,
-    /// The rotation speed of the tank
-    pub rotation_speed: f32,
+pub struct Damage {
+    pub amount: f32,
 }
 
-impl Default for TankController {
+#[derive(Component, Clone, Copy, Debug)]
+pub struct TankCannon {
+    /// The fire rate of the cannon (in seconds per shot)
+    pub fire_rate_secs: f32,
+    /// The speed of the shell
+    pub shell_speed: f32,
+    /// The offset of the cannon from the tank
+    pub offset: Vec3,
+}
+
+impl Default for TankCannon {
     fn default() -> Self {
         Self {
-            move_speed: 5.0,
-            rotation_speed: 2.0,
+            fire_rate_secs: 1.0,
+            shell_speed: 25.0,
+            offset: Vec3::new(0.0, 0.23, 0.6),
         }
     }
 }
 
+#[derive(Component, Clone, Debug)]
+struct TankCannonState {
+    /// The cooldown time remaining before we can fire again (in seconds)
+    cooldown: Timer,
+}
+
 #[derive(Resource, Default, Debug)]
-pub struct TankControllerInput {
-    pub forward: f32,
-    pub steer: f32,
+pub struct TankCannonInput {
+    pub fire: bool,
 }
 
-impl TankControllerInput {
-    fn has_input(&self) -> bool {
-        self.forward != 0.0 || self.steer != 0.0
+impl Default for TankCannonState {
+    fn default() -> Self {
+        Self {
+            cooldown: Timer::from_seconds(0.0, TimerMode::Once),
+        }
     }
 }
 
-pub struct TankControllerPlugin;
+#[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+pub struct TankCannonSet;
 
-impl Plugin for TankControllerPlugin {
+pub struct TankCannonPlugin;
+
+impl Plugin for TankCannonPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<TankControllerInput>()
-            .add_systems(FixedUpdate, player_movement);
+        app.init_resource::<TankCannonInput>().add_systems(
+            Update,
+            (initialize_cannon_state, initialize_cannon_shell_state, cannon_fire, shell_update_time_to_live, shell_update_collision)
+                .in_set(TankCannonSet)
+                .chain(),
+        );
     }
 }
 
-fn player_movement(
-    time: Res<Time>,
-    input: Res<TankControllerInput>,
-    mut player: Query<(
-        &TankController,
-        &mut Transform,
-        &mut KinematicCharacterController,
-        Option<&KinematicCharacterControllerOutput>,
-    )>,
-    mut vertical_movement: Local<f32>,
-    mut y_rotation: Local<f32>,
+fn initialize_cannon_state(
+    mut commands: Commands,
+    q_cannon: Query<(Entity, &TankCannon), Without<TankCannonState>>,
 ) {
-    if !input.has_input() {
-        return;
+    for (entity, _cannon) in q_cannon.iter() {
+        commands
+            .entity(entity)
+            .insert(TankCannonState { ..default() });
     }
+}
 
-    let Ok((tank, mut transform, mut controller, output)) = player.get_single_mut() else {
-        return;
-    };
-
-    let delta_time = time.delta_secs();
-    let mut movement = Vec3::new(0.0, 0.0, input.forward) * tank.move_speed;
-
-    if output.map(|o| o.grounded).unwrap_or(false) {
-        *vertical_movement = 0.0;
+fn initialize_cannon_shell_state(
+    mut commands: Commands,
+    q_shell: Query<(Entity, &TankCannonShell), Without<TankCannonShellState>>,
+) {
+    for (entity, shell) in q_shell.iter() {
+        commands
+            .entity(entity)
+            .insert(TankCannonShellState {
+                time_to_live: Timer::from_seconds(shell.time_to_live, TimerMode::Once),
+            });
     }
+}
 
-    if input.steer != 0.0 {
-        *y_rotation += input.steer * tank.rotation_speed * delta_time;
+fn shell_update_time_to_live(
+    time: Res<Time>,
+    mut commands: Commands,
+    mut q_shell: Query<(Entity, &TankCannonShell, &mut TankCannonShellState)>,
+) {
+    for (entity, _shell, mut state) in q_shell.iter_mut() {
+        if state.time_to_live.tick(time.delta()).just_finished() {
+            commands.entity(entity).despawn_recursive();
+        }
     }
+}
 
-    movement.y = *vertical_movement;
-    *vertical_movement += -9.81 * delta_time * controller.custom_mass.unwrap_or(1.0);
-    controller.translation = Some(transform.rotation * (movement * delta_time));
+fn shell_update_collision(
+    mut commands: Commands,
+    q_shell: Query<(Entity, &TankCannonShell, &CollisionWith)>,
+) {
+    for (entity, shell, collision_with) in q_shell.iter() {
+        commands.entity(entity).despawn_recursive();
+        commands.entity(collision_with.entity).insert(Damage { amount: shell.damage });
+    }
+}
 
-    transform.rotation = Quat::from_rotation_y(*y_rotation);
+fn cannon_fire(
+    time: Res<Time>,
+    mut commands: Commands,
+    input: Res<TankCannonInput>,
+    mut q_cannon: Query<(&Transform, &TankCannon, &mut TankCannonState)>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    game_assets: Res<GameAssets>,
+) {
+    for (transform, cannon, mut state) in q_cannon.iter_mut() {
+        if state.cooldown.tick(time.delta()).finished() {
+            if !input.fire {
+                continue;
+            }
+
+            commands
+                .spawn((
+                    Transform::from_translation(
+                        transform.translation + transform.rotation * cannon.offset,
+                    )
+                    .with_rotation(transform.rotation * Quat::from_rotation_x(FRAC_PI_2)),
+                    Visibility::default(),
+                    Collider::cylinder(0.1, 0.1),
+                    RigidBody::Dynamic,
+                    Velocity {
+                        linvel: transform.rotation * Vec3::Z * cannon.shell_speed + Vec3::Y * 2.0,
+                        ..default()
+                    },
+                    TankCannonShell::default(),
+                    ActiveEvents::COLLISION_EVENTS,
+                ))
+                .with_child((
+                    Transform::from_scale(Vec3::splat(0.025)),
+                    SceneRoot(game_assets.shell.clone()),
+                    MeshMaterial3d(materials.add(StandardMaterial {
+                        base_color: Color::WHITE,
+                        unlit: true,
+                        ..Default::default()
+                    })),
+                ));
+
+            state.cooldown = Timer::from_seconds(cannon.fire_rate_secs, TimerMode::Once);
+        }
+    }
+}
+
+#[derive(Component, Clone, Copy, Debug)]
+struct TankCannonShell {
+    time_to_live: f32,
+    damage: f32,
+}
+
+impl Default for TankCannonShell {
+    fn default() -> Self {
+        Self {
+            time_to_live: 1.0,
+            damage: 10.0,
+        }
+    }
+}
+
+#[derive(Component, Clone, Debug)]
+struct TankCannonShellState {
+    time_to_live: Timer,
 }
 
 fn main() {
@@ -117,6 +217,7 @@ fn main() {
             RapierPhysicsPlugin::<NoUserData>::default(),
             TankCameraPlugin,
             TankControllerPlugin,
+            TankCannonPlugin,
             GridMaterialPlugin,
             #[cfg(feature = "debug")]
             DebugPlugin,
@@ -127,12 +228,38 @@ fn main() {
                 .continue_to_state(GameStates::Playing)
                 .load_collection::<GameAssets>(),
         )
+        .configure_sets(Update, TankCannonSet.run_if(in_state(GameStates::Playing)))
         .add_systems(OnEnter(GameStates::Playing), setup)
         .add_systems(
             PreUpdate,
-            (update_camera_input, update_tank_input).run_if(in_state(GameStates::Playing)),
+            (update_camera_input, update_tank_input, update_cannon_input)
+                .run_if(in_state(GameStates::Playing)),
+        )
+        .add_systems(
+            Update,
+            handle_collision_events.run_if(in_state(GameStates::Playing)),
         )
         .run();
+}
+
+#[derive(Component, Clone, Copy, Debug)]
+struct CollisionWith {
+    pub entity: Entity,
+}
+
+/* A system that displays the events. */
+fn handle_collision_events(
+    mut commands: Commands,
+    mut collision_events: EventReader<CollisionEvent>,
+) {
+    for collision_event in collision_events.read() {
+        match collision_event {
+            CollisionEvent::Started(other, entity, _) => {
+                commands.entity(*entity).insert(CollisionWith { entity: *other });
+            },
+            _ => {},
+        }
+    }
 }
 
 fn setup(
@@ -197,6 +324,7 @@ fn setup(
             },
             TankController::default(),
             TankCameraTarget::default(),
+            TankCannon::default(),
         ))
         .with_child((
             Transform::from_scale(Vec3::splat(2.0)),
@@ -244,4 +372,8 @@ fn update_tank_input(mut input: ResMut<TankControllerInput>, keyboard: Res<Butto
     } else {
         0.0
     };
+}
+
+fn update_cannon_input(mut input: ResMut<TankCannonInput>, keyboard: Res<ButtonInput<KeyCode>>) {
+    input.fire = keyboard.pressed(KeyCode::Space);
 }

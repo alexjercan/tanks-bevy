@@ -63,4 +63,3 @@ fn draw_axes(mut gizmos: Gizmos, query: Query<&Transform, With<Collider>>) {
         gizmos.axes(transform, length);
     }
 }
-
