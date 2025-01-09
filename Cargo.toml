@@ -3,6 +3,10 @@ name = "tanks-bevy"
 version = "0.1.0"
 edition = "2021"
 
+[lib]
+name = "tanks"
+path = "src/lib.rs"
+
 # Enable a small amount of optimization in debug mode
 [profile.dev]
 opt-level = 1
