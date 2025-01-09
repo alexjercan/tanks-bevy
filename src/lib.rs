@@ -10,4 +10,6 @@ pub mod debug;
 pub mod prelude {
     pub use crate::camera::prelude::*;
     pub use crate::material::prelude::*;
+    #[cfg(feature = "debug")]
+    pub use crate::debug::prelude::*;
 }

@@ -1,12 +1,9 @@
-use bevy::{
-    input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel},
-    prelude::*,
-};
+use bevy::prelude::*;
 use std::f32::consts::PI;
 use crate::meth::prelude::*;
 
 pub mod prelude {
-    pub use super::{TankCamera, TankCameraTarget, TankCameraSet, TankCameraPlugin};
+    pub use super::{TankCamera, TankCameraTarget, TankCameraSet, TankCameraPlugin, TankCameraInput};
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -43,6 +40,8 @@ pub struct TankCamera {
     pub orbit_smooth: f32,
     /// The zoom smoothing factor
     pub zoom_smooth: f32,
+    /// The transform smooth factor
+    pub transform_smooth: f32,
 }
 
 impl Default for TankCamera {
@@ -57,14 +56,15 @@ impl Default for TankCamera {
             max_pitch: PI / 2.0,
             orbit_smooth: 0.1,
             zoom_smooth: 0.1,
+            transform_smooth: 0.01,
         }
     }
 }
 
 #[derive(Resource, Default, Debug)]
-struct TankCameraInput {
-    orbit: Vec2,
-    zoom: f32,
+pub struct TankCameraInput {
+    pub orbit: Vec2,
+    pub zoom: f32,
 }
 
 impl TankCameraInput {
@@ -104,7 +104,6 @@ impl Plugin for TankCameraPlugin {
             Update,
             (
                 initialize_camera_transform,
-                update_camera_input,
                 update_camera_transform_target,
                 update_camera_transform_target_focus,
                 update_camera_transform,
@@ -146,30 +145,6 @@ fn initialize_camera_transform(
     }
 }
 
-fn update_camera_input(
-    mut input: ResMut<TankCameraInput>,
-    mouse_input: Res<ButtonInput<MouseButton>>,
-    mut mouse_motion: EventReader<MouseMotion>,
-    mut scroll_events: EventReader<MouseWheel>,
-) {
-    let mouse_delta = mouse_motion.read().map(|event| event.delta).sum::<Vec2>();
-    let scroll_delta = scroll_events
-        .read()
-        .map(|event| match event.unit {
-            MouseScrollUnit::Line => event.y,
-            MouseScrollUnit::Pixel => event.y * 0.005,
-        })
-        .sum::<f32>();
-
-    input.orbit = if mouse_input.pressed(MouseButton::Right) {
-        mouse_delta
-    } else {
-        Vec2::ZERO
-    };
-
-    input.zoom = scroll_delta;
-}
-
 fn update_camera_transform_target(
     input: Res<TankCameraInput>,
     mut q_camera: Query<(&TankCamera, &mut TankCameraTransformTarget)>,
@@ -205,7 +180,13 @@ fn update_camera_transform(
     time: Res<Time>,
 ) {
     for (mut transform, target, camera) in q_camera.iter_mut() {
-        transform.focus = target.focus;
+        if transform.focus != target.focus {
+            transform.focus = transform.focus.lerp_and_snap(
+                target.focus,
+                camera.transform_smooth,
+                time.delta_secs(),
+            );
+        }
 
         if transform.yaw != target.yaw {
             transform.yaw =
@@ -241,5 +222,3 @@ fn sync_camera_transform(
             .with_rotation(rotation);
     }
 }
-
-

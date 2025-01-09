@@ -41,6 +41,7 @@ dev = [
 [dependencies]
 bevy = "0.15.1"
 bevy_asset_loader = "0.22.0"
+bevy_rapier3d = { version = "0.28.0", features = ["debug-render"] }
 bytemuck = "1.21.0"
+iyes_perf_ui = { git = "https://github.com/IyesGames/iyes_perf_ui.git", branch = "main" }
 rand = "0.8.5"
-rapier3d = "0.23.0"
