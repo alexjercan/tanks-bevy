@@ -36,6 +36,7 @@
           cargo
           rustc
           rustfmt
+          clippy
           pkg-config
           llvmPackages.bintools
         ];

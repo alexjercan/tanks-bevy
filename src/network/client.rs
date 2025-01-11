@@ -3,7 +3,6 @@ use std::time::Duration;
 use bevy_renet::renet::*;
 use serde::{Deserialize, Serialize};
 
-
 pub mod prelude {
     pub use super::{ClientChannel, ClientMessage};
 }
@@ -32,9 +31,9 @@ pub enum ClientMessage {
     },
 }
 
-impl Into<Bytes> for ClientMessage {
-    fn into(self) -> Bytes {
-        bincode::serialize(&self).unwrap().into()
+impl From<ClientMessage> for Bytes {
+    fn from(message: ClientMessage) -> Self {
+        bincode::serialize(&message).unwrap().into()
     }
 }
 

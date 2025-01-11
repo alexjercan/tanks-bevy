@@ -46,8 +46,6 @@ impl Default for ClientInfo {
 struct GameAssets {
     #[asset(path = "models/tank.glb#Scene0")]
     tank: Handle<Scene>,
-    #[asset(path = "models/shell.glb#Scene0")]
-    shell: Handle<Scene>,
     #[asset(
         paths(
             "prototype/prototype-aqua.png",
@@ -265,7 +263,7 @@ fn sync_tank_input(mut client: ResMut<RenetClient>, input: Res<ControllerInput>)
 
 fn setup_network(mut commands: Commands, client_info: Res<ClientInfo>) {
     let server_addr = client_info.address.parse().unwrap();
-    let socket = UdpSocket::bind("127.0.0.1:0").unwrap();
+    let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
     let current_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
         .unwrap();

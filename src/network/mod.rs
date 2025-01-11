@@ -7,9 +7,9 @@ use serde::{Deserialize, Serialize};
 use bevy::prelude::*;
 
 pub mod prelude {
-    pub use super::{PROTOCOL_ID, NetworkEntity, EntityKind};
-    pub use super::server::prelude::*;
     pub use super::client::prelude::*;
+    pub use super::server::prelude::*;
+    pub use super::{EntityKind, NetworkEntity, PROTOCOL_ID};
 }
 
 pub const PROTOCOL_ID: u64 = 7;

@@ -1,12 +1,9 @@
-use std::{
-    collections::HashMap,
-    time::Duration,
-};
+use std::{collections::HashMap, time::Duration};
 
 use super::EntityKind;
 use bevy::prelude::*;
-use serde::{Deserialize, Serialize};
 use bevy_renet::renet::*;
+use serde::{Deserialize, Serialize};
 
 pub mod prelude {
     pub use super::{ServerChannel, ServerMessage};
@@ -67,9 +64,9 @@ pub enum ServerMessage {
     },
 }
 
-impl Into<Bytes> for ServerMessage {
-    fn into(self) -> Bytes {
-        bincode::serialize(&self).unwrap().into()
+impl From<ServerMessage> for Bytes {
+    fn from(message: ServerMessage) -> Self {
+        bincode::serialize(&message).unwrap().into()
     }
 }
 

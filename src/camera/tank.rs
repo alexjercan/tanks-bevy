@@ -1,9 +1,11 @@
+use crate::meth::prelude::*;
 use bevy::prelude::*;
 use std::f32::consts::PI;
-use crate::meth::prelude::*;
 
 pub mod prelude {
-    pub use super::{TankCamera, TankCameraTarget, TankCameraSet, TankCameraPlugin, TankCameraInput};
+    pub use super::{
+        TankCamera, TankCameraInput, TankCameraPlugin, TankCameraSet, TankCameraTarget,
+    };
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -14,9 +16,7 @@ pub struct TankCameraTarget {
 
 impl Default for TankCameraTarget {
     fn default() -> Self {
-        Self {
-            offset: Vec3::ZERO,
-        }
+        Self { offset: Vec3::ZERO }
     }
 }
 
@@ -119,7 +119,10 @@ fn initialize_camera_transform(
     mut commands: Commands,
     q_camera: Query<
         (Entity, &Transform, &TankCamera),
-        (Without<TankCameraTransformTarget>, Without<TankCameraTransform>),
+        (
+            Without<TankCameraTransformTarget>,
+            Without<TankCameraTransform>,
+        ),
     >,
 ) {
     for (entity, transform, camera) in q_camera.iter() {
@@ -176,7 +179,11 @@ fn update_camera_transform_target_focus(
 }
 
 fn update_camera_transform(
-    mut q_camera: Query<(&mut TankCameraTransform, &TankCameraTransformTarget, &TankCamera)>,
+    mut q_camera: Query<(
+        &mut TankCameraTransform,
+        &TankCameraTransformTarget,
+        &TankCamera,
+    )>,
     time: Res<Time>,
 ) {
     for (mut transform, target, camera) in q_camera.iter_mut() {

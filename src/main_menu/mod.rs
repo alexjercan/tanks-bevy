@@ -41,7 +41,11 @@ impl Plugin for MainMenuPlugin {
             .add_event::<PlayButtonPressed>()
             .add_systems(
                 Update,
-                (spawn_main_menu, interact_with_play_button, focus_text_input.before(TextInputSystem))
+                (
+                    spawn_main_menu,
+                    interact_with_play_button,
+                    focus_text_input.before(TextInputSystem),
+                )
                     .in_set(MainMenuSet)
                     .chain(),
             );

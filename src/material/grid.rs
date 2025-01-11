@@ -120,7 +120,7 @@ impl AsBindGroup for GridBindlessMaterial {
 
         let size = render_device.create_buffer_with_data(&BufferInitDescriptor {
             label: Some("bindless_material_size"),
-            contents: &bytemuck::bytes_of(&self.size).to_vec(),
+            contents: bytemuck::bytes_of(&self.size),
             usage: BufferUsages::UNIFORM,
         });
 

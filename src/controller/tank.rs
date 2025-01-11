@@ -49,12 +49,11 @@ pub struct TankControllerPlugin;
 
 impl Plugin for TankControllerPlugin {
     fn build(&self, app: &mut App) {
-        app
-            .add_systems(
-                Update,
-                initialize_controller_state.in_set(TankControllerSet),
-            )
-            .add_systems(FixedUpdate, update_controller.in_set(TankControllerSet));
+        app.add_systems(
+            Update,
+            initialize_controller_state.in_set(TankControllerSet),
+        )
+        .add_systems(FixedUpdate, update_controller.in_set(TankControllerSet));
     }
 }
 
@@ -85,11 +84,16 @@ fn update_controller(
     for (tank, input, mut state, mut transform, mut controller, output) in q_controller.iter_mut() {
         let delta_time = time.delta_secs();
 
-        let accelerating = input.forward != 0.0 && (state.speed == 0.0 || state.speed.signum() == input.forward);
+        let accelerating =
+            input.forward != 0.0 && (state.speed == 0.0 || state.speed.signum() == input.forward);
         if accelerating {
-            state.speed = tank.move_speed.min(state.speed.abs() + tank.acceleration * delta_time) * input.forward;
+            state.speed = tank
+                .move_speed
+                .min(state.speed.abs() + tank.acceleration * delta_time)
+                * input.forward;
         } else {
-            state.speed = (state.speed.abs() - tank.deceleration * delta_time).max(0.0) * state.speed.signum();
+            state.speed = (state.speed.abs() - tank.deceleration * delta_time).max(0.0)
+                * state.speed.signum();
         }
 
         let mut movement = Vec3::new(0.0, 0.0, state.speed);

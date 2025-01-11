@@ -1,6 +1,6 @@
 use bevy::prelude::*;
-use iyes_perf_ui::prelude::*;
 use bevy_rapier3d::prelude::*;
+use iyes_perf_ui::prelude::*;
 
 pub mod prelude {
     pub use super::{DebugPlugin, DebugSet};

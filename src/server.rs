@@ -1,6 +1,5 @@
 use std::{
     collections::HashMap,
-    f32::EPSILON,
     net::UdpSocket,
     time::{Duration, SystemTime},
 };
@@ -35,8 +34,12 @@ fn main() {
 
     app.add_systems(
         Update,
-        (handle_server_events, handle_client_messages, sync_tank_transforms)
-            .run_if(resource_exists::<RenetServer>)
+        (
+            handle_server_events,
+            handle_client_messages,
+            sync_tank_transforms,
+        )
+            .run_if(resource_exists::<RenetServer>),
     );
 
     // Server Side
@@ -53,12 +56,12 @@ fn setup_game(mut commands: Commands) {
     let size = 32;
     commands.spawn((
         Transform::from_translation(Vec3::ZERO),
-        Collider::cuboid(size as f32 / 2.0, EPSILON, size as f32 / 2.0),
+        Collider::cuboid(size as f32 / 2.0, f32::EPSILON, size as f32 / 2.0),
     ));
 }
 
 fn new_renet_server() -> (RenetServer, NetcodeServerTransport) {
-    let public_addr = "127.0.0.1:5000".parse().unwrap();
+    let public_addr = "0.0.0.0:5000".parse().unwrap();
     let socket = UdpSocket::bind(public_addr).unwrap();
     let current_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
@@ -200,7 +203,10 @@ fn handle_client_messages(
                     server.broadcast_message(ServerChannel::Message, message);
                 }
                 ClientMessage::ControllerInput { forward, steer } => {
-                    info!("Client {} input: forward: {}, steer: {}", client_id, forward, steer);
+                    info!(
+                        "Client {} input: forward: {}, steer: {}",
+                        client_id, forward, steer
+                    );
 
                     if let Some(id) = lobby.players.get(&client_id) {
                         if let Ok(mut input) = q_controllers.get_mut(*id) {
