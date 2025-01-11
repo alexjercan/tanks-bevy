@@ -57,3 +57,8 @@ bytemuck = "1.21.0"
 iyes_perf_ui = { git = "https://github.com/IyesGames/iyes_perf_ui.git", branch = "main" }
 rand = "0.8.5"
 serde = { version = "1.0.217", features = ["derive"] }
+## This greatly improves WGPU's performance due to its heavy use of trace! calls
+log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"] }
+
+[build-dependencies]
+embed-resource = "1"

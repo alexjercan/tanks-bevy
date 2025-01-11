@@ -1,3 +1,4 @@
+/*
 use std::f32::{
     consts::{FRAC_PI_2, PI},
     EPSILON,
@@ -376,4 +377,9 @@ fn update_tank_input(mut input: ResMut<TankControllerInput>, keyboard: Res<Butto
 
 fn update_cannon_input(mut input: ResMut<TankCannonInput>, keyboard: Res<ButtonInput<KeyCode>>) {
     input.fire = keyboard.pressed(KeyCode::Space);
+}
+*/
+
+fn main() {
+    println!("Hello, world!");
 }

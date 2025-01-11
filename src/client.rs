@@ -1,4 +1,5 @@
 use bevy::{
+    asset::AssetMetaCheck,
     input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel},
     prelude::*,
 };
@@ -72,7 +73,26 @@ enum GameStates {
 
 fn main() {
     let mut app = App::new();
-    app.add_plugins(DefaultPlugins);
+    app.add_plugins(
+        DefaultPlugins
+            .set(WindowPlugin {
+                primary_window: Some(Window {
+                    title: "Tanks".to_string(),
+                    // Bind to canvas included in `index.html`
+                    canvas: Some("#bevy".to_owned()),
+                    fit_canvas_to_parent: true,
+                    // Tells wasm not to override default event handling, like F5 and Ctrl+R
+                    prevent_default_event_handling: false,
+                    ..default()
+                }),
+                ..default()
+            })
+            .set(AssetPlugin {
+                meta_check: AssetMetaCheck::Never,
+                ..default()
+            }),
+    );
+
     app.add_plugins(GridMaterialPlugin);
     app.add_plugins(TankCameraPlugin);
 
@@ -233,10 +253,7 @@ fn update_tank_input(mut input: ResMut<ControllerInput>, keyboard: Res<ButtonInp
     }
 }
 
-fn sync_tank_input(
-    mut client: ResMut<RenetClient>,
-    input: Res<ControllerInput>,
-) {
+fn sync_tank_input(mut client: ResMut<RenetClient>, input: Res<ControllerInput>) {
     if input.is_changed() {
         let message = ClientMessage::ControllerInput {
             forward: input.forward,

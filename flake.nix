@@ -31,10 +31,13 @@
 
       devShells.default = pkgs.mkShell rec {
         nativeBuildInputs = with pkgs; [
+          trunk
+          wasm-pack
           cargo
           rustc
           rustfmt
           pkg-config
+          llvmPackages.bintools
         ];
 
         buildInputs = with pkgs; [
