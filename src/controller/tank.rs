@@ -36,7 +36,7 @@ struct TankControllerState {
     speed: f32,
 }
 
-#[derive(Resource, Default, Debug)]
+#[derive(Component, Clone, Copy, Debug, Default)]
 pub struct TankControllerInput {
     pub forward: f32,
     pub steer: f32,
@@ -49,7 +49,7 @@ pub struct TankControllerPlugin;
 
 impl Plugin for TankControllerPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<TankControllerInput>()
+        app
             .add_systems(
                 Update,
                 initialize_controller_state.in_set(TankControllerSet),
@@ -73,16 +73,16 @@ fn initialize_controller_state(
 
 fn update_controller(
     time: Res<Time>,
-    input: Res<TankControllerInput>,
     mut q_controller: Query<(
         &TankController,
+        &TankControllerInput,
         &mut TankControllerState,
         &mut Transform,
         &mut KinematicCharacterController,
         Option<&KinematicCharacterControllerOutput>,
     )>,
 ) {
-    for (tank, mut state, mut transform, mut controller, output) in q_controller.iter_mut() {
+    for (tank, input, mut state, mut transform, mut controller, output) in q_controller.iter_mut() {
         let delta_time = time.delta_secs();
 
         let accelerating = input.forward != 0.0 && (state.speed == 0.0 || state.speed.signum() == input.forward);
