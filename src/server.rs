@@ -203,11 +203,6 @@ fn handle_client_messages(
                     server.broadcast_message(ServerChannel::Message, message);
                 }
                 ClientMessage::ControllerInput { forward, steer } => {
-                    info!(
-                        "Client {} input: forward: {}, steer: {}",
-                        client_id, forward, steer
-                    );
-
                     if let Some(id) = lobby.players.get(&client_id) {
                         if let Ok(mut input) = q_controllers.get_mut(*id) {
                             input.forward = forward;

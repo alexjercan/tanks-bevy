@@ -374,11 +374,6 @@ fn handle_server_messages(
                 position,
                 rotation,
             } => {
-                info!(
-                    "Syncing transform of entity {} to {:?} with rotation {:?}.",
-                    id, position, rotation
-                );
-
                 if let Some(entity) = lobby.entities.get(&id) {
                     if let Ok(mut transform) = q_transform.get_mut(*entity) {
                         transform.translation = position;
