@@ -7,6 +7,7 @@ pub mod main_menu;
 pub mod material;
 pub mod meth;
 pub mod network;
+pub mod renderer;
 
 #[cfg(feature = "debug")]
 pub mod debug;
@@ -19,4 +20,5 @@ pub mod prelude {
     pub use crate::main_menu::prelude::*;
     pub use crate::material::prelude::*;
     pub use crate::network::prelude::*;
+    pub use crate::renderer::prelude::*;
 }

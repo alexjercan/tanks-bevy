@@ -4,20 +4,8 @@ use std::f32::consts::PI;
 
 pub mod prelude {
     pub use super::{
-        TankCamera, TankCameraInput, TankCameraPlugin, TankCameraSet, TankCameraTarget,
+        TankCamera, TankCameraInput, TankCameraPlugin, TankCameraSet, TankCameraTransformTarget,
     };
-}
-
-#[derive(Component, Clone, Copy, Debug)]
-pub struct TankCameraTarget {
-    /// Offset from the center of the transform
-    pub offset: Vec3,
-}
-
-impl Default for TankCameraTarget {
-    fn default() -> Self {
-        Self { offset: Vec3::ZERO }
-    }
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -83,11 +71,11 @@ impl TankCameraInput {
 }
 
 #[derive(Component, Clone, Copy, Debug)]
-struct TankCameraTransformTarget {
-    focus: Vec3,
-    yaw: f32,
-    pitch: f32,
-    radius: f32,
+pub struct TankCameraTransformTarget {
+    pub focus: Vec3,
+    pub yaw: f32,
+    pub pitch: f32,
+    pub radius: f32,
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -113,8 +101,7 @@ impl Plugin for TankCameraPlugin {
             Update,
             (
                 initialize_camera_transform,
-                update_camera_transform_target,
-                update_camera_transform_target_focus,
+                update_camera_target_orbit,
                 update_camera_transform,
                 sync_camera_transform,
             )
@@ -157,7 +144,7 @@ fn initialize_camera_transform(
     }
 }
 
-fn update_camera_transform_target(
+fn update_camera_target_orbit(
     mut q_camera: Query<(&TankCamera, &TankCameraInput, &mut TankCameraTransformTarget)>,
 ) {
     for (camera, input, mut camera_target) in q_camera.iter_mut() {
@@ -175,17 +162,6 @@ fn update_camera_transform_target(
     }
 }
 
-fn update_camera_transform_target_focus(
-    q_target: Query<(&Transform, &TankCameraTarget)>,
-    mut q_camera: Query<(&TankCamera, &mut TankCameraTransformTarget)>,
-) {
-    if let Ok((transform, target)) = q_target.get_single() {
-        for (_camera, mut camera_target) in q_camera.iter_mut() {
-            camera_target.focus = transform.translation + target.offset;
-        }
-    }
-}
-
 fn update_camera_transform(
     mut q_camera: Query<(
         &mut TankCameraTransform,
@@ -196,11 +172,13 @@ fn update_camera_transform(
 ) {
     for (mut transform, target, camera) in q_camera.iter_mut() {
         if transform.focus != target.focus {
-            transform.focus = transform.focus.lerp_and_snap(
-                target.focus,
-                camera.transform_smooth,
-                time.delta_secs(),
-            );
+            // TODO: Fix this
+            // transform.focus = transform.focus.lerp_and_snap(
+            //     target.focus,
+            //     camera.transform_smooth,
+            //     time.delta_secs(),
+            // );
+            transform.focus = target.focus;
         }
 
         if transform.yaw != target.yaw {

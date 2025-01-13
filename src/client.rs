@@ -1,26 +1,7 @@
-use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_asset_loader::prelude::*;
+use bevy::{asset::AssetMetaCheck, prelude::*};
 use leafwing_input_manager::prelude::*;
 use tanks::prelude::*;
-
-#[derive(AssetCollection, Resource)]
-struct GameAssets {
-    #[asset(path = "models/tank.glb#Scene0")]
-    tank: Handle<Scene>,
-    #[asset(
-        paths(
-            "prototype/prototype-aqua.png",
-            "prototype/prototype-orange.png",
-            "prototype/prototype-yellow.png",
-            "prototype/prototype-blue.png",
-            "prototype/prototype-purple.png",
-            "prototype/prototype-green.png",
-            "prototype/prototype-red.png",
-        ),
-        collection(typed)
-    )]
-    pub prototype_textures: Vec<Handle<Image>>,
-}
 
 #[derive(Clone, Eq, PartialEq, Debug, Hash, Default, States)]
 enum GameStates {
@@ -54,7 +35,6 @@ fn main() {
     app.add_plugins(InputManagerPlugin::<CameraMovement>::default());
     app.add_plugins(InputManagerPlugin::<PlayerInputAction>::default());
 
-    app.add_plugins(GridMaterialPlugin);
     app.add_plugins(TankCameraPlugin);
 
     app.init_state::<GameStates>();
@@ -74,13 +54,16 @@ fn main() {
     // Network
     app.add_plugins(ClientPlugin);
 
+    // Renderer
+    app.add_plugins(RendererPlugin);
+    app.configure_sets(Update, RendererSet.run_if(in_state(GameStates::Playing)).run_if(client_connected));
+
     app.add_systems(OnEnter(GameStates::MainMenu), setup_main_menu);
     app.add_systems(
         Update,
         handle_play_button_pressed.run_if(in_state(GameStates::MainMenu)),
     );
     app.add_systems(OnEnter(GameStates::Playing), setup_game);
-
     app.add_systems(
         PreUpdate,
         (update_camera_input, update_player_input)
@@ -89,7 +72,7 @@ fn main() {
     );
     app.add_systems(
         Update,
-        (add_ground_cosmetics, add_player_cosmetics)
+        (update_camera_target)
             .run_if(in_state(GameStates::Playing))
             .run_if(client_connected),
     );
@@ -132,6 +115,20 @@ fn update_camera_input(mut q_camera: Query<(&mut TankCameraInput, &ActionState<C
     for (mut input, action) in q_camera.iter_mut() {
         input.zoom = action.value(&CameraMovement::Zoom);
         input.orbit = action.axis_pair(&CameraMovement::Pan);
+    }
+}
+
+fn update_camera_target(
+    q_player: Query<(&Player, &Transform)>,
+    local_player: Res<LocalPlayer>,
+    mut q_camera: Query<&mut TankCameraTransformTarget>,
+) {
+    for (Player { client_id }, transform ) in q_player.iter() {
+        if *client_id == **local_player {
+            for mut target in q_camera.iter_mut() {
+                target.focus = transform.translation;
+            }
+        }
     }
 }
 
@@ -179,53 +176,4 @@ fn setup_game(mut commands: Commands) {
         InputMap::default().with_dual_axis(PlayerInputAction::Move, VirtualDPad::wasd());
 
     commands.spawn((PlayerInputMove::default(), InputManagerBundle::with_map(input_map)));
-}
-
-// Renderer
-
-#[derive(Component, Clone, Copy, Debug)]
-pub struct ClientRenderer;
-
-fn add_ground_cosmetics(
-    mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<GridBindlessMaterial>>,
-    q_ground: Query<(Entity, &Ground), Without<ClientRenderer>>,
-    game_assets: Res<GameAssets>,
-) {
-    for (entity, Ground { width, height }) in q_ground.iter() {
-        let mesh = Plane3d::default().mesh().size(*width, *height).build();
-        let material = GridBindlessMaterial::new(
-            UVec2::new(*width as u32, *height as u32),
-            game_assets.prototype_textures.clone(),
-        );
-        commands.entity(entity).insert((
-            Mesh3d(meshes.add(mesh)),
-            MeshMaterial3d(materials.add(material)),
-        ));
-    }
-}
-
-fn add_player_cosmetics(
-    mut commands: Commands,
-    q_player: Query<(Entity, &Player), Without<ClientRenderer>>,
-    game_assets: Res<GameAssets>,
-    local_player: Res<LocalPlayer>,
-) {
-    for (entity, Player { client_id }) in q_player.iter() {
-        commands
-            .entity(entity)
-            .insert((Visibility::default(), ClientRenderer))
-            .with_child((
-                Transform::from_scale(Vec3::splat(2.0)),
-                SceneRoot(game_assets.tank.clone()),
-            ));
-
-        // TODO: This should be done in a separate system
-        if *client_id == **local_player {
-            commands
-                .entity(entity)
-                .insert(TankCameraTarget::default());
-        }
-    }
 }
