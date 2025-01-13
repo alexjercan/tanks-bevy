@@ -1,24 +1,10 @@
-use bevy::{asset::AssetMetaCheck, input::mouse::{MouseMotion, MouseScrollUnit, MouseWheel}, prelude::*};
+use bevy::{
+    asset::AssetMetaCheck,
+    prelude::*,
+};
 use bevy_asset_loader::prelude::*;
+use leafwing_input_manager::prelude::*;
 use tanks::prelude::*;
-
-#[derive(Resource, Debug)]
-pub struct ClientInfo {
-    pub address: String,
-    pub name: String,
-}
-
-impl Default for ClientInfo {
-    fn default() -> Self {
-        Self {
-            address: "127.0.0.1:5000".to_string(),
-            name: "Player".to_string(),
-        }
-    }
-}
-
-#[derive(Component, Clone, Copy, Debug)]
-pub struct ClientRenderer;
 
 #[derive(AssetCollection, Resource)]
 struct GameAssets {
@@ -68,13 +54,15 @@ fn main() {
                 ..default()
             }),
     );
+    app.add_plugins(InputManagerPlugin::<CameraMovement>::default());
 
     app.add_plugins(GridMaterialPlugin);
     app.add_plugins(TankCameraPlugin);
 
-    // Load Assets
     app.init_state::<GameStates>();
     app.enable_state_scoped_entities::<GameStates>();
+
+    // Load Assets
     app.add_loading_state(
         LoadingState::new(GameStates::AssetLoading)
             .continue_to_state(GameStates::MainMenu)
@@ -84,7 +72,6 @@ fn main() {
     // Main Menu
     app.add_plugins(MainMenuPlugin);
     app.configure_sets(Update, MainMenuSet.run_if(in_state(GameStates::MainMenu)));
-    app.init_resource::<ClientInfo>();
 
     // Network
     app.add_plugins(ClientPlugin);
@@ -95,13 +82,14 @@ fn main() {
         handle_play_button_pressed.run_if(in_state(GameStates::MainMenu)),
     );
     app.add_systems(OnEnter(GameStates::Playing), setup_game);
+
     app.add_systems(
         PreUpdate,
-        (update_camera_input).run_if(in_state(GameStates::Playing)),
+        (update_camera_input).run_if(in_state(GameStates::Playing)).run_if(client_connected),
     );
     app.add_systems(
         Update,
-        (add_ground_cosmetics, add_player_cosmetics).run_if(in_state(GameStates::Playing)),
+        (add_ground_cosmetics, add_player_cosmetics).run_if(in_state(GameStates::Playing)).run_if(client_connected),
     );
 
     app.run();
@@ -130,46 +118,47 @@ fn handle_play_button_pressed(
     }
 }
 
+#[derive(Actionlike, Clone, Debug, Copy, PartialEq, Eq, Hash, Reflect)]
+enum CameraMovement {
+    #[actionlike(DualAxis)]
+    Pan,
+    #[actionlike(Axis)]
+    Zoom,
+}
+
 fn update_camera_input(
-    mut input: ResMut<TankCameraInput>,
-    mouse_input: Res<ButtonInput<MouseButton>>,
-    mut mouse_motion: EventReader<MouseMotion>,
-    mut scroll_events: EventReader<MouseWheel>,
+    mut q_camera: Query<(&mut TankCameraInput, &ActionState<CameraMovement>)>,
 ) {
-    let mouse_delta = mouse_motion.read().map(|event| event.delta).sum::<Vec2>();
-    let scroll_delta = scroll_events
-        .read()
-        .map(|event| match event.unit {
-            MouseScrollUnit::Line => event.y,
-            MouseScrollUnit::Pixel => event.y * 0.005,
-        })
-        .sum::<f32>();
-
-    input.orbit = if mouse_input.pressed(MouseButton::Right) {
-        mouse_delta
-    } else {
-        Vec2::ZERO
-    };
-
-    input.zoom = scroll_delta;
+    for (mut input, action) in q_camera.iter_mut() {
+        input.zoom = action.value(&CameraMovement::Zoom);
+        input.orbit = action.axis_pair(&CameraMovement::Pan);
+    }
 }
 
 fn setup_game(mut commands: Commands) {
-    // light
     commands.spawn((
         DirectionalLight::default(),
         Transform::from_translation(Vec3::ONE).looking_at(Vec3::ZERO, Vec3::Y),
         StateScoped(GameStates::Playing),
     ));
 
-    // camera
+    let input_map = InputMap::default()
+        .with_dual_axis(CameraMovement::Pan, MouseMove::default())
+        .with_axis(CameraMovement::Zoom, MouseScrollAxis::Y);
     commands.spawn((
+        TankCameraInput::default(),
         TankCamera::default(),
         Camera3d::default(),
         Transform::from_xyz(15.0, 15.0, 15.0).looking_at(Vec3::ZERO, Vec3::Y),
+        InputManagerBundle::with_map(input_map),
         StateScoped(GameStates::Playing),
     ));
 }
+
+// Renderer
+
+#[derive(Component, Clone, Copy, Debug)]
+pub struct ClientRenderer;
 
 fn add_ground_cosmetics(
     mut commands: Commands,
@@ -206,8 +195,8 @@ fn add_player_cosmetics(
                 SceneRoot(game_assets.tank.clone()),
             ));
 
-            if *client_id == **local_player {
-                commands.entity(entity).insert(TankCameraTarget::default());
-            }
+        if *client_id == **local_player {
+            commands.entity(entity).insert(TankCameraTarget::default());
+        }
     }
 }

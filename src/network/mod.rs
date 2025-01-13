@@ -8,6 +8,7 @@ use serde::{Deserialize, Serialize};
 use bevy::prelude::*;
 
 pub mod prelude {
+    pub use bevy_replicon::prelude::client_connected;
     pub use super::client::prelude::*;
     pub use super::server::prelude::*;
     pub use super::{NetworkEntity, PROTOCOL_ID, Ground, Player};

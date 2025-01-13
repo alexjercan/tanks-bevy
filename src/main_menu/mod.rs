@@ -2,7 +2,22 @@ use bevy::{prelude::*, ui::FocusPolicy};
 use bevy_simple_text_input::*;
 
 pub mod prelude {
-    pub use super::{MainMenuPlugin, MainMenuRoot, MainMenuSet, PlayButtonPressed};
+    pub use super::{MainMenuPlugin, MainMenuRoot, MainMenuSet, PlayButtonPressed, ClientInfo};
+}
+
+#[derive(Resource, Debug, Clone)]
+pub struct ClientInfo {
+    pub address: String,
+    pub name: String,
+}
+
+impl Default for ClientInfo {
+    fn default() -> Self {
+        Self {
+            address: "127.0.0.1:5000".to_string(),
+            name: "Player".to_string(),
+        }
+    }
 }
 
 /// The MainMenuRoot component is used to identify the root entity of the Main Menu.
@@ -38,6 +53,7 @@ pub struct MainMenuPlugin;
 impl Plugin for MainMenuPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(TextInputPlugin)
+            .init_resource::<ClientInfo>()
             .add_event::<PlayButtonPressed>()
             .add_systems(
                 Update,

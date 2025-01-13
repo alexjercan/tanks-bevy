@@ -61,10 +61,19 @@ impl Default for TankCamera {
     }
 }
 
-#[derive(Resource, Default, Debug)]
+#[derive(Component, Clone, Copy, Debug)]
 pub struct TankCameraInput {
     pub orbit: Vec2,
     pub zoom: f32,
+}
+
+impl Default for TankCameraInput {
+    fn default() -> Self {
+        Self {
+            orbit: Vec2::ZERO,
+            zoom: 0.0,
+        }
+    }
 }
 
 impl TankCameraInput {
@@ -100,7 +109,7 @@ pub struct TankCameraPlugin;
 
 impl Plugin for TankCameraPlugin {
     fn build(&self, app: &mut App) {
-        app.init_resource::<TankCameraInput>().add_systems(
+        app.add_systems(
             Update,
             (
                 initialize_camera_transform,
@@ -149,14 +158,13 @@ fn initialize_camera_transform(
 }
 
 fn update_camera_transform_target(
-    input: Res<TankCameraInput>,
-    mut q_camera: Query<(&TankCamera, &mut TankCameraTransformTarget)>,
+    mut q_camera: Query<(&TankCamera, &TankCameraInput, &mut TankCameraTransformTarget)>,
 ) {
-    if !input.has_input() {
-        return;
-    }
+    for (camera, input, mut camera_target) in q_camera.iter_mut() {
+        if !input.has_input() {
+            continue;
+        }
 
-    for (camera, mut camera_target) in q_camera.iter_mut() {
         camera_target.yaw -= input.orbit.x * camera.orbit_sensitivity;
 
         camera_target.pitch = (camera_target.pitch + input.orbit.y * camera.orbit_sensitivity)
