@@ -56,7 +56,6 @@ fn handle_player_input(
     client_map: ResMut<ClientMap>,
 ) {
     for FromClient { client_id, event } in input.read() {
-        info!("received event {event:?} from {client_id:?}");
         if let Some(entity) = client_map.get(client_id) {
             if let Ok(mut player_input) = q_players.get_mut(*entity) {
                 player_input.forward = event.y;
