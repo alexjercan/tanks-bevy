@@ -11,7 +11,7 @@ pub mod prelude {
     pub use bevy_replicon::prelude::client_connected;
     pub use super::client::prelude::*;
     pub use super::server::prelude::*;
-    pub use super::{NetworkEntity, PROTOCOL_ID, Ground, Player};
+    pub use super::{NetworkEntity, PROTOCOL_ID, Ground, Player, PlayerInputEvent};
 }
 
 pub const PROTOCOL_ID: u64 = 7;
@@ -30,6 +30,9 @@ pub struct Player {
     pub client_id: ClientId,
 }
 
+#[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
+pub struct PlayerInputEvent(pub Vec2);
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NetworkPlugin;
 
@@ -37,6 +40,8 @@ impl Plugin for NetworkPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(RepliconPlugins);
         app.add_plugins(RepliconRenetPlugins);
+
+        app.add_client_event::<PlayerInputEvent>(ChannelKind::Ordered);
 
         app.replicate::<NetworkEntity>();
         app.replicate::<Ground>();

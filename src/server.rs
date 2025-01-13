@@ -30,7 +30,7 @@ fn main() {
     app.init_resource::<ClientMap>();
 
     app.add_systems(Startup, setup_game);
-    app.add_systems(Update, (handle_client_connected, handle_client_disconnected));
+    app.add_systems(Update, (handle_client_connected, handle_client_disconnected, handle_player_input));
 
     app.run();
 }
@@ -48,6 +48,22 @@ fn setup_game(mut commands: Commands) {
         },
         Collider::cuboid(size / 2.0, f32::EPSILON, size / 2.0),
     ));
+}
+
+fn handle_player_input(
+    mut input: EventReader<FromClient<PlayerInputEvent>>,
+    mut q_players: Query<&mut TankControllerInput>,
+    client_map: ResMut<ClientMap>,
+) {
+    for FromClient { client_id, event } in input.read() {
+        info!("received event {event:?} from {client_id:?}");
+        if let Some(entity) = client_map.get(client_id) {
+            if let Ok(mut player_input) = q_players.get_mut(*entity) {
+                player_input.forward = event.y;
+                player_input.steer = event.x;
+            }
+        }
+    }
 }
 
 fn handle_client_disconnected(

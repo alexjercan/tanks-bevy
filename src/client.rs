@@ -1,7 +1,4 @@
-use bevy::{
-    asset::AssetMetaCheck,
-    prelude::*,
-};
+use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_asset_loader::prelude::*;
 use leafwing_input_manager::prelude::*;
 use tanks::prelude::*;
@@ -55,6 +52,7 @@ fn main() {
             }),
     );
     app.add_plugins(InputManagerPlugin::<CameraMovement>::default());
+    app.add_plugins(InputManagerPlugin::<PlayerInputAction>::default());
 
     app.add_plugins(GridMaterialPlugin);
     app.add_plugins(TankCameraPlugin);
@@ -85,11 +83,15 @@ fn main() {
 
     app.add_systems(
         PreUpdate,
-        (update_camera_input).run_if(in_state(GameStates::Playing)).run_if(client_connected),
+        (update_camera_input, update_player_input)
+            .run_if(in_state(GameStates::Playing))
+            .run_if(client_connected),
     );
     app.add_systems(
         Update,
-        (add_ground_cosmetics, add_player_cosmetics).run_if(in_state(GameStates::Playing)).run_if(client_connected),
+        (add_ground_cosmetics, add_player_cosmetics)
+            .run_if(in_state(GameStates::Playing))
+            .run_if(client_connected),
     );
 
     app.run();
@@ -126,12 +128,30 @@ enum CameraMovement {
     Zoom,
 }
 
-fn update_camera_input(
-    mut q_camera: Query<(&mut TankCameraInput, &ActionState<CameraMovement>)>,
-) {
+fn update_camera_input(mut q_camera: Query<(&mut TankCameraInput, &ActionState<CameraMovement>)>) {
     for (mut input, action) in q_camera.iter_mut() {
         input.zoom = action.value(&CameraMovement::Zoom);
         input.orbit = action.axis_pair(&CameraMovement::Pan);
+    }
+}
+
+#[derive(Actionlike, Clone, Debug, Copy, PartialEq, Eq, Hash, Reflect)]
+enum PlayerInputAction {
+    #[actionlike(DualAxis)]
+    Move,
+}
+
+#[derive(Component, Clone, Debug, Copy, Deref, DerefMut, Default)]
+struct PlayerInputMove(Vec2);
+
+fn update_player_input(mut input: EventWriter<PlayerInputEvent>, mut q_input: Query<(&mut PlayerInputMove, &ActionState<PlayerInputAction>)>) {
+    for (mut prev, action) in q_input.iter_mut() {
+        let movement = action.clamped_axis_pair(&PlayerInputAction::Move);
+
+        if movement.x != prev.x || movement.y != prev.y {
+            **prev = movement;
+            input.send(PlayerInputEvent(movement));
+        }
     }
 }
 
@@ -145,6 +165,7 @@ fn setup_game(mut commands: Commands) {
     let input_map = InputMap::default()
         .with_dual_axis(CameraMovement::Pan, MouseMove::default())
         .with_axis(CameraMovement::Zoom, MouseScrollAxis::Y);
+
     commands.spawn((
         TankCameraInput::default(),
         TankCamera::default(),
@@ -153,6 +174,11 @@ fn setup_game(mut commands: Commands) {
         InputManagerBundle::with_map(input_map),
         StateScoped(GameStates::Playing),
     ));
+
+    let input_map =
+        InputMap::default().with_dual_axis(PlayerInputAction::Move, VirtualDPad::wasd());
+
+    commands.spawn((PlayerInputMove::default(), InputManagerBundle::with_map(input_map)));
 }
 
 // Renderer
@@ -189,14 +215,17 @@ fn add_player_cosmetics(
     for (entity, Player { client_id }) in q_player.iter() {
         commands
             .entity(entity)
-            .insert((Visibility::default(),))
+            .insert((Visibility::default(), ClientRenderer))
             .with_child((
                 Transform::from_scale(Vec3::splat(2.0)),
                 SceneRoot(game_assets.tank.clone()),
             ));
 
+        // TODO: This should be done in a separate system
         if *client_id == **local_player {
-            commands.entity(entity).insert(TankCameraTarget::default());
+            commands
+                .entity(entity)
+                .insert(TankCameraTarget::default());
         }
     }
 }

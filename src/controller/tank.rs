@@ -103,7 +103,7 @@ fn update_controller(
         }
 
         if input.steer != 0.0 {
-            state.y_rotation = (state.y_rotation + input.steer * tank.rotation_speed * delta_time)
+            state.y_rotation = (state.y_rotation - input.steer * tank.rotation_speed * delta_time)
                 .rem_euclid(2.0 * PI);
         }
 
