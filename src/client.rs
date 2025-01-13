@@ -1,5 +1,6 @@
-use bevy_asset_loader::prelude::*;
 use bevy::{asset::AssetMetaCheck, prelude::*};
+use bevy_asset_loader::prelude::*;
+use bevy_renet::client_just_connected;
 use leafwing_input_manager::prelude::*;
 use tanks::prelude::*;
 
@@ -8,6 +9,7 @@ enum GameStates {
     #[default]
     AssetLoading,
     MainMenu,
+    Connecting,
     Playing,
 }
 
@@ -56,7 +58,12 @@ fn main() {
 
     // Renderer
     app.add_plugins(RendererPlugin);
-    app.configure_sets(Update, RendererSet.run_if(in_state(GameStates::Playing)).run_if(client_connected));
+    app.configure_sets(
+        Update,
+        RendererSet
+            .run_if(in_state(GameStates::Playing))
+            .run_if(client_connected),
+    );
 
     #[cfg(feature = "debug")]
     app.add_plugins(DebugPlugin);
@@ -65,6 +72,12 @@ fn main() {
     app.add_systems(
         Update,
         handle_play_button_pressed.run_if(in_state(GameStates::MainMenu)),
+    );
+    app.add_systems(
+        Update,
+        handle_connecting_done
+            .run_if(in_state(GameStates::Connecting))
+            .run_if(client_just_connected),
     );
     app.add_systems(OnEnter(GameStates::Playing), setup_game);
     app.add_systems(
@@ -84,8 +97,16 @@ fn main() {
 }
 
 fn setup_main_menu(mut commands: Commands) {
-    commands.spawn((Name::new("CameraUI"), Camera2d, StateScoped(GameStates::MainMenu)));
-    commands.spawn((Name::new("MainMenu"), MainMenuRoot, StateScoped(GameStates::MainMenu)));
+    commands.spawn((
+        Name::new("CameraUI"),
+        Camera2d,
+        StateScoped(GameStates::MainMenu),
+    ));
+    commands.spawn((
+        Name::new("MainMenu"),
+        MainMenuRoot,
+        StateScoped(GameStates::MainMenu),
+    ));
 }
 
 fn handle_play_button_pressed(
@@ -98,12 +119,16 @@ fn handle_play_button_pressed(
         client_info.address = event.address.clone();
         client_info.name = event.name.clone();
 
-        next_state.set(GameStates::Playing);
+        next_state.set(GameStates::Connecting);
 
         client_events.send(ClientConnectEvent {
             address: client_info.address.clone(),
         });
     }
+}
+
+fn handle_connecting_done(mut next_state: ResMut<NextState<GameStates>>) {
+    next_state.set(GameStates::Playing);
 }
 
 #[derive(Actionlike, Clone, Debug, Copy, PartialEq, Eq, Hash, Reflect)]
@@ -126,7 +151,7 @@ fn update_camera_target(
     local_player: Res<LocalPlayer>,
     mut q_camera: Query<&mut TankCameraTransformTarget>,
 ) {
-    for (Player { client_id }, transform ) in q_player.iter() {
+    for (Player { client_id, .. }, transform) in q_player.iter() {
         if *client_id == **local_player {
             for mut target in q_camera.iter_mut() {
                 target.focus = transform.translation;
@@ -144,7 +169,10 @@ enum PlayerInputAction {
 #[derive(Component, Clone, Debug, Copy, Deref, DerefMut, Default)]
 struct PlayerInputMove(Vec2);
 
-fn update_player_input(mut input: EventWriter<PlayerInputEvent>, mut q_input: Query<(&mut PlayerInputMove, &ActionState<PlayerInputAction>)>) {
+fn update_player_input(
+    mut input: EventWriter<PlayerInputEvent>,
+    mut q_input: Query<(&mut PlayerInputMove, &ActionState<PlayerInputAction>)>,
+) {
     for (mut prev, action) in q_input.iter_mut() {
         let movement = action.clamped_axis_pair(&PlayerInputAction::Move);
 
@@ -155,7 +183,11 @@ fn update_player_input(mut input: EventWriter<PlayerInputEvent>, mut q_input: Qu
     }
 }
 
-fn setup_game(mut commands: Commands) {
+fn setup_game(
+    mut commands: Commands,
+    client_info: Res<ClientInfo>,
+    mut join: EventWriter<PlayerJoinEvent>,
+) {
     commands.spawn((
         Name::new("DirectionalLight"),
         DirectionalLight::default(),
@@ -180,5 +212,14 @@ fn setup_game(mut commands: Commands) {
     let input_map =
         InputMap::default().with_dual_axis(PlayerInputAction::Move, VirtualDPad::wasd());
 
-    commands.spawn((Name::new("PlayerInput"), PlayerInputMove::default(), InputManagerBundle::with_map(input_map)));
+    commands.spawn((
+        Name::new("PlayerInput"),
+        PlayerInputMove::default(),
+        InputManagerBundle::with_map(input_map),
+    ));
+
+    join.send(PlayerJoinEvent {
+        name: client_info.name.clone(),
+        color: Color::srgb(0.0, 0.0, 1.0),
+    });
 }

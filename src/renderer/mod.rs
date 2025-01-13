@@ -42,8 +42,7 @@ impl Plugin for RendererPlugin {
 
         app.add_systems(
             Update,
-            (add_ground_cosmetics, add_player_cosmetics)
-                .in_set(RendererSet)
+            (add_ground_cosmetics, add_player_cosmetics).in_set(RendererSet),
         );
     }
 }
@@ -71,16 +70,23 @@ fn add_ground_cosmetics(
 
 fn add_player_cosmetics(
     mut commands: Commands,
-    q_player: Query<Entity, (With<Player>, Without<ClientRenderer>)>,
+    q_player: Query<(Entity, &Player), Without<ClientRenderer>>,
     game_assets: Res<GameAssets>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
-    for entity in q_player.iter() {
+    for (entity, Player { name, color, .. }) in q_player.iter() {
+        info!("Adding cosmetics for player: {}", name);
+        let material = StandardMaterial {
+            base_color: *color,
+            ..Default::default()
+        };
         commands
             .entity(entity)
             .insert((Visibility::default(), ClientRenderer))
             .with_child((
                 Transform::from_scale(Vec3::splat(2.0)),
                 SceneRoot(game_assets.tank.clone()),
+                MeshMaterial3d(materials.add(material)),
             ));
     }
 }

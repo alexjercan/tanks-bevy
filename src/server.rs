@@ -30,7 +30,7 @@ fn main() {
     app.init_resource::<ClientMap>();
 
     app.add_systems(Startup, setup_game);
-    app.add_systems(Update, (handle_client_connected, handle_client_disconnected, handle_player_input));
+    app.add_systems(Update, (handle_client_connected, handle_client_disconnected, handle_player_join, handle_player_input));
 
     app.run();
 }
@@ -49,6 +49,56 @@ fn setup_game(mut commands: Commands) {
         },
         Collider::cuboid(size / 2.0, f32::EPSILON, size / 2.0),
     ));
+}
+
+fn handle_player_join(
+    mut commands: Commands,
+    mut join: EventReader<FromClient<PlayerJoinEvent>>,
+    mut client_map: ResMut<ClientMap>,
+) {
+    for FromClient { client_id, event } in join.read() {
+        let position = Vec3::new(
+            rand::random::<f32>() * 20. - 10.,
+            0.5,
+            rand::random::<f32>() * 20. - 10.,
+        );
+        let rotation = Quat::IDENTITY;
+
+        let entity = commands.spawn((
+            Replicated,
+            Name::new("Player"),
+            Transform::from_translation(position).with_rotation(rotation),
+            NetworkEntity,
+            Player {
+                client_id: *client_id,
+                name: event.name.clone(),
+                color: event.color,
+            },
+            Collider::cuboid(0.4, 0.2, 0.4),
+            KinematicCharacterController {
+                custom_mass: Some(5.0),
+                up: Vec3::Y,
+                offset: CharacterLength::Absolute(0.01),
+                slide: true,
+                autostep: Some(CharacterAutostep {
+                    max_height: CharacterLength::Relative(0.3),
+                    min_width: CharacterLength::Relative(0.5),
+                    include_dynamic_bodies: false,
+                }),
+                // Don’t allow climbing slopes larger than 45 degrees.
+                max_slope_climb_angle: 45.0_f32.to_radians(),
+                // Automatically slide down on slopes smaller than 30 degrees.
+                min_slope_slide_angle: 30.0_f32.to_radians(),
+                apply_impulse_to_dynamic_bodies: true,
+                snap_to_ground: None,
+                ..default()
+            },
+            TankControllerInput::default(),
+            TankController::default(),
+        )).id();
+
+        client_map.insert(*client_id, entity);
+    }
 }
 
 fn handle_player_input(
@@ -79,49 +129,9 @@ fn handle_client_disconnected(
 }
 
 fn handle_client_connected(
-    mut commands: Commands,
     mut connected: EventReader<ClientConnectedEvent>,
-    mut client_map: ResMut<ClientMap>,
 ) {
-    for ClientConnectedEvent { client_id } in connected.read() {
-        let position = Vec3::new(
-            rand::random::<f32>() * 20. - 10.,
-            0.5,
-            rand::random::<f32>() * 20. - 10.,
-        );
-        let rotation = Quat::IDENTITY;
-
-        let entity = commands.spawn((
-            Replicated,
-            Name::new("Player"),
-            Transform::from_translation(position).with_rotation(rotation),
-            NetworkEntity,
-            Player {
-                client_id: *client_id,
-            },
-            Collider::cuboid(0.4, 0.2, 0.4),
-            KinematicCharacterController {
-                custom_mass: Some(5.0),
-                up: Vec3::Y,
-                offset: CharacterLength::Absolute(0.01),
-                slide: true,
-                autostep: Some(CharacterAutostep {
-                    max_height: CharacterLength::Relative(0.3),
-                    min_width: CharacterLength::Relative(0.5),
-                    include_dynamic_bodies: false,
-                }),
-                // Don’t allow climbing slopes larger than 45 degrees.
-                max_slope_climb_angle: 45.0_f32.to_radians(),
-                // Automatically slide down on slopes smaller than 30 degrees.
-                min_slope_slide_angle: 30.0_f32.to_radians(),
-                apply_impulse_to_dynamic_bodies: true,
-                snap_to_ground: None,
-                ..default()
-            },
-            TankControllerInput::default(),
-            TankController::default(),
-        )).id();
-
-        client_map.insert(*client_id, entity);
+    for ClientConnectedEvent { client_id: _ } in connected.read() {
+        // TODO: some stuff when a client connects
     }
 }

@@ -10,8 +10,8 @@ use bevy::prelude::*;
 pub mod prelude {
     pub use super::client::prelude::*;
     pub use super::server::prelude::*;
-    pub use super::{Ground, NetworkEntity, Player, PlayerInputEvent, PROTOCOL_ID};
-    pub use bevy_replicon::prelude::client_connected;
+    pub use super::{Ground, NetworkEntity, Player, PlayerInputEvent, PlayerJoinEvent, PROTOCOL_ID};
+    pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
 
 pub const PROTOCOL_ID: u64 = 7;
@@ -25,13 +25,22 @@ pub struct Ground {
     pub height: f32,
 }
 
-#[derive(Component, Clone, Copy, Debug, Serialize, Deserialize)]
+#[derive(Component, Clone, Debug, Serialize, Deserialize)]
 pub struct Player {
     pub client_id: ClientId,
+    pub name: String,
+    pub color: Color,
 }
 
 #[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
 pub struct PlayerInputEvent(pub Vec2);
+
+#[derive(Debug, Default, Deserialize, Event, Serialize)]
+pub struct PlayerJoinEvent {
+    pub name: String,
+    pub color: Color,
+}
+
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NetworkPlugin;
@@ -42,6 +51,7 @@ impl Plugin for NetworkPlugin {
         app.add_plugins(RepliconRenetPlugins);
 
         app.add_client_event::<PlayerInputEvent>(ChannelKind::Ordered);
+        app.add_client_event::<PlayerJoinEvent>(ChannelKind::Ordered);
 
         app.replicate::<Name>();
         app.replicate::<NetworkEntity>();
