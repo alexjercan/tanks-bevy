@@ -39,6 +39,7 @@ fn setup_game(mut commands: Commands) {
     let size = 100.0;
 
     commands.spawn((
+        Name::new("Ground"),
         Replicated,
         Transform::default(),
         NetworkEntity,
@@ -92,6 +93,7 @@ fn handle_client_connected(
 
         let entity = commands.spawn((
             Replicated,
+            Name::new("Player"),
             Transform::from_translation(position).with_rotation(rotation),
             NetworkEntity,
             Player {

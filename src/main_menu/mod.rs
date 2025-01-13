@@ -98,6 +98,7 @@ fn spawn_main_menu(
         .with_children(|parent| {
             parent
                 .spawn((
+                    Name::new("PlayButton"),
                     PlayButton,
                     Button,
                     Node {
@@ -124,6 +125,7 @@ fn spawn_main_menu(
                 ));
 
             parent.spawn((
+                Name::new("AddressInput"),
                 AddressInput,
                 Node {
                     width: Val::Px(500.0),
@@ -150,6 +152,7 @@ fn spawn_main_menu(
             ));
 
             parent.spawn((
+                Name::new("NameInput"),
                 NameInput,
                 Node {
                     width: Val::Px(200.0),

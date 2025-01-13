@@ -62,6 +62,7 @@ log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"
 leafwing-input-manager = "0.16.0"
 bevy_replicon = "0.29.2"
 bevy_replicon_renet = "0.6.0"
+bevy-inspector-egui = "0.28.1"
 
 [build-dependencies]
 embed-resource = "1"

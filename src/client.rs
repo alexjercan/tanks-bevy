@@ -58,6 +58,9 @@ fn main() {
     app.add_plugins(RendererPlugin);
     app.configure_sets(Update, RendererSet.run_if(in_state(GameStates::Playing)).run_if(client_connected));
 
+    #[cfg(feature = "debug")]
+    app.add_plugins(DebugPlugin);
+
     app.add_systems(OnEnter(GameStates::MainMenu), setup_main_menu);
     app.add_systems(
         Update,
@@ -81,8 +84,8 @@ fn main() {
 }
 
 fn setup_main_menu(mut commands: Commands) {
-    commands.spawn((Camera2d, StateScoped(GameStates::MainMenu)));
-    commands.spawn((MainMenuRoot, StateScoped(GameStates::MainMenu)));
+    commands.spawn((Name::new("CameraUI"), Camera2d, StateScoped(GameStates::MainMenu)));
+    commands.spawn((Name::new("MainMenu"), MainMenuRoot, StateScoped(GameStates::MainMenu)));
 }
 
 fn handle_play_button_pressed(
@@ -154,6 +157,7 @@ fn update_player_input(mut input: EventWriter<PlayerInputEvent>, mut q_input: Qu
 
 fn setup_game(mut commands: Commands) {
     commands.spawn((
+        Name::new("DirectionalLight"),
         DirectionalLight::default(),
         Transform::from_translation(Vec3::ONE).looking_at(Vec3::ZERO, Vec3::Y),
         StateScoped(GameStates::Playing),
@@ -164,6 +168,7 @@ fn setup_game(mut commands: Commands) {
         .with_axis(CameraMovement::Zoom, MouseScrollAxis::Y);
 
     commands.spawn((
+        Name::new("Camera3d"),
         TankCameraInput::default(),
         TankCamera::default(),
         Camera3d::default(),
@@ -175,5 +180,5 @@ fn setup_game(mut commands: Commands) {
     let input_map =
         InputMap::default().with_dual_axis(PlayerInputAction::Move, VirtualDPad::wasd());
 
-    commands.spawn((PlayerInputMove::default(), InputManagerBundle::with_map(input_map)));
+    commands.spawn((Name::new("PlayerInput"), PlayerInputMove::default(), InputManagerBundle::with_map(input_map)));
 }

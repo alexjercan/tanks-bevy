@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 use iyes_perf_ui::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 pub mod prelude {
     pub use super::{DebugPlugin, DebugSet};
@@ -21,6 +22,8 @@ impl Plugin for DebugPlugin {
             .add_plugins(bevy::diagnostic::EntityCountDiagnosticsPlugin)
             .add_plugins(bevy::diagnostic::SystemInformationDiagnosticsPlugin)
             .add_plugins(PerfUiPlugin)
+            // Bevy egui inspector
+            .add_plugins(WorldInspectorPlugin::new())
             // we want to show Rapier debug information:
             .add_plugins(RapierDebugRenderPlugin::default())
             // We need to order our system before PerfUiSet::Setup,
@@ -35,7 +38,7 @@ impl Plugin for DebugPlugin {
 fn setup(mut commands: Commands) {
     // create a simple Perf UI with default settings
     // and all entries provided by the crate:
-    commands.spawn(PerfUiAllEntries::default());
+    commands.spawn((Name::new("PerfUI"), PerfUiAllEntries::default()));
 }
 
 fn toggle(
@@ -50,14 +53,14 @@ fn toggle(
         } else {
             // create a simple Perf UI with default settings
             // and all entries provided by the crate:
-            commands.spawn(PerfUiAllEntries::default());
+            commands.spawn((Name::new("PerfUI"), PerfUiAllEntries::default()));
         }
     }
 }
 
 // This system draws the axes based on the cube's transform, with length based on the size of
 // the entity's axis-aligned bounding box (AABB).
-fn draw_axes(mut gizmos: Gizmos, query: Query<&Transform, With<Collider>>) {
+fn draw_axes(mut gizmos: Gizmos, query: Query<&Transform>) {
     for &transform in &query {
         let length = 3.0;
         gizmos.axes(transform, length);

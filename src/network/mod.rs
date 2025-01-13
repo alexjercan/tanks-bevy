@@ -8,10 +8,10 @@ use serde::{Deserialize, Serialize};
 use bevy::prelude::*;
 
 pub mod prelude {
-    pub use bevy_replicon::prelude::client_connected;
     pub use super::client::prelude::*;
     pub use super::server::prelude::*;
-    pub use super::{NetworkEntity, PROTOCOL_ID, Ground, Player, PlayerInputEvent};
+    pub use super::{Ground, NetworkEntity, Player, PlayerInputEvent, PROTOCOL_ID};
+    pub use bevy_replicon::prelude::client_connected;
 }
 
 pub const PROTOCOL_ID: u64 = 7;
@@ -43,6 +43,7 @@ impl Plugin for NetworkPlugin {
 
         app.add_client_event::<PlayerInputEvent>(ChannelKind::Ordered);
 
+        app.replicate::<Name>();
         app.replicate::<NetworkEntity>();
         app.replicate::<Ground>();
         app.replicate::<Player>();
