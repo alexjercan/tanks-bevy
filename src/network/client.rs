@@ -1,69 +1,79 @@
-use std::time::Duration;
+use std::{net::UdpSocket, time::SystemTime};
 
-use bevy_renet::renet::*;
+use bevy::prelude::*;
+use bevy_renet::{netcode::*, renet::{ConnectionConfig, RenetClient}};
+use bevy_replicon::prelude::*;
+use bevy_replicon_renet::RenetChannelsExt;
 use serde::{Deserialize, Serialize};
+use super::{NetworkPlugin, PROTOCOL_ID};
 
 pub mod prelude {
-    pub use super::{ClientChannel, ClientMessage};
+    pub use super::{ClientPlugin, ClientSet, ClientConnectEvent, LocalPlayer};
 }
+
+/// The ClientConnectEvent is an event that is sent when the client wants to connect to a server
+/// with the given address.
+#[derive(Debug, Clone, Event)]
+pub struct ClientConnectEvent {
+    pub address: String,
+}
+
+#[derive(Resource, Debug, Clone, Serialize, Deserialize, Deref, DerefMut)]
+pub struct LocalPlayer(pub ClientId);
+
+#[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ClientSet;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-/// The ClientMessage enum represents the messages that can be sent from the client to the server.
-pub enum ClientMessage {
-    /// The ClientJoin message is sent to the server to inform that the client wants to join the
-    /// lobby.
-    ClientJoin {
-        /// The name of the client.
-        name: String,
-    },
-    /// The RequestLobbyInfo message is sent to the server to request the lobby information.
-    RequestLobbyInfo,
-    /// The ClientReady message is sent to the server to inform that the client is ready to start
-    /// playing.
-    ClientReady,
-    /// The ControllerInput message is sent to the server to inform that the client has input
-    /// for their character controller.
-    ControllerInput {
-        /// The forward input.
-        forward: f32,
-        /// The steer input.
-        steer: f32,
-    },
-}
+pub struct ClientPlugin;
 
-impl From<ClientMessage> for Bytes {
-    fn from(message: ClientMessage) -> Self {
-        bincode::serialize(&message).unwrap().into()
+impl Plugin for ClientPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_plugins(NetworkPlugin);
+
+        app.add_event::<ClientConnectEvent>();
+
+        app.add_systems(
+            Update,
+            (handle_client_connect)
+                .in_set(ClientSet)
+                .run_if(not(resource_exists::<RenetClient>)),
+        );
     }
 }
 
-impl From<Bytes> for ClientMessage {
-    fn from(bytes: Bytes) -> Self {
-        bincode::deserialize(&bytes).unwrap()
-    }
-}
+fn handle_client_connect(
+    mut commands: Commands,
+    channels: Res<RepliconChannels>,
+    mut connect_events: EventReader<ClientConnectEvent>,
+) {
+    for ClientConnectEvent { address } in connect_events.read() {
+        let server_channels_config = channels.get_server_configs();
+        let client_channels_config = channels.get_client_configs();
 
-/// TODO: Split messages into multiple types with different channels, e.g: Input, Command, etc.
-pub enum ClientChannel {
-    Message,
-}
+        let client = RenetClient::new(ConnectionConfig {
+            server_channels_config,
+            client_channels_config,
+            ..Default::default()
+        });
 
-impl From<ClientChannel> for u8 {
-    fn from(channel_id: ClientChannel) -> Self {
-        match channel_id {
-            ClientChannel::Message => 0,
-        }
-    }
-}
+        let server_addr = address.parse().unwrap();
+        let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
+        let current_time = SystemTime::now()
+            .duration_since(SystemTime::UNIX_EPOCH)
+            .unwrap();
+        let client_id = current_time.as_millis() as u64;
+        let authentication = ClientAuthentication::Unsecure {
+            client_id,
+            protocol_id: PROTOCOL_ID,
+            server_addr,
+            user_data: None,
+        };
 
-impl ClientChannel {
-    pub fn channels_config() -> Vec<ChannelConfig> {
-        vec![ChannelConfig {
-            channel_id: Self::Message.into(),
-            max_memory_usage_bytes: 5 * 1024 * 1024,
-            send_type: SendType::ReliableOrdered {
-                resend_time: Duration::ZERO,
-            },
-        }]
+        let transport = NetcodeClientTransport::new(current_time, authentication, socket).unwrap();
+
+        commands.insert_resource(LocalPlayer(ClientId::new(client_id)));
+        commands.insert_resource(client);
+        commands.insert_resource(transport);
     }
 }

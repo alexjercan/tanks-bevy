@@ -1,101 +1,111 @@
-use std::{collections::HashMap, time::Duration};
+use std::{
+    net::UdpSocket,
+    time::SystemTime,
+};
 
-use super::EntityKind;
+use super::{PROTOCOL_ID, NetworkPlugin};
 use bevy::prelude::*;
-use bevy_renet::renet::*;
+use bevy_renet::{netcode::*, renet::{ConnectionConfig, RenetServer}};
+use bevy_replicon::prelude::*;
+use bevy_replicon_renet::RenetChannelsExt;
 use serde::{Deserialize, Serialize};
 
 pub mod prelude {
-    pub use super::{ServerChannel, ServerMessage};
+    pub use super::{ServerPlugin, ServerSet, ClientConnectedEvent, ClientDisconnectedEvent};
 }
+
+/// The ClientConnectedEvent is an event that is sent when a client connects to the server
+#[derive(Debug, Clone, Event)]
+pub struct ClientConnectedEvent {
+    pub client_id: ClientId,
+}
+
+/// The ClientDisconnectedEvent is an event that is sent when a client disconnects from the server
+#[derive(Debug, Clone, Event)]
+pub struct ClientDisconnectedEvent {
+    pub client_id: ClientId,
+    pub reason: String,
+}
+
+#[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
+pub struct ServerSet;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub enum ServerMessage {
-    /// The ClientConnectedAck message is sent to a client when they connect to the server.
-    /// The message informs the client of their own client id.
-    ClientConnectedAck {
-        /// The id of the client that connected.
-        id: ClientId,
-    },
-    /// The ClientJoined message is sent to all clients when a new client joins the server.
-    ClientJoined {
-        /// The id of the client that connected.
-        id: ClientId,
-        /// The name of the client that connected.
-        name: String,
-    },
-    /// The ClientJoinAck message is sent to a client to indicate that they have successfully
-    /// joined the lobby.
-    ClientJoinAck,
-    /// The LobbyInfo message is sent to a client to inform them of the current lobby state.
-    LobbyInfo {
-        /// The names of the clients in the lobby.
-        names: HashMap<ClientId, String>,
-    },
-    /// The ClientLeft message is sent to all clients when a client leaves the server.
-    ClientLeft {
-        /// The id of the client that left.
-        id: ClientId,
-    },
-    /// The SpawnEntity message is used to spawn an entity on the client.
-    SpawnEntity {
-        /// The id of the entity.
-        id: Entity,
-        /// The position of the entity.
-        position: Vec3,
-        /// The rotation of the entity.
-        rotation: Quat,
-        /// The kind of entity to spawn.
-        kind: EntityKind,
-    },
-    /// The DespawnEntity message is used to despawn an entity on the client.
-    DespawnEntity {
-        /// The id of the entity.
-        id: Entity,
-    },
-    /// The SyncTransform message is used to synchronize the transform of an entity on the client.
-    SyncTransform {
-        /// The id of the entity.
-        id: Entity,
-        /// The position of the entity.
-        position: Vec3,
-        /// The rotation of the entity.
-        rotation: Quat,
-    },
-}
+pub struct ServerPlugin;
 
-impl From<ServerMessage> for Bytes {
-    fn from(message: ServerMessage) -> Self {
-        bincode::serialize(&message).unwrap().into()
+impl Plugin for ServerPlugin {
+    fn build(&self, app: &mut App) {
+        app.add_plugins(NetworkPlugin);
+
+        app.add_event::<ClientConnectedEvent>();
+        app.add_event::<ClientDisconnectedEvent>();
+
+        app.add_systems(
+            Startup,
+            start_server,
+        );
+
+        app.add_systems(
+            Update,
+            (handle_server_events)
+                .in_set(ServerSet)
+                .run_if(resource_exists::<RenetServer>),
+        );
     }
 }
 
-impl From<Bytes> for ServerMessage {
-    fn from(bytes: Bytes) -> Self {
-        bincode::deserialize(&bytes).unwrap()
-    }
+fn start_server(
+    mut commands: Commands,
+    channels: Res<RepliconChannels>,
+) {
+    let server_channels_config = channels.get_server_configs();
+    let client_channels_config = channels.get_client_configs();
+
+    let server = RenetServer::new(ConnectionConfig {
+        server_channels_config,
+        client_channels_config,
+        ..Default::default()
+    });
+
+    let public_addr = "0.0.0.0:5000".parse().unwrap();
+    let socket = UdpSocket::bind(public_addr).unwrap();
+    let current_time = SystemTime::now()
+        .duration_since(SystemTime::UNIX_EPOCH)
+        .unwrap();
+    let server_config = ServerConfig {
+        current_time,
+        max_clients: 64,
+        protocol_id: PROTOCOL_ID,
+        public_addresses: vec![public_addr],
+        authentication: ServerAuthentication::Unsecure,
+    };
+
+    let transport = NetcodeServerTransport::new(server_config, socket).unwrap();
+
+    commands.insert_resource(server);
+    commands.insert_resource(transport);
 }
 
-pub enum ServerChannel {
-    Message,
-}
+fn handle_server_events(
+    mut events: EventReader<ServerEvent>,
+    mut connected: EventWriter<ClientConnectedEvent>,
+    mut disconnected: EventWriter<ClientDisconnectedEvent>,
+) {
+    for event in events.read() {
+        match event {
+            ServerEvent::ClientConnected { client_id } => {
+                info!("Player {:?} connected.", client_id);
 
-impl From<ServerChannel> for u8 {
-    fn from(channel_id: ServerChannel) -> Self {
-        match channel_id {
-            ServerChannel::Message => 0,
+                connected.send(ClientConnectedEvent { client_id: *client_id });
+            }
+            ServerEvent::ClientDisconnected { client_id, reason } => {
+                info!("Player {:?} disconnected: {}", client_id, reason);
+
+                disconnected.send(ClientDisconnectedEvent {
+                    client_id: *client_id,
+                    reason: reason.to_string(),
+                });
+            }
         }
-    }
-}
-
-impl ServerChannel {
-    pub fn channels_config() -> Vec<ChannelConfig> {
-        vec![ChannelConfig {
-            channel_id: Self::Message.into(),
-            max_memory_usage_bytes: 10 * 1024 * 1024,
-            send_type: SendType::ReliableOrdered {
-                resend_time: Duration::from_millis(200),
-            },
-        }]
     }
 }
