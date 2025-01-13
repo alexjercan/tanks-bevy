@@ -131,7 +131,7 @@ fn handle_client_disconnected(
 fn handle_client_connected(
     mut connected: EventReader<ClientConnectedEvent>,
 ) {
-    for ClientConnectedEvent { client_id: _ } in connected.read() {
+    for ClientConnectedEvent { .. } in connected.read() {
         // TODO: some stuff when a client connects
     }
 }

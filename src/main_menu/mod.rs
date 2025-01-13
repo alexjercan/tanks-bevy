@@ -1,8 +1,10 @@
 use bevy::{prelude::*, ui::FocusPolicy};
 use bevy_simple_text_input::*;
 
+use crate::prelude::GameStates;
+
 pub mod prelude {
-    pub use super::{MainMenuPlugin, MainMenuRoot, MainMenuSet, PlayButtonPressed, ClientInfo};
+    pub use super::{ClientInfo, MainMenuPlugin, PlayButtonPressed};
 }
 
 #[derive(Resource, Debug, Clone)]
@@ -19,11 +21,6 @@ impl Default for ClientInfo {
         }
     }
 }
-
-/// The MainMenuRoot component is used to identify the root entity of the Main Menu.
-/// It will be used to spawn the Main Menu UI. This should be created by the game's startup system.
-#[derive(Component, Clone, Copy, Debug)]
-pub struct MainMenuRoot;
 
 #[derive(Component, Clone, Copy, Debug)]
 struct MainMenu;
@@ -43,11 +40,6 @@ pub struct PlayButtonPressed {
     pub name: String,
 }
 
-/// This set is used for the Main Menu, which should be the first thing the player sees when they
-/// start the game.
-#[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
-pub struct MainMenuSet;
-
 pub struct MainMenuPlugin;
 
 impl Plugin for MainMenuPlugin {
@@ -55,14 +47,14 @@ impl Plugin for MainMenuPlugin {
         app.add_plugins(TextInputPlugin)
             .init_resource::<ClientInfo>()
             .add_event::<PlayButtonPressed>()
+            .add_systems(OnEnter(GameStates::MainMenu), spawn_main_menu)
             .add_systems(
                 Update,
                 (
-                    spawn_main_menu,
                     interact_with_play_button,
                     focus_text_input.before(TextInputSystem),
                 )
-                    .in_set(MainMenuSet)
+                    .run_if(in_state(GameStates::MainMenu))
                     .chain(),
             );
     }
@@ -76,25 +68,27 @@ const BORDER_COLOR_ACTIVE: Color = Color::srgb(0.75, 0.52, 0.99);
 const TEXT_COLOR: Color = Color::srgb(0.9, 0.9, 0.9);
 const BACKGROUND_COLOR: Color = Color::srgb(0.15, 0.15, 0.15);
 
-fn spawn_main_menu(
-    mut commands: Commands,
-    q_main_menu: Query<Entity, (With<MainMenuRoot>, Without<MainMenu>)>,
-) {
-    let Ok(entity) = q_main_menu.get_single() else {
-        return;
-    };
+fn spawn_main_menu(mut commands: Commands) {
+    commands.spawn((
+        Name::new("CameraUI"),
+        Camera2d,
+        StateScoped(GameStates::MainMenu),
+    ));
 
     commands
-        .entity(entity)
-        .insert(MainMenu)
-        .insert(Node {
-            width: Val::Percent(100.0),
-            height: Val::Percent(100.0),
-            align_items: AlignItems::Center,
-            justify_content: JustifyContent::Center,
-            flex_direction: FlexDirection::Column,
-            ..default()
-        })
+        .spawn((
+            Name::new("MainMenu"),
+            MainMenu,
+            Node {
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                flex_direction: FlexDirection::Column,
+                ..default()
+            },
+            StateScoped(GameStates::MainMenu),
+        ))
         .with_children(|parent| {
             parent
                 .spawn((

@@ -2,10 +2,10 @@ use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use crate::prelude::{GridBindlessMaterial, GridMaterialPlugin, Ground, Player};
+use crate::prelude::{GridBindlessMaterial, GridMaterialPlugin, Ground, Player, GameStates};
 
 pub mod prelude {
-    pub use super::{GameAssets, RendererPlugin, RendererSet};
+    pub use super::{GameAssets, RendererPlugin};
 }
 
 #[derive(AssetCollection, Resource)]
@@ -27,9 +27,6 @@ pub struct GameAssets {
     pub prototype_textures: Vec<Handle<Image>>,
 }
 
-#[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
-pub struct RendererSet;
-
 #[derive(Component, Clone, Copy, Debug)]
 struct ClientRenderer;
 
@@ -40,11 +37,32 @@ impl Plugin for RendererPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(GridMaterialPlugin);
 
+        app.add_loading_state(
+            LoadingState::new(GameStates::AssetLoading)
+                .continue_to_state(GameStates::MainMenu)
+                .load_collection::<GameAssets>(),
+        );
+
+        app.add_systems(
+            OnEnter(GameStates::Playing),
+            spawn_renderer,
+        );
         app.add_systems(
             Update,
-            (add_ground_cosmetics, add_player_cosmetics).in_set(RendererSet),
+            (add_ground_cosmetics, add_player_cosmetics).run_if(in_state(GameStates::Playing)),
         );
     }
+}
+
+fn spawn_renderer(
+    mut commands: Commands,
+) {
+    commands.spawn((
+        Name::new("DirectionalLight"),
+        DirectionalLight::default(),
+        Transform::from_translation(Vec3::ONE).looking_at(Vec3::ZERO, Vec3::Y),
+        StateScoped(GameStates::Playing),
+    ));
 }
 
 fn add_ground_cosmetics(
@@ -75,6 +93,7 @@ fn add_player_cosmetics(
     mut materials: ResMut<Assets<StandardMaterial>>,
 ) {
     for (entity, Player { name, color, .. }) in q_player.iter() {
+        // TODO: add cosmetics for player
         info!("Adding cosmetics for player: {}", name);
         let material = StandardMaterial {
             base_color: *color,
