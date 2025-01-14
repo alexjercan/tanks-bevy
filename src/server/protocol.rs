@@ -96,12 +96,12 @@ fn handle_server_events(
     for event in events.read() {
         match event {
             ServerEvent::ClientConnected { client_id } => {
-                info!("Player {:?} connected.", client_id);
+                debug!("Client {:?} connected.", client_id);
 
                 connected.send(ClientConnectedEvent { client_id: *client_id });
             }
             ServerEvent::ClientDisconnected { client_id, reason } => {
-                info!("Player {:?} disconnected: {}", client_id, reason);
+                debug!("Client {:?} disconnected: {}", client_id, reason);
 
                 disconnected.send(ClientDisconnectedEvent {
                     client_id: *client_id,

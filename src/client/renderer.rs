@@ -3,7 +3,7 @@ use bevy_asset_loader::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use utils::prelude::*;
-use crate::network::prelude::{Ground, Player};
+use crate::network::prelude::*;
 use crate::client::prelude::*;
 
 pub mod prelude {
@@ -14,6 +14,8 @@ pub mod prelude {
 pub struct GameAssets {
     #[asset(path = "models/tank.glb#Scene0")]
     pub tank: Handle<Scene>,
+    #[asset(path = "models/shell.glb#Scene0")]
+    shell: Handle<Scene>,
     #[asset(
         paths(
             "prototype/prototype-aqua.png",
@@ -46,14 +48,28 @@ impl Plugin for RendererPlugin {
         );
 
         app.add_systems(
+            OnEnter(GameStates::AssetLoading),
+            spawn_loading_ui,
+        );
+        app.add_systems(
             OnEnter(GameStates::Playing),
             spawn_renderer,
         );
         app.add_systems(
             Update,
-            (add_ground_cosmetics, add_player_cosmetics).run_if(in_state(GameStates::Playing)),
+            (add_ground_cosmetics, add_player_cosmetics, add_shell_cosmetics).run_if(in_state(GameStates::Playing)),
         );
     }
+}
+
+fn spawn_loading_ui(
+    mut commands: Commands,
+) {
+    commands.spawn((
+        Name::new("CameraUI"),
+        Camera2d,
+        StateScoped(GameStates::AssetLoading),
+    ));
 }
 
 fn spawn_renderer(
@@ -108,6 +124,22 @@ fn add_player_cosmetics(
                 Transform::from_scale(Vec3::splat(2.0)),
                 SceneRoot(game_assets.tank.clone()),
                 MeshMaterial3d(materials.add(material)),
+            ));
+    }
+}
+
+fn add_shell_cosmetics(
+    mut commands: Commands,
+    q_shell: Query<(Entity, &Shell), Without<ClientRenderer>>,
+    game_assets: Res<GameAssets>,
+) {
+    for (entity, _) in q_shell.iter() {
+        commands
+            .entity(entity)
+            .insert((Visibility::default(), ClientRenderer))
+            .with_child((
+                Transform::from_scale(Vec3::splat(0.025)),
+                SceneRoot(game_assets.shell.clone()),
             ));
     }
 }

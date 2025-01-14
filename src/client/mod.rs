@@ -8,6 +8,7 @@ pub mod main_menu;
 pub mod renderer;
 pub mod protocol;
 pub mod client;
+pub mod gui;
 
 #[cfg(feature = "debug")]
 pub mod debug;
@@ -28,6 +29,7 @@ pub mod prelude {
     pub use super::renderer::prelude::*;
     pub use super::protocol::prelude::*;
     pub use super::client::prelude::*;
+    pub use super::gui::prelude::*;
 
     #[cfg(feature = "debug")]
     pub use super::debug::prelude::*;

@@ -4,7 +4,11 @@ use serde::{Deserialize, Serialize};
 use bevy::prelude::*;
 
 pub mod prelude {
-    pub use super::{Ground, NetworkEntity, Player, PlayerInputEvent, PlayerJoinEvent, PROTOCOL_ID, NetworkPlugin};
+    pub use super::{
+        Ground, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent, PlayerFireEvent,
+        PlayerInputEvent, PlayerJoinEvent, PlayerJoinedEvent, PlayerLeftEvent, PlayerSpawnEvent,
+        Shell, PROTOCOL_ID,
+    };
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
 
@@ -26,8 +30,14 @@ pub struct Player {
     pub color: Color,
 }
 
+#[derive(Component, Clone, Debug, Serialize, Deserialize)]
+pub struct Shell;
+
 #[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
 pub struct PlayerInputEvent(pub Vec2);
+
+#[derive(Debug, Default, Deserialize, Event, Serialize)]
+pub struct PlayerFireEvent;
 
 #[derive(Debug, Default, Deserialize, Event, Serialize)]
 pub struct PlayerJoinEvent {
@@ -35,6 +45,24 @@ pub struct PlayerJoinEvent {
     pub color: Color,
 }
 
+#[derive(Debug, Default, Deserialize, Event, Serialize)]
+pub struct PlayerSpawnEvent;
+
+#[derive(Debug, Deserialize, Event, Serialize)]
+pub struct PlayerJoinedEvent {
+    pub client_id: ClientId,
+    pub name: String,
+}
+
+#[derive(Debug, Deserialize, Event, Serialize)]
+pub struct PlayerLeftEvent {
+    pub client_id: ClientId,
+}
+
+#[derive(Debug, Deserialize, Event, Serialize)]
+pub struct PlayerDiedEvent {
+    pub client_id: ClientId,
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NetworkPlugin;
@@ -44,12 +72,19 @@ impl Plugin for NetworkPlugin {
         app.add_plugins(RepliconPlugins);
 
         app.add_client_event::<PlayerInputEvent>(ChannelKind::Ordered);
+        app.add_client_event::<PlayerFireEvent>(ChannelKind::Ordered);
         app.add_client_event::<PlayerJoinEvent>(ChannelKind::Ordered);
+        app.add_client_event::<PlayerSpawnEvent>(ChannelKind::Ordered);
+
+        app.add_server_event::<PlayerJoinedEvent>(ChannelKind::Ordered);
+        app.add_server_event::<PlayerDiedEvent>(ChannelKind::Ordered);
+        app.add_server_event::<PlayerLeftEvent>(ChannelKind::Ordered);
 
         app.replicate::<Name>();
         app.replicate::<NetworkEntity>();
         app.replicate::<Ground>();
         app.replicate::<Player>();
+        app.replicate::<Shell>();
         app.replicate_group::<(Transform, NetworkEntity)>(); // NetworkTransform
     }
 }

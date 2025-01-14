@@ -1,15 +1,20 @@
 use std::{net::UdpSocket, time::SystemTime};
 
+use crate::network::prelude::*;
 use bevy::prelude::*;
-use bevy_renet::{netcode::*, renet::{ConnectionConfig, RenetClient}};
+use bevy_renet::{
+    netcode::*,
+    renet::{ConnectionConfig, RenetClient},
+};
 use bevy_replicon::prelude::*;
 use bevy_replicon_renet::RenetChannelsExt;
-use serde::{Deserialize, Serialize};
-use crate::network::prelude::{NetworkPlugin, PROTOCOL_ID};
 use bevy_replicon_renet::RepliconRenetPlugins;
+use serde::{Deserialize, Serialize};
 
 pub mod prelude {
-    pub use super::{ClientProtocolPlugin, ClientProtocolSet, ClientConnectEvent, LocalPlayer};
+    pub use super::{
+        ClientConnectEvent, ClientProtocolPlugin, ClientProtocolSet, LocalPlayer, LocalPlayerEntity,
+    };
 }
 
 /// The ClientConnectEvent is an event that is sent when the client wants to connect to a server
@@ -21,6 +26,9 @@ pub struct ClientConnectEvent {
 
 #[derive(Resource, Debug, Clone, Serialize, Deserialize, Deref, DerefMut)]
 pub struct LocalPlayer(pub ClientId);
+
+#[derive(Resource, Debug, Clone, Deref, DerefMut)]
+pub struct LocalPlayerEntity(pub Entity);
 
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClientProtocolSet;
@@ -40,6 +48,13 @@ impl Plugin for ClientProtocolPlugin {
             (handle_client_connect)
                 .in_set(ClientProtocolSet)
                 .run_if(not(resource_exists::<RenetClient>)),
+        );
+        app.add_systems(
+            Update,
+            (update_local_player_entity)
+                .in_set(ClientProtocolSet)
+                .run_if(not(resource_exists::<LocalPlayerEntity>))
+                .run_if(resource_exists::<LocalPlayer>),
         );
     }
 }
@@ -77,5 +92,17 @@ fn handle_client_connect(
         commands.insert_resource(LocalPlayer(ClientId::new(client_id)));
         commands.insert_resource(client);
         commands.insert_resource(transport);
+    }
+}
+
+fn update_local_player_entity(
+    mut commands: Commands,
+    local_player: Res<LocalPlayer>,
+    q_player: Query<(Entity, &Player)>,
+) {
+    for (entity, player) in q_player.iter() {
+        if player.client_id == **local_player {
+            commands.insert_resource(LocalPlayerEntity(entity));
+        }
     }
 }

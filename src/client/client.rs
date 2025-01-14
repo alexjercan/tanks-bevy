@@ -1,4 +1,5 @@
 use bevy::{asset::AssetMetaCheck, prelude::*};
+
 use crate::client::prelude::*;
 use crate::network::prelude::*;
 
@@ -34,6 +35,7 @@ impl Plugin for ClientPlugin {
         app.add_plugins(MainMenuPlugin);
         app.add_plugins(TankCameraPlugin);
         app.add_plugins(TankInputPlugin);
+        app.add_plugins(GameGuiPlugin);
 
         #[cfg(feature = "debug")]
         app.add_plugins(DebugPlugin);
@@ -46,12 +48,21 @@ impl Plugin for ClientPlugin {
             handle_play_button_pressed.run_if(in_state(GameStates::MainMenu)),
         );
         app.add_systems(
+            OnEnter(GameStates::Connecting),
+            spawn_connecting_ui,
+        );
+        app.add_systems(
             Update,
             handle_connecting_done
                 .run_if(in_state(GameStates::Connecting))
                 .run_if(client_just_connected),
         );
         app.add_systems(OnEnter(GameStates::Playing), setup_game);
+        app.add_systems(
+            Update,
+            (handle_player_died)
+                .run_if(in_state(GameStates::Playing))
+        );
     }
 }
 
@@ -73,6 +84,14 @@ fn handle_play_button_pressed(
     }
 }
 
+fn spawn_connecting_ui(mut commands: Commands) {
+    commands.spawn((
+        Name::new("CameraUI"),
+        Camera2d,
+        StateScoped(GameStates::Connecting),
+    ));
+}
+
 fn handle_connecting_done(mut next_state: ResMut<NextState<GameStates>>) {
     next_state.set(GameStates::Playing);
 }
@@ -82,4 +101,16 @@ fn setup_game(client_info: Res<ClientInfo>, mut join: EventWriter<PlayerJoinEven
         name: client_info.name.clone(),
         color: Color::srgb(0.0, 0.0, 1.0),
     });
+}
+
+fn handle_player_died(
+    mut commands: Commands,
+    mut died: EventReader<PlayerDiedEvent>,
+    local_player: Res<LocalPlayer>,
+) {
+    for event in died.read() {
+        if event.client_id == **local_player {
+            commands.remove_resource::<LocalPlayerEntity>();
+        }
+    }
 }
