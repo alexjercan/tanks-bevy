@@ -2,7 +2,9 @@ use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use crate::prelude::{GridBindlessMaterial, GridMaterialPlugin, Ground, Player, GameStates};
+use utils::prelude::*;
+use crate::network::prelude::{Ground, Player};
+use crate::client::prelude::*;
 
 pub mod prelude {
     pub use super::{GameAssets, RendererPlugin};

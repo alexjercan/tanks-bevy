@@ -1,7 +1,8 @@
 use bevy::prelude::*;
 use leafwing_input_manager::prelude::*;
 
-use crate::prelude::{GameStates, PlayerInputEvent};
+use crate::network::prelude::PlayerInputEvent;
+use crate::client::prelude::*;
 
 pub mod prelude {
     pub use super::TankInputPlugin;

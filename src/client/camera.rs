@@ -1,11 +1,8 @@
 use bevy::prelude::*;
-use orbiter::prelude::*;
-use smooth::prelude::*;
+use utils::prelude::*;
 
-use crate::prelude::{LocalPlayer, Player, GameStates};
-
-pub mod orbiter;
-pub mod smooth;
+use crate::network::prelude::Player;
+use crate::client::prelude::*;
 
 pub mod prelude {
     pub use super::TankCameraPlugin;

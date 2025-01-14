@@ -1,16 +1,10 @@
-pub mod client;
-pub mod server;
-
 use bevy_replicon::prelude::*;
-use bevy_replicon_renet::RepliconRenetPlugins;
 use serde::{Deserialize, Serialize};
 
 use bevy::prelude::*;
 
 pub mod prelude {
-    pub use super::client::prelude::*;
-    pub use super::server::prelude::*;
-    pub use super::{Ground, NetworkEntity, Player, PlayerInputEvent, PlayerJoinEvent, PROTOCOL_ID};
+    pub use super::{Ground, NetworkEntity, Player, PlayerInputEvent, PlayerJoinEvent, PROTOCOL_ID, NetworkPlugin};
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
 
@@ -48,7 +42,6 @@ pub struct NetworkPlugin;
 impl Plugin for NetworkPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(RepliconPlugins);
-        app.add_plugins(RepliconRenetPlugins);
 
         app.add_client_event::<PlayerInputEvent>(ChannelKind::Ordered);
         app.add_client_event::<PlayerJoinEvent>(ChannelKind::Ordered);

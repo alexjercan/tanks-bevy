@@ -1,7 +1,7 @@
 use bevy::{prelude::*, ui::FocusPolicy};
 use bevy_simple_text_input::*;
 
-use crate::prelude::GameStates;
+use crate::client::prelude::*;
 
 pub mod prelude {
     pub use super::{ClientInfo, MainMenuPlugin, PlayButtonPressed};

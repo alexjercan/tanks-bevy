@@ -1,4 +1,4 @@
-//! The orbiter transform plugin
+//! The smooth transform plugin
 
 use bevy::prelude::*;
 

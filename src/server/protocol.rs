@@ -3,7 +3,8 @@ use std::{
     time::SystemTime,
 };
 
-use super::{PROTOCOL_ID, NetworkPlugin};
+use bevy_replicon_renet::RepliconRenetPlugins;
+use crate::network::prelude::{NetworkPlugin, PROTOCOL_ID};
 use bevy::prelude::*;
 use bevy_renet::{netcode::*, renet::{ConnectionConfig, RenetServer}};
 use bevy_replicon::prelude::*;
@@ -11,7 +12,7 @@ use bevy_replicon_renet::RenetChannelsExt;
 use serde::{Deserialize, Serialize};
 
 pub mod prelude {
-    pub use super::{ServerPlugin, ServerSet, ClientConnectedEvent, ClientDisconnectedEvent};
+    pub use super::{ServerProtocolPlugin, ServerProtocolSet, ClientConnectedEvent, ClientDisconnectedEvent};
 }
 
 /// The ClientConnectedEvent is an event that is sent when a client connects to the server
@@ -28,14 +29,15 @@ pub struct ClientDisconnectedEvent {
 }
 
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ServerSet;
+pub struct ServerProtocolSet;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ServerPlugin;
+pub struct ServerProtocolPlugin;
 
-impl Plugin for ServerPlugin {
+impl Plugin for ServerProtocolPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(NetworkPlugin);
+        app.add_plugins(RepliconRenetPlugins);
 
         app.add_event::<ClientConnectedEvent>();
         app.add_event::<ClientDisconnectedEvent>();
@@ -48,7 +50,7 @@ impl Plugin for ServerPlugin {
         app.add_systems(
             Update,
             (handle_server_events)
-                .in_set(ServerSet)
+                .in_set(ServerProtocolSet)
                 .run_if(resource_exists::<RenetServer>),
         );
     }

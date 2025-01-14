@@ -5,10 +5,11 @@ use bevy_renet::{netcode::*, renet::{ConnectionConfig, RenetClient}};
 use bevy_replicon::prelude::*;
 use bevy_replicon_renet::RenetChannelsExt;
 use serde::{Deserialize, Serialize};
-use super::{NetworkPlugin, PROTOCOL_ID};
+use crate::network::prelude::{NetworkPlugin, PROTOCOL_ID};
+use bevy_replicon_renet::RepliconRenetPlugins;
 
 pub mod prelude {
-    pub use super::{ClientPlugin, ClientSet, ClientConnectEvent, LocalPlayer};
+    pub use super::{ClientProtocolPlugin, ClientProtocolSet, ClientConnectEvent, LocalPlayer};
 }
 
 /// The ClientConnectEvent is an event that is sent when the client wants to connect to a server
@@ -22,21 +23,22 @@ pub struct ClientConnectEvent {
 pub struct LocalPlayer(pub ClientId);
 
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
-pub struct ClientSet;
+pub struct ClientProtocolSet;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
-pub struct ClientPlugin;
+pub struct ClientProtocolPlugin;
 
-impl Plugin for ClientPlugin {
+impl Plugin for ClientProtocolPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(NetworkPlugin);
+        app.add_plugins(RepliconRenetPlugins);
 
         app.add_event::<ClientConnectEvent>();
 
         app.add_systems(
             Update,
             (handle_client_connect)
-                .in_set(ClientSet)
+                .in_set(ClientProtocolSet)
                 .run_if(not(resource_exists::<RenetClient>)),
         );
     }
