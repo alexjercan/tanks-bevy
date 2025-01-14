@@ -1,18 +1,22 @@
 use std::{
-    net::UdpSocket,
+    net::{Ipv4Addr, SocketAddr, UdpSocket},
     time::SystemTime,
 };
 
-use bevy_replicon_renet::RepliconRenetPlugins;
 use crate::network::prelude::{NetworkPlugin, PROTOCOL_ID};
 use bevy::prelude::*;
-use bevy_renet::{netcode::*, renet::{ConnectionConfig, RenetServer}};
 use bevy_replicon::prelude::*;
-use bevy_replicon_renet::RenetChannelsExt;
+use bevy_replicon_renet2::{
+    netcode::{NativeSocket, NetcodeServerTransport, ServerAuthentication, ServerSetupConfig},
+    renet2::{ConnectionConfig, RenetServer},
+    RenetChannelsExt, RepliconRenetPlugins,
+};
 use serde::{Deserialize, Serialize};
 
 pub mod prelude {
-    pub use super::{ServerProtocolPlugin, ServerProtocolSet, ClientConnectedEvent, ClientDisconnectedEvent};
+    pub use super::{
+        ClientConnectedEvent, ClientDisconnectedEvent, ServerProtocolPlugin, ServerProtocolSet,
+    };
 }
 
 /// The ClientConnectedEvent is an event that is sent when a client connects to the server
@@ -42,10 +46,7 @@ impl Plugin for ServerProtocolPlugin {
         app.add_event::<ClientConnectedEvent>();
         app.add_event::<ClientDisconnectedEvent>();
 
-        app.add_systems(
-            Startup,
-            start_server,
-        );
+        app.add_systems(Startup, start_server);
 
         app.add_systems(
             Update,
@@ -56,33 +57,27 @@ impl Plugin for ServerProtocolPlugin {
     }
 }
 
-fn start_server(
-    mut commands: Commands,
-    channels: Res<RepliconChannels>,
-) {
-    let server_channels_config = channels.get_server_configs();
-    let client_channels_config = channels.get_client_configs();
+fn start_server(mut commands: Commands, channels: Res<RepliconChannels>) {
+    let server = RenetServer::new(ConnectionConfig::from_channels(
+        channels.get_server_configs(),
+        channels.get_client_configs(),
+    ));
 
-    let server = RenetServer::new(ConnectionConfig {
-        server_channels_config,
-        client_channels_config,
-        ..Default::default()
-    });
-
-    let public_addr = "0.0.0.0:5000".parse().unwrap();
-    let socket = UdpSocket::bind(public_addr).unwrap();
     let current_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
         .unwrap();
-    let server_config = ServerConfig {
+    let public_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 5000);
+    let socket = UdpSocket::bind(public_addr).unwrap();
+    let server_config = ServerSetupConfig {
         current_time,
         max_clients: 64,
         protocol_id: PROTOCOL_ID,
-        public_addresses: vec![public_addr],
         authentication: ServerAuthentication::Unsecure,
+        socket_addresses: vec![vec![public_addr]],
     };
 
-    let transport = NetcodeServerTransport::new(server_config, socket).unwrap();
+    let transport =
+        NetcodeServerTransport::new(server_config, NativeSocket::new(socket).unwrap()).unwrap();
 
     commands.insert_resource(server);
     commands.insert_resource(transport);
@@ -98,7 +93,9 @@ fn handle_server_events(
             ServerEvent::ClientConnected { client_id } => {
                 debug!("Client {:?} connected.", client_id);
 
-                connected.send(ClientConnectedEvent { client_id: *client_id });
+                connected.send(ClientConnectedEvent {
+                    client_id: *client_id,
+                });
             }
             ServerEvent::ClientDisconnected { client_id, reason } => {
                 debug!("Client {:?} disconnected: {}", client_id, reason);

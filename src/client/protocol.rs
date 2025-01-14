@@ -1,14 +1,16 @@
-use std::{net::UdpSocket, time::SystemTime};
+use std::{
+    net::{Ipv4Addr, SocketAddr, UdpSocket},
+    time::SystemTime,
+};
 
 use crate::network::prelude::*;
 use bevy::prelude::*;
-use bevy_renet::{
-    netcode::*,
-    renet::{ConnectionConfig, RenetClient},
-};
 use bevy_replicon::prelude::*;
-use bevy_replicon_renet::RenetChannelsExt;
-use bevy_replicon_renet::RepliconRenetPlugins;
+use bevy_replicon_renet2::{
+    netcode::{ClientAuthentication, NativeSocket, NetcodeClientTransport},
+    renet2::{ConnectionConfig, RenetClient},
+    RenetChannelsExt, RepliconRenetPlugins,
+};
 use serde::{Deserialize, Serialize};
 
 pub mod prelude {
@@ -65,29 +67,34 @@ fn handle_client_connect(
     mut connect_events: EventReader<ClientConnectEvent>,
 ) {
     for ClientConnectEvent { address } in connect_events.read() {
-        let server_channels_config = channels.get_server_configs();
-        let client_channels_config = channels.get_client_configs();
+        let client = RenetClient::new(
+            ConnectionConfig::from_channels(
+                channels.get_server_configs(),
+                channels.get_client_configs(),
+            ),
+            false,
+        );
 
-        let client = RenetClient::new(ConnectionConfig {
-            server_channels_config,
-            client_channels_config,
-            ..Default::default()
-        });
-
-        let server_addr = address.parse().unwrap();
-        let socket = UdpSocket::bind("0.0.0.0:0").unwrap();
         let current_time = SystemTime::now()
             .duration_since(SystemTime::UNIX_EPOCH)
             .unwrap();
         let client_id = current_time.as_millis() as u64;
+        let server_addr = address.parse().unwrap();
+        let socket = UdpSocket::bind(SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 0)).unwrap();
         let authentication = ClientAuthentication::Unsecure {
             client_id,
             protocol_id: PROTOCOL_ID,
+            socket_id: 0,
             server_addr,
             user_data: None,
         };
 
-        let transport = NetcodeClientTransport::new(current_time, authentication, socket).unwrap();
+        let transport = NetcodeClientTransport::new(
+            current_time,
+            authentication,
+            NativeSocket::new(socket).unwrap(),
+        )
+        .unwrap();
 
         commands.insert_resource(LocalPlayer(ClientId::new(client_id)));
         commands.insert_resource(client);
