@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use leafwing_input_manager::prelude::*;
 
-use crate::client::prelude::*;
-use crate::network::prelude::*;
+use crate::prelude::*;
+use network::prelude::*;
 
 pub mod prelude {
     pub use super::TankInputPlugin;

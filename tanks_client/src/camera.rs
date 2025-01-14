@@ -1,8 +1,8 @@
 use bevy::prelude::*;
-use utils::prelude::*;
 
-use crate::network::prelude::Player;
-use crate::client::prelude::*;
+use utils::prelude::*;
+use network::prelude::*;
+use crate::prelude::*;
 
 pub mod prelude {
     pub use super::TankCameraPlugin;
@@ -36,6 +36,7 @@ fn spawn_camera(
         Name::new("CameraRoot"),
         SmoothTransform::default(),
         Transform::from_xyz(0.0, 0.0, 0.0),
+        Visibility::default(),
         StateScoped(GameStates::Playing),
     )).with_child((
         Name::new("Camera3d"),

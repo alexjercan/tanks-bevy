@@ -1,7 +1,7 @@
 use bevy::{prelude::*, ui::FocusPolicy};
 use bevy_simple_text_input::*;
 
-use crate::client::prelude::*;
+use crate::prelude::*;
 
 pub mod prelude {
     pub use super::{ClientInfo, MainMenuPlugin, PlayButtonPressed};
@@ -16,7 +16,7 @@ pub struct ClientInfo {
 impl Default for ClientInfo {
     fn default() -> Self {
         Self {
-            address: "127.0.0.1:5000".to_string(),
+            address: "127.0.0.1".to_string(),
             name: "Player".to_string(),
         }
     }
@@ -137,7 +137,7 @@ fn spawn_main_menu(mut commands: Commands) {
                     ..default()
                 }),
                 TextInputTextColor(TextColor(TEXT_COLOR)),
-                TextInputValue("127.0.0.1:5000".to_string()),
+                TextInputValue("127.0.0.1".to_string()),
                 TextInputSettings {
                     retain_on_submit: true,
                     ..default()

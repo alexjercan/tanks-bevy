@@ -31,6 +31,7 @@
 
       devShells.default = pkgs.mkShell rec {
         nativeBuildInputs = with pkgs; [
+          openssl
           trunk
           wasm-pack
           cargo

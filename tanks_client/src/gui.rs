@@ -3,8 +3,8 @@ use std::collections::HashMap;
 use bevy::prelude::*;
 use bevy_replicon::prelude::*;
 
-use crate::client::prelude::*;
-use crate::network::prelude::*;
+use crate::prelude::*;
+use network::prelude::*;
 
 pub mod prelude {
     pub use super::GameGuiPlugin;

@@ -2,9 +2,8 @@ use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use utils::prelude::*;
-use crate::network::prelude::*;
-use crate::client::prelude::*;
+use network::prelude::*;
+use crate::prelude::*;
 
 pub mod prelude {
     pub use super::{GameAssets, RendererPlugin};
@@ -39,8 +38,6 @@ pub struct RendererPlugin;
 
 impl Plugin for RendererPlugin {
     fn build(&self, app: &mut App) {
-        app.add_plugins(GridMaterialPlugin);
-
         app.add_loading_state(
             LoadingState::new(GameStates::AssetLoading)
                 .continue_to_state(GameStates::MainMenu)
@@ -86,16 +83,16 @@ fn spawn_renderer(
 fn add_ground_cosmetics(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<GridBindlessMaterial>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
     q_ground: Query<(Entity, &Ground), Without<ClientRenderer>>,
     game_assets: Res<GameAssets>,
 ) {
     for (entity, Ground { width, height }) in q_ground.iter() {
         let mesh = Plane3d::default().mesh().size(*width, *height).build();
-        let material = GridBindlessMaterial::new(
-            UVec2::new(*width as u32, *height as u32),
-            game_assets.prototype_textures.clone(),
-        );
+        let material = StandardMaterial {
+            base_color_texture: Some(game_assets.prototype_textures[0].clone_weak()),
+            ..Default::default()
+        };
         commands.entity(entity).insert((
             Mesh3d(meshes.add(mesh)),
             MeshMaterial3d(materials.add(material)),

@@ -2,10 +2,11 @@
 
 use std::f32::consts::FRAC_PI_2;
 
-use crate::network::prelude::*;
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 use bevy_replicon::prelude::Replicated;
+
+use network::prelude::*;
 use utils::prelude::*;
 
 pub mod prelude {

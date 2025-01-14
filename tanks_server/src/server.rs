@@ -1,7 +1,5 @@
 use std::{collections::HashMap, time::Duration};
 
-use crate::network::prelude::*;
-use crate::server::prelude::*;
 use bevy::{
     app::ScheduleRunnerPlugin,
     log::{Level, LogPlugin},
@@ -11,6 +9,9 @@ use bevy::{
 use bevy_rapier3d::prelude::*;
 use bevy_replicon::prelude::*;
 use utils::prelude::*;
+
+use network::prelude::*;
+use crate::prelude::*;
 
 pub mod prelude {
     pub use super::ServerPlugin;

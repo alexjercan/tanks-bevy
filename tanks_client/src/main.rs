@@ -1,5 +1,5 @@
 use bevy::prelude::*;
-use tanks::client::prelude::*;
+use tanks_client::prelude::*;
 
 fn main() {
     let mut app = App::new();
