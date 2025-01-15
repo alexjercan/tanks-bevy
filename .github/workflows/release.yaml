@@ -12,7 +12,7 @@ on:
         type: string
 
 env:
-  GAME_EXECUTABLE_NAME: tanks-client
+  GAME_EXECUTABLE_NAME: tanks_client
   GAME_OSX_APP_NAME: Tanks
 
 permissions:
@@ -48,7 +48,7 @@ jobs:
           targets: aarch64-apple-darwin
       - name: Build release for Apple Silicon
         run: |
-          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build --profile dist --target=aarch64-apple-darwin
+          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build -p tanks_client --profile dist --target=aarch64-apple-darwin
       - name: Install rust toolchain for Apple x86
         uses: dtolnay/rust-toolchain@master
         with:
@@ -56,7 +56,7 @@ jobs:
           targets: x86_64-apple-darwin
       - name: Build release for x86 Apple
         run: |
-          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build --profile dist --target=x86_64-apple-darwin
+          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build -p tanks_client --profile dist --target=x86_64-apple-darwin
       - name: Create Universal Binary
         run: |
           lipo -create -output target/dist/${{ env.GAME_EXECUTABLE_NAME }} target/aarch64-apple-darwin/dist/${{ env.GAME_EXECUTABLE_NAME }} target/x86_64-apple-darwin/dist/${{ env.GAME_EXECUTABLE_NAME }}
@@ -95,7 +95,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev
       - name: Build release
         run: |
-          cargo build --profile dist
+          cargo build -p tanks_client --profile dist
       - name: Prepare release
         run: |
           chmod +x target/dist/${{ env.GAME_EXECUTABLE_NAME }}
@@ -128,7 +128,7 @@ jobs:
           toolchain: stable
       - name: Build release
         run: |
-          cargo build --profile dist
+          cargo build -p tanks_client --profile dist
       - name: Prepare release
         run: |
           mkdir target/dist/assets && cp -r assets target/dist/assets
