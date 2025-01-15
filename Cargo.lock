@@ -4944,6 +4944,8 @@ dependencies = [
  "log",
  "renet2_netcode",
  "serde-wasm-bindgen",
+ "tracing",
+ "tracing-wasm",
  "url",
  "wasm-bindgen",
  "wasm-bindgen-futures",

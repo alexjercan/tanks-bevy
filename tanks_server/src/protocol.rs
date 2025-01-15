@@ -93,11 +93,11 @@ fn start_server(
     let http_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 5000);
 
     // Native socket
-    let native_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 0);
+    let native_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 5001);
     let native_socket = NativeSocket::new(UdpSocket::bind(native_addr).unwrap()).unwrap();
 
     // WebTransport socket
-    let wt_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 0);
+    let wt_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 5002);
     let (wt_socket, cert_hash) = {
         let (config, cert_hash) = WebTransportServerConfig::new_selfsigned(wt_addr, max_clients);
         (
@@ -107,7 +107,7 @@ fn start_server(
     };
 
     // WebSocket socket
-    let ws_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 0);
+    let ws_addr = SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 5003);
     let ws_socket = {
         let config = WebSocketServerConfig::new(ws_addr, max_clients);
         WebSocketServer::new(config, runtime.handle().clone()).unwrap()
@@ -158,11 +158,20 @@ async fn run_http_server(http_addr: SocketAddr, client_connection_info: ClientCo
     let ws_port = client_connection_info.ws_port;
     let cert_hash = client_connection_info.cert_hash;
 
-    let native = warp::path!("native").map(move || warp::reply::json(&native_port));
+    let native = warp::path!("native").map(move || {
+        info!("Native port: {}", native_port);
+        warp::reply::json(&native_port)
+    });
 
     let cors = warp::cors().allow_any_origin();
     let wasm = warp::path!("wasm")
-        .map(move || warp::reply::json(&(&wt_port, &cert_hash, &ws_port)))
+        .map(move || {
+            info!(
+                "WebTransport port: {}, cert hash: {:?}, WebSocket port: {}",
+                wt_port, cert_hash, ws_port
+            );
+            warp::reply::json(&(&wt_port, &cert_hash, &ws_port))
+        })
         .with(cors);
 
     let routes = warp::get().and(native.or(wasm));
