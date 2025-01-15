@@ -49,6 +49,7 @@ fn add_ground_cosmetics(
         let mesh = Plane3d::default().mesh().size(*width, *height).build();
         let material = StandardMaterial {
             base_color_texture: Some(game_assets.prototype_textures[0].clone_weak()),
+            unlit: true,
             ..Default::default()
         };
         commands.entity(entity).insert((
