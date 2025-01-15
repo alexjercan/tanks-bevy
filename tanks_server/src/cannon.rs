@@ -48,15 +48,9 @@ impl Default for TankCannonState {
     }
 }
 
-#[derive(Component, Clone, Copy, Debug)]
+#[derive(Component, Clone, Copy, Debug, Default)]
 pub struct TankCannonInput {
     pub fire: bool,
-}
-
-impl Default for TankCannonInput {
-    fn default() -> Self {
-        Self { fire: false }
-    }
 }
 
 #[derive(Component, Clone, Copy, Debug)]

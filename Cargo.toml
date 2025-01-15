@@ -4,8 +4,6 @@ members = [
     "network",
     "tanks_server",
     "tanks_client",
-    "tanks_client/protocol_native",
-    "tanks_client/protocol_wasm",
 ]
 resolver = "2"
 

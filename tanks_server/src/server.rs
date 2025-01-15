@@ -277,7 +277,7 @@ fn handle_player_dead(
     {
         println!("Player {} is dead", name);
 
-        player_entity_map.remove(&client_id);
+        player_entity_map.remove(client_id);
 
         commands.entity(entity).despawn_recursive();
 

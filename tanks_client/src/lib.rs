@@ -1,5 +1,7 @@
 //! This module contains the client-side game logic.
 
+#![allow(clippy::type_complexity)]
+
 use bevy::prelude::*;
 
 pub mod camera;

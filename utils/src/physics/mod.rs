@@ -40,7 +40,7 @@ fn handle_collision_events(
                     .entity(*other)
                     .insert(CollisionWith { entity: *entity });
             }
-            _ => {}
+            CollisionEvent::Stopped(_other, _entity, _) => {}
         }
     }
 }
