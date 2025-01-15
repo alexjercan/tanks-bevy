@@ -1,33 +1,11 @@
 use bevy::prelude::*;
-use bevy_asset_loader::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
 use network::prelude::*;
 
 pub mod prelude {
-    pub use super::{GameAssets, RendererPlugin};
-}
-
-#[derive(AssetCollection, Resource)]
-pub struct GameAssets {
-    #[asset(path = "models/tank.glb#Scene0")]
-    pub tank: Handle<Scene>,
-    #[asset(path = "models/shell.glb#Scene0")]
-    shell: Handle<Scene>,
-    #[asset(
-        paths(
-            "prototype/prototype-aqua.png",
-            "prototype/prototype-orange.png",
-            "prototype/prototype-yellow.png",
-            "prototype/prototype-blue.png",
-            "prototype/prototype-purple.png",
-            "prototype/prototype-green.png",
-            "prototype/prototype-red.png",
-        ),
-        collection(typed)
-    )]
-    pub prototype_textures: Vec<Handle<Image>>,
+    pub use super::RendererPlugin;
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -38,13 +16,6 @@ pub struct RendererPlugin;
 
 impl Plugin for RendererPlugin {
     fn build(&self, app: &mut App) {
-        app.add_loading_state(
-            LoadingState::new(GameStates::AssetLoading)
-                .continue_to_state(GameStates::MainMenu)
-                .load_collection::<GameAssets>(),
-        );
-
-        app.add_systems(OnEnter(GameStates::AssetLoading), spawn_loading_ui);
         app.add_systems(OnEnter(GameStates::Playing), spawn_renderer);
         app.add_systems(
             Update,
@@ -56,14 +27,6 @@ impl Plugin for RendererPlugin {
                 .run_if(in_state(GameStates::Playing)),
         );
     }
-}
-
-fn spawn_loading_ui(mut commands: Commands) {
-    commands.spawn((
-        Name::new("CameraUI"),
-        Camera2d,
-        StateScoped(GameStates::AssetLoading),
-    ));
 }
 
 fn spawn_renderer(mut commands: Commands) {

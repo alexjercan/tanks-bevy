@@ -7,7 +7,7 @@ pub mod prelude {
     pub use super::{
         Ground, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent, PlayerFireEvent,
         PlayerInputEvent, PlayerJoinEvent, PlayerJoinedEvent, PlayerLeftEvent, PlayerSpawnEvent,
-        Shell, PROTOCOL_ID,
+        Shell, PROTOCOL_ID, CannonFiredEvent, ShellImpactEvent,
     };
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
@@ -32,6 +32,12 @@ pub struct Player {
 
 #[derive(Component, Clone, Debug, Serialize, Deserialize)]
 pub struct Shell;
+
+#[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
+pub struct CannonFiredEvent(pub Vec3);
+
+#[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
+pub struct ShellImpactEvent(pub Vec3);
 
 #[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
 pub struct PlayerInputEvent(pub Vec2);
@@ -62,6 +68,7 @@ pub struct PlayerLeftEvent {
 #[derive(Debug, Deserialize, Event, Serialize)]
 pub struct PlayerDiedEvent {
     pub client_id: ClientId,
+    pub position: Vec3,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -79,6 +86,9 @@ impl Plugin for NetworkPlugin {
         app.add_server_event::<PlayerJoinedEvent>(ChannelKind::Ordered);
         app.add_server_event::<PlayerDiedEvent>(ChannelKind::Ordered);
         app.add_server_event::<PlayerLeftEvent>(ChannelKind::Ordered);
+
+        app.add_server_event::<CannonFiredEvent>(ChannelKind::Unreliable);
+        app.add_server_event::<ShellImpactEvent>(ChannelKind::Unreliable);
 
         app.replicate::<Name>();
         app.replicate::<NetworkEntity>();

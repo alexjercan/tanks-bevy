@@ -1,4 +1,5 @@
 use bevy::{asset::AssetMetaCheck, prelude::*};
+use bevy_asset_loader::prelude::*;
 
 use crate::prelude::*;
 use network::prelude::*;
@@ -36,13 +37,20 @@ impl Plugin for ClientPlugin {
         app.add_plugins(TankCameraPlugin);
         app.add_plugins(TankInputPlugin);
         app.add_plugins(GameGuiPlugin);
+        app.add_plugins(AudioEffectsPlugin);
 
         #[cfg(feature = "debug")]
         app.add_plugins(DebugPlugin);
 
         app.init_state::<GameStates>();
         app.enable_state_scoped_entities::<GameStates>();
+        app.add_loading_state(
+            LoadingState::new(GameStates::AssetLoading)
+                .continue_to_state(GameStates::MainMenu)
+                .load_collection::<GameAssets>(),
+        );
 
+        app.add_systems(OnEnter(GameStates::AssetLoading), spawn_loading_ui);
         app.add_systems(
             Update,
             handle_play_button_pressed.run_if(in_state(GameStates::MainMenu)),
@@ -60,6 +68,14 @@ impl Plugin for ClientPlugin {
             (handle_player_died).run_if(in_state(GameStates::Playing)),
         );
     }
+}
+
+fn spawn_loading_ui(mut commands: Commands) {
+    commands.spawn((
+        Name::new("CameraUI"),
+        Camera2d,
+        StateScoped(GameStates::AssetLoading),
+    ));
 }
 
 fn handle_play_button_pressed(

@@ -4,7 +4,7 @@ use std::f32::consts::FRAC_PI_2;
 
 use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
-use bevy_replicon::prelude::Replicated;
+use bevy_replicon::prelude::*;
 
 use network::prelude::*;
 use utils::prelude::*;
@@ -115,6 +115,7 @@ fn cannon_fire(
         &TankCannon,
         &mut TankCannonState,
     )>,
+    mut fired: EventWriter<ToClients<CannonFiredEvent>>,
 ) {
     for (mut input, transform, cannon, mut state) in q_cannon.iter_mut() {
         if state.cooldown.tick(time.delta()).finished() {
@@ -123,13 +124,12 @@ fn cannon_fire(
             }
 
             let shell = TankCannonShell::default();
+            let point = transform.translation + transform.rotation * cannon.offset;
 
             commands.spawn((
                 Replicated,
                 Name::new("TankCannonShell"),
-                Transform::from_translation(
-                    transform.translation + transform.rotation * cannon.offset,
-                )
+                Transform::from_translation(point)
                 .with_rotation(transform.rotation * Quat::from_rotation_x(FRAC_PI_2)),
                 NetworkEntity,
                 Shell,
@@ -147,6 +147,11 @@ fn cannon_fire(
             ));
 
             state.cooldown = Timer::from_seconds(cannon.fire_rate_secs, TimerMode::Once);
+
+            fired.send(ToClients {
+                mode: SendMode::Broadcast,
+                event: CannonFiredEvent(point),
+            });
         }
 
         input.fire = false;
@@ -167,12 +172,18 @@ fn shell_update_time_to_live(
 
 fn shell_update_collision(
     mut commands: Commands,
-    q_shell: Query<(Entity, &TankCannonShell, &CollisionWith)>,
+    q_shell: Query<(Entity, &Transform, &TankCannonShell, &CollisionWith)>,
+    mut impact: EventWriter<ToClients<ShellImpactEvent>>,
 ) {
-    for (entity, shell, collision_with) in q_shell.iter() {
+    for (entity, transform, shell, collision_with) in q_shell.iter() {
         commands.entity(entity).despawn_recursive();
         commands.entity(collision_with.entity).insert(Damage {
             amount: shell.damage,
+        });
+
+        impact.send(ToClients {
+            mode: SendMode::Broadcast,
+            event: ShellImpactEvent(transform.translation),
         });
     }
 }

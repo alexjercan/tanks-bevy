@@ -264,12 +264,13 @@ fn handle_player_fire(
 
 fn handle_player_dead(
     mut commands: Commands,
-    q_player: Query<(Entity, &Player), With<Dead>>,
+    q_player: Query<(Entity, &Transform, &Player), With<Dead>>,
     mut player_entity_map: ResMut<PlayerEntityMap>,
     mut died: EventWriter<ToClients<PlayerDiedEvent>>,
 ) {
     for (
         entity,
+        transform,
         Player {
             client_id, name, ..
         },
@@ -285,6 +286,7 @@ fn handle_player_dead(
             mode: SendMode::Broadcast,
             event: PlayerDiedEvent {
                 client_id: *client_id,
+                position: transform.translation,
             },
         });
     }

@@ -1,4 +1,5 @@
 use bevy::prelude::*;
+use bevy_kira_audio::prelude::*;
 
 use crate::prelude::*;
 use network::prelude::*;
@@ -46,6 +47,7 @@ fn spawn_camera(mut commands: Commands) {
             OrbiterTransform::default(),
             Camera3d::default(),
             Transform::from_xyz(15.0, 15.0, 15.0).looking_at(Vec3::ZERO, Vec3::Y),
+            SpatialAudioReceiver,
         ));
 }
 
