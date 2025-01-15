@@ -7,9 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
-### Added
+## [0.1.2] - 2025-01-15
 
-### Changed
+### Fixed
+
+- @alexjercan Fixed wasm client creating webtransport connection
 
 ## [0.1.1] - 2025-01-15
 
@@ -26,7 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @alexjercan Implemented native client support
 - @alexjercan Implemented multiplayer player movement
 
-[unreleased]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.1...HEAD
+[unreleased]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/alexjercan/tanks-bevy/releases/tag/v0.1.0
 
