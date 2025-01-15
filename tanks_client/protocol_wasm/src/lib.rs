@@ -6,30 +6,37 @@ use renet2_netcode::{
     CongestionControl, NetcodeClientTransport, ServerCertHash, WebSocketClient,
     WebSocketClientConfig, WebTransportClient, WebTransportClientConfig,
 };
-use wasm_timer::{SystemTime, UNIX_EPOCH};
+use wasm_bindgen_futures::JsFuture;
+use wasm_timer::SystemTime;
+use wasm_bindgen::prelude::*;
+use web_sys::{Request, RequestInit, RequestMode, Response};
 
-async fn get_server_details(http_path: String) -> (u16, ServerCertHash, u16) {
-    reqwest::get(http_path)
-        .await
-        .unwrap()
-        .json::<(u16, ServerCertHash, u16)>()
-        .await
-        .unwrap()
+#[wasm_bindgen]
+extern "C" {
+    #[wasm_bindgen(js_namespace = globalThis, js_name = fetch)]
+    fn fetch_with_str(url: &str) -> js_sys::Promise;
 }
 
-pub fn create_client(
+pub async fn create_client(
     address: String,
     config: ConnectionConfig,
     protocol_id: u64,
-) -> (RenetClient, NetcodeClientTransport) {
-    let http_path = format!("http://{}:5000/wasm", address);
+) -> Result<(RenetClient, NetcodeClientTransport), String> {
+    let opts = RequestInit::new();
+    opts.set_method("GET");
+    opts.set_mode(RequestMode::Cors);
 
-    // TODO: how to run async code in wasm_bindgen?
-    // let (wt_port, cert_hash, ws_port) = block_on(get_server_details(http_path));
+    let url = format!("http://{}:5000/wasm", address);
 
-    let wt_port = 54369;
-    let cert_hash = ServerCertHash { hash: [153,146,19,35,202,50,61,87,66,235,178,6,92,122,9,196,140,58,49,87,150,159,109,146,11,230,44,211,90,249,139,60] };
-    let ws_port = 46713;
+    let request = Request::new_with_str_and_init(&url, &opts).unwrap();
+
+    let window = web_sys::window().unwrap();
+    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await.unwrap();
+
+    let resp: Response = resp_value.dyn_into().unwrap();
+    let json = JsFuture::from(resp.json().unwrap()).await.unwrap();
+
+    let (wt_port, cert_hash, ws_port) = serde_wasm_bindgen::from_value::<(u16, ServerCertHash, u16)>(json).unwrap();
 
     let current_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
@@ -54,7 +61,7 @@ pub fn create_client(
         let client = RenetClient::new(config, socket.is_reliable());
         let transport = NetcodeClientTransport::new(current_time, authentication, socket).unwrap();
 
-        (client, transport)
+        Ok((client, transport))
     } else {
         let server_url = url::Url::parse(&format!("ws://{}:{}/ws", address, ws_port)).unwrap();
         let socket_config = WebSocketClientConfig { server_url };
@@ -71,6 +78,6 @@ pub fn create_client(
         let client = RenetClient::new(config, socket.is_reliable());
         let transport = NetcodeClientTransport::new(current_time, authentication, socket).unwrap();
 
-        (client, transport)
+        Ok((client, transport))
     }
 }

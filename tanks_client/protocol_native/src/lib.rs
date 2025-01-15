@@ -8,21 +8,20 @@ use renet2_netcode::{
     ClientAuthentication, ClientSocket, NativeSocket, NetcodeClientTransport,
 };
 
-pub fn create_client(
+pub async fn create_client(
     address: String,
     config: ConnectionConfig,
     protocol_id: u64,
-) -> (RenetClient, NetcodeClientTransport) {
-    let runtime = tokio::runtime::Runtime::new().unwrap();
+) -> Result<(RenetClient, NetcodeClientTransport), String> {
     let http_path = format!("http://{}:5000/native", address);
-    let server_port = runtime.block_on(async move {
-        reqwest::get(http_path)
-            .await
-            .unwrap()
-            .json::<u16>()
-            .await
-            .unwrap()
-    });
+    let server_port = ureq::get(&http_path)
+        .call()
+        .unwrap()
+        .into_string()
+        .unwrap()
+        .parse::<u16>()
+        .unwrap();
+
     let server_addr = SocketAddr::new(address.parse().unwrap(), server_port);
 
     let client_socket = NativeSocket::new(
@@ -45,5 +44,5 @@ pub fn create_client(
     let transport =
         NetcodeClientTransport::new(current_time, authentication, client_socket).unwrap();
 
-    (client, transport)
+    Ok((client, transport))
 }

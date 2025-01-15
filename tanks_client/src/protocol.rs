@@ -1,4 +1,4 @@
-use bevy::prelude::*;
+use bevy::{ecs::world::CommandQueue, prelude::*, tasks::{block_on, futures_lite::future, AsyncComputeTaskPool, Task}};
 use bevy_replicon::prelude::*;
 use bevy_replicon_renet2::{
     renet2::{ConnectionConfig, RenetClient},
@@ -33,6 +33,9 @@ pub struct LocalPlayer(pub ClientId);
 #[derive(Resource, Debug, Clone, Deref, DerefMut)]
 pub struct LocalPlayerEntity(pub Entity);
 
+#[derive(Resource, Debug)]
+struct ConnectTask(pub Task<CommandQueue>);
+
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct ClientProtocolSet;
 
@@ -48,9 +51,17 @@ impl Plugin for ClientProtocolPlugin {
 
         app.add_systems(
             Update,
-            (handle_client_connect)
+            (generate_connect_task)
                 .in_set(ClientProtocolSet)
-                .run_if(not(resource_exists::<RenetClient>)),
+                .run_if(not(resource_exists::<RenetClient>))
+                .run_if(not(resource_exists::<ConnectTask>))
+        );
+        app.add_systems(
+            Update,
+            (handle_connect_task)
+                .in_set(ClientProtocolSet)
+                .run_if(not(resource_exists::<RenetClient>))
+                .run_if(resource_exists::<ConnectTask>)
         );
         app.add_systems(
             Update,
@@ -62,22 +73,46 @@ impl Plugin for ClientProtocolPlugin {
     }
 }
 
-pub fn handle_client_connect(
+pub fn generate_connect_task(
     mut commands: Commands,
     channels: Res<RepliconChannels>,
     mut connect_events: EventReader<ClientConnectEvent>,
 ) {
+    let thread_pool = AsyncComputeTaskPool::get();
+
     for ClientConnectEvent { address } in connect_events.read() {
+        let address = address.clone();
         let config = ConnectionConfig::from_channels(
             channels.get_server_configs(),
             channels.get_client_configs(),
         );
+        info!("Connecting to server at {}", address);
 
-        let (client, transport) = create_client(address.clone(), config, PROTOCOL_ID);
+        let task = thread_pool.spawn(async move {
+            let (client, transport) = create_client(address, config, PROTOCOL_ID).await.unwrap();
+            info!("Connected to server");
 
-        commands.insert_resource(LocalPlayer(ClientId::new(transport.client_id())));
-        commands.insert_resource(client);
-        commands.insert_resource(transport);
+            let mut command_queue = CommandQueue::default();
+            command_queue.push(move |world: &mut World| {
+                world.insert_resource(LocalPlayer(ClientId::new(transport.client_id())));
+                world.insert_resource(client);
+                world.insert_resource(transport);
+            });
+
+            command_queue
+        });
+
+        commands.insert_resource(ConnectTask(task));
+    }
+}
+
+fn handle_connect_task(
+    mut commands: Commands,
+    mut task: ResMut<ConnectTask>,
+) {
+    info!("Handling connect task");
+    if let Some(mut commands_queue) = block_on(future::poll_once(&mut task.0)) {
+        commands.append(&mut commands_queue);
     }
 }
 

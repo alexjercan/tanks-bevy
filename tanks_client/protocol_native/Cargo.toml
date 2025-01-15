@@ -42,8 +42,7 @@ dev = [
 bevy_replicon_renet2 = { version = "0.1.0", features = ["native_transport"] }
 log = { version = "0.4", features = ["max_level_debug", "release_max_level_warn"] }
 renet2_netcode = { version = "0.1.0", features = ["native_transport" ] }
-reqwest = { version = "0.12.12", features = ["json"] }
-tokio = { version = "1.43.0", features = ["full"] }
+ureq = "2.12.1"
 
 [build-dependencies]
 embed-resource = "1"
