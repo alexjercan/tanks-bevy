@@ -5,7 +5,7 @@ use bevy::prelude::*;
 // use crate::meth::prelude::*;
 
 pub mod prelude {
-  pub use super::{SmoothTransform, SmoothTransformPlugin, SmoothTransformSet};
+    pub use super::{SmoothTransform, SmoothTransformPlugin, SmoothTransformSet};
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -54,19 +54,12 @@ impl Plugin for SmoothTransformPlugin {
 
 fn initialize_smooth(
     mut commands: Commands,
-    q_smooth: Query<
-        (Entity, &SmoothTransform),
-        (
-            Without<SmoothTransformState>,
-        ),
-    >,
+    q_smooth: Query<(Entity, &SmoothTransform), (Without<SmoothTransformState>,)>,
 ) {
     for (entity, SmoothTransform { target, .. }) in q_smooth.iter() {
         commands
             .entity(entity)
-            .insert(SmoothTransformState {
-                position: *target,
-            });
+            .insert(SmoothTransformState { position: *target });
     }
 }
 
@@ -82,9 +75,14 @@ fn update_smooth_transform(
 }
 
 fn sync_smooth_transform(
-    mut q_smooth: Query<(&mut Transform, &SmoothTransformState, &SmoothTransform), Changed<SmoothTransformState>>,
+    mut q_smooth: Query<
+        (&mut Transform, &SmoothTransformState, &SmoothTransform),
+        Changed<SmoothTransformState>,
+    >,
 ) {
-    for (mut transform, SmoothTransformState { position }, SmoothTransform { .. }) in q_smooth.iter_mut() {
+    for (mut transform, SmoothTransformState { position }, SmoothTransform { .. }) in
+        q_smooth.iter_mut()
+    {
         transform.translation = *position;
     }
 }

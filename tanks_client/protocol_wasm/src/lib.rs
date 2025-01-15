@@ -6,9 +6,9 @@ use renet2_netcode::{
     CongestionControl, NetcodeClientTransport, ServerCertHash, WebSocketClient,
     WebSocketClientConfig, WebTransportClient, WebTransportClientConfig,
 };
+use wasm_bindgen::prelude::*;
 use wasm_bindgen_futures::JsFuture;
 use wasm_timer::SystemTime;
-use wasm_bindgen::prelude::*;
 use web_sys::{Request, RequestInit, RequestMode, Response};
 
 #[wasm_bindgen]
@@ -31,12 +31,15 @@ pub async fn create_client(
     let request = Request::new_with_str_and_init(&url, &opts).unwrap();
 
     let window = web_sys::window().unwrap();
-    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await.unwrap();
+    let resp_value = JsFuture::from(window.fetch_with_request(&request))
+        .await
+        .unwrap();
 
     let resp: Response = resp_value.dyn_into().unwrap();
     let json = JsFuture::from(resp.json().unwrap()).await.unwrap();
 
-    let (wt_port, cert_hash, ws_port) = serde_wasm_bindgen::from_value::<(u16, ServerCertHash, u16)>(json).unwrap();
+    let (wt_port, cert_hash, ws_port) =
+        serde_wasm_bindgen::from_value::<(u16, ServerCertHash, u16)>(json).unwrap();
 
     let current_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)

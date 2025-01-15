@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 
-use utils::prelude::*;
-use network::prelude::*;
 use crate::prelude::*;
+use network::prelude::*;
+use utils::prelude::*;
 
 pub mod prelude {
     pub use super::TankCameraPlugin;
@@ -15,13 +15,16 @@ impl Plugin for TankCameraPlugin {
         app.add_plugins(OrbiterTransformPlugin);
         app.add_plugins(SmoothTransformPlugin);
 
-        app.configure_sets(Update, OrbiterTransformSet.run_if(in_state(GameStates::Playing)));
-        app.configure_sets(Update, SmoothTransformSet.run_if(in_state(GameStates::Playing)));
-
-        app.add_systems(
-            OnEnter(GameStates::Playing),
-            spawn_camera,
+        app.configure_sets(
+            Update,
+            OrbiterTransformSet.run_if(in_state(GameStates::Playing)),
         );
+        app.configure_sets(
+            Update,
+            SmoothTransformSet.run_if(in_state(GameStates::Playing)),
+        );
+
+        app.add_systems(OnEnter(GameStates::Playing), spawn_camera);
         app.add_systems(
             Update,
             update_camera_target.run_if(in_state(GameStates::Playing)),
@@ -29,21 +32,21 @@ impl Plugin for TankCameraPlugin {
     }
 }
 
-fn spawn_camera(
-    mut commands: Commands,
-) {
-    commands.spawn((
-        Name::new("CameraRoot"),
-        SmoothTransform::default(),
-        Transform::from_xyz(0.0, 0.0, 0.0),
-        Visibility::default(),
-        StateScoped(GameStates::Playing),
-    )).with_child((
-        Name::new("Camera3d"),
-        OrbiterTransform::default(),
-        Camera3d::default(),
-        Transform::from_xyz(15.0, 15.0, 15.0).looking_at(Vec3::ZERO, Vec3::Y),
-    ));
+fn spawn_camera(mut commands: Commands) {
+    commands
+        .spawn((
+            Name::new("CameraRoot"),
+            SmoothTransform::default(),
+            Transform::from_xyz(0.0, 0.0, 0.0),
+            Visibility::default(),
+            StateScoped(GameStates::Playing),
+        ))
+        .with_child((
+            Name::new("Camera3d"),
+            OrbiterTransform::default(),
+            Camera3d::default(),
+            Transform::from_xyz(15.0, 15.0, 15.0).looking_at(Vec3::ZERO, Vec3::Y),
+        ));
 }
 
 fn update_camera_target(

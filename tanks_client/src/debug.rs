@@ -1,7 +1,7 @@
 use bevy::prelude::*;
+use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use bevy_rapier3d::prelude::*;
 use iyes_perf_ui::prelude::*;
-use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
 pub mod prelude {
     pub use super::{DebugPlugin, DebugSet};

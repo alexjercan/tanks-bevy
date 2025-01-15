@@ -33,10 +33,14 @@ fn handle_collision_events(
     for collision_event in collision_events.read() {
         match collision_event {
             CollisionEvent::Started(other, entity, _) => {
-                commands.entity(*entity).insert(CollisionWith { entity: *other });
-                commands.entity(*other).insert(CollisionWith { entity: *entity });
-            },
-            _ => {},
+                commands
+                    .entity(*entity)
+                    .insert(CollisionWith { entity: *other });
+                commands
+                    .entity(*other)
+                    .insert(CollisionWith { entity: *entity });
+            }
+            _ => {}
         }
     }
 }

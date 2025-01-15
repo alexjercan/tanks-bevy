@@ -47,10 +47,7 @@ impl Plugin for ClientPlugin {
             Update,
             handle_play_button_pressed.run_if(in_state(GameStates::MainMenu)),
         );
-        app.add_systems(
-            OnEnter(GameStates::Connecting),
-            spawn_connecting_ui,
-        );
+        app.add_systems(OnEnter(GameStates::Connecting), spawn_connecting_ui);
         app.add_systems(
             Update,
             handle_connecting_done
@@ -60,8 +57,7 @@ impl Plugin for ClientPlugin {
         app.add_systems(OnEnter(GameStates::Playing), setup_game);
         app.add_systems(
             Update,
-            (handle_player_died)
-                .run_if(in_state(GameStates::Playing))
+            (handle_player_died).run_if(in_state(GameStates::Playing)),
         );
     }
 }

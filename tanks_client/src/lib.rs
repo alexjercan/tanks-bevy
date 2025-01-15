@@ -3,12 +3,12 @@
 use bevy::prelude::*;
 
 pub mod camera;
-pub mod input;
-pub mod main_menu;
-pub mod renderer;
-pub mod protocol;
 pub mod client;
 pub mod gui;
+pub mod input;
+pub mod main_menu;
+pub mod protocol;
+pub mod renderer;
 
 #[cfg(feature = "debug")]
 pub mod debug;
@@ -24,12 +24,12 @@ pub enum GameStates {
 
 pub mod prelude {
     pub use super::camera::prelude::*;
-    pub use super::input::prelude::*;
-    pub use super::main_menu::prelude::*;
-    pub use super::renderer::prelude::*;
-    pub use super::protocol::prelude::*;
     pub use super::client::prelude::*;
     pub use super::gui::prelude::*;
+    pub use super::input::prelude::*;
+    pub use super::main_menu::prelude::*;
+    pub use super::protocol::prelude::*;
+    pub use super::renderer::prelude::*;
 
     #[cfg(feature = "debug")]
     pub use super::debug::prelude::*;

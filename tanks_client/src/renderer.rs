@@ -2,8 +2,8 @@ use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use network::prelude::*;
 use crate::prelude::*;
+use network::prelude::*;
 
 pub mod prelude {
     pub use super::{GameAssets, RendererPlugin};
@@ -44,24 +44,21 @@ impl Plugin for RendererPlugin {
                 .load_collection::<GameAssets>(),
         );
 
-        app.add_systems(
-            OnEnter(GameStates::AssetLoading),
-            spawn_loading_ui,
-        );
-        app.add_systems(
-            OnEnter(GameStates::Playing),
-            spawn_renderer,
-        );
+        app.add_systems(OnEnter(GameStates::AssetLoading), spawn_loading_ui);
+        app.add_systems(OnEnter(GameStates::Playing), spawn_renderer);
         app.add_systems(
             Update,
-            (add_ground_cosmetics, add_player_cosmetics, add_shell_cosmetics).run_if(in_state(GameStates::Playing)),
+            (
+                add_ground_cosmetics,
+                add_player_cosmetics,
+                add_shell_cosmetics,
+            )
+                .run_if(in_state(GameStates::Playing)),
         );
     }
 }
 
-fn spawn_loading_ui(
-    mut commands: Commands,
-) {
+fn spawn_loading_ui(mut commands: Commands) {
     commands.spawn((
         Name::new("CameraUI"),
         Camera2d,
@@ -69,9 +66,7 @@ fn spawn_loading_ui(
     ));
 }
 
-fn spawn_renderer(
-    mut commands: Commands,
-) {
+fn spawn_renderer(mut commands: Commands) {
     commands.spawn((
         Name::new("DirectionalLight"),
         DirectionalLight::default(),

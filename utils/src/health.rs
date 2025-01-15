@@ -3,7 +3,7 @@
 use bevy::prelude::*;
 
 pub mod prelude {
-    pub use super::{Health, Damage, Dead, HealthPlugin, HealthSet};
+    pub use super::{Damage, Dead, Health, HealthPlugin, HealthSet};
 }
 
 #[derive(Component, Clone, Debug)]
@@ -32,10 +32,7 @@ pub struct HealthPlugin;
 
 impl Plugin for HealthPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            Update,
-            handle_damage,
-        );
+        app.add_systems(Update, handle_damage);
     }
 }
 

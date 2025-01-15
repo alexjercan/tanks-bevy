@@ -4,9 +4,7 @@ use std::{
 };
 
 use bevy_replicon_renet2::renet2::{ConnectionConfig, RenetClient};
-use renet2_netcode::{
-    ClientAuthentication, ClientSocket, NativeSocket, NetcodeClientTransport,
-};
+use renet2_netcode::{ClientAuthentication, ClientSocket, NativeSocket, NetcodeClientTransport};
 
 pub async fn create_client(
     address: String,

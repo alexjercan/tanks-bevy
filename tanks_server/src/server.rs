@@ -10,8 +10,8 @@ use bevy_rapier3d::prelude::*;
 use bevy_replicon::prelude::*;
 use utils::prelude::*;
 
-use network::prelude::*;
 use crate::prelude::*;
+use network::prelude::*;
 
 pub mod prelude {
     pub use super::ServerPlugin;

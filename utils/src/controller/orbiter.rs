@@ -8,7 +8,7 @@ use leafwing_input_manager::prelude::*;
 use crate::meth::prelude::*;
 
 pub mod prelude {
-  pub use super::{OrbiterTransform, OrbiterTransformPlugin, OrbiterTransformSet};
+    pub use super::{OrbiterTransform, OrbiterTransformPlugin, OrbiterTransformSet};
 }
 
 #[derive(Component, Clone, Copy, Debug)]
@@ -122,22 +122,20 @@ fn initialize_orbiter(
 
         commands
             .entity(entity)
-            .insert(OrbiterTransformTarget {
-                yaw,
-                pitch,
-                radius,
-            })
-            .insert(OrbiterTransformState {
-                yaw,
-                pitch,
-                radius,
-            })
-            .insert(InputManagerBundle::with_map(OrbiterTransformAction::default_input_map()));
+            .insert(OrbiterTransformTarget { yaw, pitch, radius })
+            .insert(OrbiterTransformState { yaw, pitch, radius })
+            .insert(InputManagerBundle::with_map(
+                OrbiterTransformAction::default_input_map(),
+            ));
     }
 }
 
 fn update_orbiter_target(
-    mut q_camera: Query<(&OrbiterTransform, &ActionState<OrbiterTransformAction>, &mut OrbiterTransformTarget)>,
+    mut q_camera: Query<(
+        &OrbiterTransform,
+        &ActionState<OrbiterTransformAction>,
+        &mut OrbiterTransformTarget,
+    )>,
 ) {
     for (camera, action, mut camera_target) in q_camera.iter_mut() {
         let zoom = action.value(&OrbiterTransformAction::Zoom);
@@ -163,10 +161,9 @@ fn update_orbiter_transform(
 ) {
     for (mut state, target, camera) in q_camera.iter_mut() {
         if state.yaw != target.yaw {
-            state.yaw =
-                state
-                    .yaw
-                    .lerp_and_snap(target.yaw, camera.orbit_smooth, time.delta_secs());
+            state.yaw = state
+                .yaw
+                .lerp_and_snap(target.yaw, camera.orbit_smooth, time.delta_secs());
         }
 
         if state.pitch != target.pitch {
@@ -177,17 +174,19 @@ fn update_orbiter_transform(
         }
 
         if state.radius != target.radius {
-            state.radius = state.radius.lerp_and_snap(
-                target.radius,
-                camera.zoom_smooth,
-                time.delta_secs(),
-            );
+            state.radius =
+                state
+                    .radius
+                    .lerp_and_snap(target.radius, camera.zoom_smooth, time.delta_secs());
         }
     }
 }
 
 fn sync_orbiter_transform(
-    mut q_camera: Query<(&mut Transform, &OrbiterTransformState, &OrbiterTransform), Changed<OrbiterTransformState>>,
+    mut q_camera: Query<
+        (&mut Transform, &OrbiterTransformState, &OrbiterTransform),
+        Changed<OrbiterTransformState>,
+    >,
 ) {
     for (mut transform, state, camera) in q_camera.iter_mut() {
         let rotation = Quat::from_rotation_y(state.yaw) * Quat::from_rotation_x(-state.pitch);
