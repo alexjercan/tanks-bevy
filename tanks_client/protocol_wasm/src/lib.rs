@@ -41,7 +41,12 @@ pub async fn create_client(
 
     let (wt_port, cert_hash, ws_port) =
         serde_wasm_bindgen::from_value::<(u16, ServerCertHash, u16)>(json).unwrap();
-    tracing::debug!("wt_port = {}, cert_hash = {:?}, ws_port = {}", wt_port, cert_hash, ws_port);
+    tracing::debug!(
+        "wt_port = {}, cert_hash = {:?}, ws_port = {}",
+        wt_port,
+        cert_hash,
+        ws_port
+    );
 
     let current_time = SystemTime::now()
         .duration_since(SystemTime::UNIX_EPOCH)
@@ -49,7 +54,10 @@ pub async fn create_client(
     let client_id = current_time.as_millis() as u64;
     if webtransport_is_available_with_cert_hashes() {
         let server_addr = SocketAddr::new(address.parse().unwrap(), wt_port);
-        tracing::info!("setting up webtransport client (server = {:?})", server_addr);
+        tracing::info!(
+            "setting up webtransport client (server = {:?})",
+            server_addr
+        );
 
         let authentication = ClientAuthentication::Unsecure {
             client_id,
@@ -72,7 +80,10 @@ pub async fn create_client(
     } else {
         tracing::warn!("webtransport with cert hashes is not supported on this platform, falling back to websockets");
         let server_url = url::Url::parse(&format!("ws://{}:{}/ws", address, ws_port)).unwrap();
-        tracing::info!("setting up websocket client (server = {:?})", server_url.as_str());
+        tracing::info!(
+            "setting up websocket client (server = {:?})",
+            server_url.as_str()
+        );
 
         let socket_config = WebSocketClientConfig { server_url };
         let server_addr = socket_config.server_address().unwrap();

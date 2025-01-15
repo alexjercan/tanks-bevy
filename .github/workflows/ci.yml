@@ -28,7 +28,9 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
         if: runner.os == 'linux'
       - name: Build & run tests
-        run: cargo test
+        run: |
+          cargo test -p tanks_server --all-features
+          cargo test -p tanks_client --all-features
   all-doc-tests:
     runs-on: ubuntu-latest
     steps:
@@ -48,7 +50,9 @@ jobs:
       - name: Install alsa and udev
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run doc tests with all features (this also compiles README examples)
-        run: cargo test --doc --all-features
+        run: |
+          cargo test -p tanks_server --doc --all-features
+          cargo test -p tanks_client --doc --all-features
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -68,9 +72,9 @@ jobs:
           components: rustfmt, clippy
       - name: Install alsa and udev
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
-      - name: Run clippy server
-        run: cargo clippy -p tanks_server --all-targets --all-features -- -Dwarnings
-      - name: Run clippy client
-        run: cargo clippy -p tanks_client --all-targets --all-features -- -Dwarnings
+      - name: Run clippy
+        run: |
+          cargo clippy -p tanks_server --all-targets --all-features -- -Dwarnings
+          cargo clippy -p tanks_client --all-targets --all-features -- -Dwarnings
       - name: Check format
         run: cargo fmt --all -- --check
