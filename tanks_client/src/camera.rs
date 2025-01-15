@@ -20,7 +20,7 @@ impl Plugin for TankCameraPlugin {
             OrbiterTransformSet.run_if(in_state(GameStates::Playing)),
         );
         app.configure_sets(
-            Update,
+            PostUpdate,
             SmoothTransformSet.run_if(in_state(GameStates::Playing)),
         );
 
