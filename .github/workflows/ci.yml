@@ -69,8 +69,8 @@ jobs:
       - name: Install alsa and udev
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run clippy server
-        run: cargo clippy -p tanks_server --workspace --all-targets --all-features -- -Dwarnings
+        run: cargo clippy -p tanks_server --all-targets --all-features -- -Dwarnings
       - name: Run clippy client
-        run: cargo clippy -p tanks_client --workspace --all-targets --all-features -- -Dwarnings
+        run: cargo clippy -p tanks_client --all-targets --all-features -- -Dwarnings
       - name: Check format
         run: cargo fmt --all -- --check
