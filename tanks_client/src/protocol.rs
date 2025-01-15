@@ -9,10 +9,10 @@ use serde::{Deserialize, Serialize};
 use network::prelude::*;
 
 #[cfg(not(target_family = "wasm"))]
-use native::create_client;
+use protocol_native::create_client;
 
 #[cfg(target_family = "wasm")]
-use wasm::create_client;
+use protocol_wasm::create_client;
 
 pub mod prelude {
     pub use super::{
@@ -73,7 +73,7 @@ pub fn handle_client_connect(
             channels.get_client_configs(),
         );
 
-        let (client, transport) = create_client(address.clone(), config);
+        let (client, transport) = create_client(address.clone(), config, PROTOCOL_ID);
 
         commands.insert_resource(LocalPlayer(ClientId::new(transport.client_id())));
         commands.insert_resource(client);
@@ -89,122 +89,6 @@ fn update_local_player_entity(
     for (entity, player) in q_player.iter() {
         if player.client_id == **local_player {
             commands.insert_resource(LocalPlayerEntity(entity));
-        }
-    }
-}
-
-#[cfg(not(target_family = "wasm"))]
-mod native {
-    use std::{
-        net::{Ipv4Addr, SocketAddr, UdpSocket},
-        time::SystemTime,
-    };
-
-    use bevy_replicon_renet2::renet2::{ConnectionConfig, RenetClient};
-    use renet2_netcode::{
-        ClientAuthentication, ClientSocket, NativeSocket, NetcodeClientTransport,
-    };
-
-    use super::PROTOCOL_ID;
-
-    pub fn create_client(
-        address: String,
-        config: ConnectionConfig,
-    ) -> (RenetClient, NetcodeClientTransport) {
-        let runtime = tokio::runtime::Runtime::new().unwrap();
-        let http_path = format!("http://{}:5000/native", address);
-        let server_port = runtime.block_on(async move {
-            reqwest::get(http_path)
-                .await
-                .unwrap()
-                .json::<u16>()
-                .await
-                .unwrap()
-        });
-        let server_addr = SocketAddr::new(address.parse().unwrap(), server_port);
-
-        let client_socket = NativeSocket::new(
-            UdpSocket::bind(SocketAddr::new(Ipv4Addr::UNSPECIFIED.into(), 0)).unwrap(),
-        )
-        .unwrap();
-        let current_time = SystemTime::now()
-            .duration_since(SystemTime::UNIX_EPOCH)
-            .unwrap();
-        let client_id = current_time.as_millis() as u64;
-        let authentication = ClientAuthentication::Unsecure {
-            socket_id: 0,
-            server_addr,
-            client_id,
-            user_data: None,
-            protocol_id: PROTOCOL_ID,
-        };
-
-        let client = RenetClient::new(config, client_socket.is_reliable());
-        let transport =
-            NetcodeClientTransport::new(current_time, authentication, client_socket).unwrap();
-
-        (client, transport)
-    }
-}
-
-#[cfg(target_family = "wasm")]
-mod wasm {
-    pub fn create_client(
-        address: String,
-        config: ConnectionConfig,
-    ) -> (RenetClient, NetcodeClientTransport) {
-        let runtime = tokio::runtime::Runtime::new().unwrap();
-        let http_path = format!("http://{}:5000/wasm", address);
-        let (wt_port, cert_hash, ws_port) = runtime.block_on(async move {
-            reqwest::get(http_path)
-                .await
-                .unwrap()
-                .json::<(u16, ServerCertHash, u16)>()
-                .await
-                .unwrap()
-        });
-
-        let current_time = SystemTime::now()
-            .duration_since(SystemTime::UNIX_EPOCH)
-            .unwrap();
-        let client_id = current_time.as_millis() as u64;
-        if webtransport_is_available_with_cert_hashes() {
-            let server_addr = SocketAddr::new(address.parse().unwrap(), wt_port);
-            let authentication = ClientAuthentication::Unsecure {
-                client_id,
-                protocol_id: 0,
-                socket_id: 1,
-                server_addr,
-                user_data: None,
-            };
-            let socket_config = WebTransportClientConfig {
-                server_dest: server_addr.into(),
-                congestion_control: CongestionControl::default(),
-                server_cert_hashes: Vec::from([cert_hash]),
-            };
-            let socket = WebTransportClient::new(socket_config);
-
-            let client = RenetClient::new(connection_config, socket.is_reliable());
-            let transport = NetcodeClientTransport::new(current_time, authentication, socket).unwrap();
-
-            (client, transport)
-        } else {
-            let server_url = format!("ws://{}:{}/ws", address, ws_port);
-            let socket_config = WebSocketClientConfig { server_url };
-            let server_addr = socket_config.server_address().unwrap();
-            let authentication = ClientAuthentication::Unsecure {
-                client_id,
-                protocol_id: 0,
-                socket_id: 2,
-                server_addr,
-                user_data: None,
-            };
-
-            let socket = WebSocketClient::new(socket_config).unwrap();
-            let client = RenetClient::new(connection_config, socket.is_reliable());
-            let transport = NetcodeClientTransport::new(current_time, authentication, socket).unwrap();
-
-            (client, transport)
         }
     }
 }
