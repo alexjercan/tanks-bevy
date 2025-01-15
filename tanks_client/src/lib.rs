@@ -13,6 +13,7 @@ pub mod main_menu;
 pub mod protocol;
 pub mod renderer;
 pub mod audio;
+pub mod particles;
 
 #[cfg(feature = "debug")]
 pub mod debug;
@@ -62,6 +63,7 @@ pub mod prelude {
     pub use super::protocol::prelude::*;
     pub use super::renderer::prelude::*;
     pub use super::audio::prelude::*;
+    pub use super::particles::prelude::*;
 
     #[cfg(feature = "debug")]
     pub use super::debug::prelude::*;

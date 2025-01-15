@@ -38,6 +38,7 @@ impl Plugin for ClientPlugin {
         app.add_plugins(TankInputPlugin);
         app.add_plugins(GameGuiPlugin);
         app.add_plugins(AudioEffectsPlugin);
+        app.add_plugins(ParticleEffectsPlugin);
 
         #[cfg(feature = "debug")]
         app.add_plugins(DebugPlugin);

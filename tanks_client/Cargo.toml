@@ -33,6 +33,7 @@ url = "2.5.4"
 utils = { path = "../utils" }
 network = { path = "../network" }
 bevy_kira_audio = "0.22.0"
+bevy_hanabi = "0.14.0"
 
 [target.'cfg(not(target_arch = "wasm32"))'.dependencies]
 protocol_native = { path = "./protocol_native" }
