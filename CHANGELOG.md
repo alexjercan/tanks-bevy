@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [unreleased]
 
+### Added
+
+- @alexjercan Added sounds to the game
+- @alexjercan Added particle effects to the game (native support only)
+
 ## [0.1.2] - 2025-01-15
 
 ### Fixed
