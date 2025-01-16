@@ -65,6 +65,7 @@ impl Plugin for ServerPlugin {
                 handle_player_input,
                 handle_player_fire,
                 handle_player_dead,
+                handle_player_throttle,
             ),
         );
     }
@@ -113,6 +114,7 @@ fn spawn_player(commands: &mut Commands, client_id: &ClientId, info: &PlayerInfo
             TankCannonInput::default(),
             TankCannon::default(),
             Health::default(),
+            Throttle { value: 0.0 },
         ))
         .id();
 
@@ -289,5 +291,13 @@ fn handle_player_dead(
                 position: transform.translation,
             },
         });
+    }
+}
+
+fn handle_player_throttle(
+    mut q_player: Query<(&TankControllerInput, &mut Throttle)>,
+) {
+    for (input, mut throttle) in q_player.iter_mut() {
+        throttle.value = input.forward.abs();
     }
 }

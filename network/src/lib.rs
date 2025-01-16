@@ -5,9 +5,9 @@ use bevy::prelude::*;
 
 pub mod prelude {
     pub use super::{
-        Ground, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent, PlayerFireEvent,
-        PlayerInputEvent, PlayerJoinEvent, PlayerJoinedEvent, PlayerLeftEvent, PlayerSpawnEvent,
-        Shell, PROTOCOL_ID, CannonFiredEvent, ShellImpactEvent,
+        CannonFiredEvent, Ground, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent,
+        PlayerFireEvent, PlayerInputEvent, PlayerJoinEvent, PlayerJoinedEvent, PlayerLeftEvent,
+        PlayerSpawnEvent, Shell, ShellImpactEvent, Throttle, PROTOCOL_ID,
     };
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
@@ -31,10 +31,15 @@ pub struct Player {
 }
 
 #[derive(Component, Clone, Debug, Serialize, Deserialize)]
+pub struct Throttle {
+    pub value: f32,
+}
+
+#[derive(Component, Clone, Debug, Serialize, Deserialize)]
 pub struct Shell;
 
 #[derive(Debug, Default, Deserialize, Event, Serialize)]
-pub struct CannonFiredEvent{
+pub struct CannonFiredEvent {
     pub position: Vec3,
     pub rotation: Quat,
 }
@@ -98,6 +103,7 @@ impl Plugin for NetworkPlugin {
         app.replicate::<Ground>();
         app.replicate::<Player>();
         app.replicate::<Shell>();
+        app.replicate::<Throttle>();
         app.replicate_group::<(Transform, NetworkEntity)>(); // NetworkTransform
     }
 }
