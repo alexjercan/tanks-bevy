@@ -9,8 +9,17 @@ pub mod prelude {
     pub use super::AudioEffectsPlugin;
 }
 
+#[derive(Component, Debug, Clone, Serialize, Deserialize)]
+struct EngineSound;
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct AudioEffectsPlugin;
+
+#[derive(Resource, Component, Default, Clone)]
+struct ExplosionChannel;
+
+#[derive(Resource, Component, Default, Clone)]
+struct EngineChannel;
 
 impl Plugin for AudioEffectsPlugin {
     fn build(&self, app: &mut App) {
@@ -22,10 +31,15 @@ impl Plugin for AudioEffectsPlugin {
                 play_cannon_fired,
                 play_shell_impact,
                 play_player_died,
+                play_engine_sound,
                 destroy_audio,
             )
                 .run_if(in_state(GameStates::Playing)),
         );
+
+        app
+            .add_audio_channel::<ExplosionChannel>()
+            .add_audio_channel::<EngineChannel>();
     }
 }
 
@@ -33,11 +47,11 @@ impl Plugin for AudioEffectsPlugin {
 fn play_cannon_fired(
     mut commands: Commands,
     game_assets: Res<GameAssets>,
-    audio: Res<Audio>,
+    channel: Res<AudioChannel<ExplosionChannel>>,
     mut fired: EventReader<CannonFiredEvent>,
 ) {
     for event in fired.read() {
-        let sound = audio.play(game_assets.cannon_fire.clone()).handle();
+        let sound = channel.play(game_assets.cannon_fire.clone()).handle();
 
         commands.spawn((
             Name::new("CannonFireSound"),
@@ -54,11 +68,11 @@ fn play_cannon_fired(
 fn play_shell_impact(
     mut commands: Commands,
     game_assets: Res<GameAssets>,
-    audio: Res<Audio>,
+    channel: Res<AudioChannel<ExplosionChannel>>,
     mut impacts: EventReader<ShellImpactEvent>,
 ) {
     for event in impacts.read() {
-        let sound = audio.play(game_assets.shell_impact.clone()).handle();
+        let sound = channel.play(game_assets.shell_impact.clone()).handle();
 
         commands.spawn((
             Name::new("ShellImpactSound"),
@@ -75,11 +89,11 @@ fn play_shell_impact(
 fn play_player_died(
     mut commands: Commands,
     game_assets: Res<GameAssets>,
-    audio: Res<Audio>,
+    channel: Res<AudioChannel<ExplosionChannel>>,
     mut deaths: EventReader<PlayerDiedEvent>,
 ) {
     for event in deaths.read() {
-        let sound = audio.play(game_assets.death.clone()).handle();
+        let sound = channel.play(game_assets.death.clone()).handle();
 
         commands.spawn((
             Name::new("PlayerDiedSound"),
@@ -90,6 +104,28 @@ fn play_player_died(
             SpatialRadius { radius: 50.0 },
             StateScoped(GameStates::Playing),
         ));
+    }
+}
+
+fn play_engine_sound(
+    mut commands: Commands,
+    game_assets: Res<GameAssets>,
+    channel: Res<AudioChannel<EngineChannel>>,
+    q_player: Query<Entity, (With<Player>, Without<EngineSound>)>,
+) {
+    for entity in q_player.iter() {
+        let sound = channel.play(game_assets.tank_engine.clone()).looped().handle();
+
+        commands.entity(entity)
+            .insert(EngineSound)
+            .with_child((
+                Name::new("EngineSound"),
+                Transform::default(),
+                SpatialAudioEmitter {
+                    instances: vec![sound],
+                },
+                SpatialRadius { radius: 25.0 },
+            ));
     }
 }
 

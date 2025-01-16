@@ -7,3 +7,4 @@
 * shell_impact.ogg <https://opengameart.org/content/3-background-crash-explosion-bang-sounds>
 * cannon_fire.ogg: <https://opengameart.org/content/synthesized-explosion>
 * tank.glb: <https://joysmashteam.itch.io/nature-and-tank-model-pack>
+* tank_engine.ogg <https://opengameart.org/content/engine-loop-heavy-vehicletank>

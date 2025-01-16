@@ -52,6 +52,8 @@ pub struct GameAssets {
     pub shell_impact: Handle<bevy_kira_audio::AudioSource>,
     #[asset(path = "sounds/death.ogg")]
     pub death: Handle<bevy_kira_audio::AudioSource>,
+    #[asset(path = "sounds/tank_engine.ogg")]
+    pub tank_engine: Handle<bevy_kira_audio::AudioSource>,
 }
 
 pub mod prelude {
