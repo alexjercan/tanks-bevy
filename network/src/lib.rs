@@ -12,7 +12,7 @@ pub mod prelude {
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
 
-pub const PROTOCOL_ID: u64 = 7;
+pub const PROTOCOL_ID: u64 = 8;
 
 #[derive(Component, Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct NetworkEntity;
