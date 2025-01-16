@@ -46,6 +46,7 @@ fn play_cannon_fired(
                 instances: vec![sound],
             },
             SpatialRadius { radius: 50.0 },
+            StateScoped(GameStates::Playing),
         ));
     }
 }
@@ -66,6 +67,7 @@ fn play_shell_impact(
                 instances: vec![sound],
             },
             SpatialRadius { radius: 50.0 },
+            StateScoped(GameStates::Playing),
         ));
     }
 }
@@ -86,6 +88,7 @@ fn play_player_died(
                 instances: vec![sound],
             },
             SpatialRadius { radius: 50.0 },
+            StateScoped(GameStates::Playing),
         ));
     }
 }

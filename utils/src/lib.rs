@@ -7,6 +7,7 @@ pub mod health;
 pub mod material;
 pub mod meth;
 pub mod physics;
+pub mod despawn;
 
 pub mod prelude {
     pub use crate::controller::prelude::*;
@@ -14,4 +15,5 @@ pub mod prelude {
     pub use crate::material::prelude::*;
     pub use crate::meth::prelude::*;
     pub use crate::physics::prelude::*;
+    pub use crate::despawn::prelude::*;
 }

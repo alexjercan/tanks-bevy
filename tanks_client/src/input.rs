@@ -31,7 +31,7 @@ pub struct TankInputPlugin;
 impl Plugin for TankInputPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(InputManagerPlugin::<PlayerInputAction>::default());
-        app.add_systems(OnEnter(GameStates::Playing), spawn_input);
+        app.add_systems(OnEnter(GameStates::Playing), setup_input);
         app.add_systems(
             Update,
             (update_player_input)
@@ -47,7 +47,7 @@ impl Plugin for TankInputPlugin {
     }
 }
 
-fn spawn_input(mut commands: Commands) {
+fn setup_input(mut commands: Commands) {
     commands.spawn((
         Name::new("PlayerInput"),
         PlayerInputMove::default(),

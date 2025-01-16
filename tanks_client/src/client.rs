@@ -1,6 +1,7 @@
 use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_asset_loader::prelude::*;
 
+use utils::prelude::*;
 use crate::prelude::*;
 use network::prelude::*;
 
@@ -38,6 +39,7 @@ impl Plugin for ClientPlugin {
         app.add_plugins(TankInputPlugin);
         app.add_plugins(GameGuiPlugin);
         app.add_plugins(AudioEffectsPlugin);
+        app.add_plugins(DespawnAfterPlugin);
 
         // FIXME: For now we disable particle effects on wasm because it's not working
         #[cfg(not(target_family = "wasm"))]

@@ -5,20 +5,12 @@ use bevy::{
 use bevy_hanabi::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use utils::prelude::*;
 use crate::prelude::*;
 use network::prelude::*;
 
 pub mod prelude {
     pub use super::ParticleEffectsPlugin;
-}
-
-#[derive(Component, Clone, Debug, Deref, DerefMut)]
-struct DespawnAfter(Timer);
-
-impl DespawnAfter {
-    pub fn new(time: f32) -> Self {
-        Self(Timer::from_seconds(time, TimerMode::Once))
-    }
 }
 
 #[derive(Resource)]
@@ -41,7 +33,6 @@ impl Plugin for ParticleEffectsPlugin {
                 .run_if(in_state(GameStates::Playing))
                 .run_if(resource_exists::<ParticleSystems>),
         );
-        app.add_systems(Update, despawn_after);
     }
 }
 
@@ -236,6 +227,7 @@ fn play_cannon_fired(
                 ..Default::default()
             },
             DespawnAfter::new(2.0),
+            StateScoped(GameStates::Playing),
         ));
     }
 }
@@ -263,18 +255,7 @@ fn play_player_died(
                 ..Default::default()
             },
             DespawnAfter::new(2.0),
+            StateScoped(GameStates::Playing),
         ));
-    }
-}
-
-fn despawn_after(
-    time: Res<Time>,
-    mut commands: Commands,
-    mut query: Query<(Entity, &mut DespawnAfter)>,
-) {
-    for (entity, mut despawn_after) in query.iter_mut() {
-        if despawn_after.tick(time.delta()).just_finished() {
-            commands.entity(entity).despawn_recursive();
-        }
     }
 }
