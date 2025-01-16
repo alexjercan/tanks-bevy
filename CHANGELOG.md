@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+## [0.1.3] - 2025-01-15
+
+### Added
+
 - @alexjercan Added sounds to the game
 - @alexjercan Added particle effects to the game (native support only)
 
@@ -33,7 +37,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - @alexjercan Implemented native client support
 - @alexjercan Implemented multiplayer player movement
 
-[unreleased]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.2...HEAD
+[unreleased]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/alexjercan/tanks-bevy/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/alexjercan/tanks-bevy/releases/tag/v0.1.0
