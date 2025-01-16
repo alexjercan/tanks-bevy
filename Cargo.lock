@@ -4190,7 +4190,7 @@ dependencies = [
 
 [[package]]
 name = "network"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "bevy",
  "bevy_replicon",
@@ -4990,7 +4990,7 @@ checksum = "afbdc74edc00b6f6a218ca6a5364d6226a259d4b8ea1af4a0ea063f27e179f4d"
 
 [[package]]
 name = "protocol_native"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "bevy_replicon_renet2",
  "embed-resource",
@@ -5001,7 +5001,7 @@ dependencies = [
 
 [[package]]
 name = "protocol_wasm"
-version = "0.1.0"
+version = "1.0.0"
 dependencies = [
  "bevy_replicon_renet2",
  "embed-resource",
@@ -6193,7 +6193,7 @@ dependencies = [
 
 [[package]]
 name = "tanks_client"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "bevy",
  "bevy-inspector-egui",
@@ -6221,7 +6221,7 @@ dependencies = [
 
 [[package]]
 name = "tanks_server"
-version = "0.1.0"
+version = "0.1.2"
 dependencies = [
  "bevy",
  "bevy_asset_loader",
