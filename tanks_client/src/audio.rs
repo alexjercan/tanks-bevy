@@ -41,7 +41,7 @@ fn play_cannon_fired(
 
         commands.spawn((
             Name::new("CannonFireSound"),
-            Transform::from_translation(**event),
+            Transform::from_translation(event.position),
             SpatialAudioEmitter {
                 instances: vec![sound],
             },

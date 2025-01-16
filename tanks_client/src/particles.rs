@@ -1,4 +1,7 @@
-use bevy::{prelude::*, render::mesh::{SphereKind, SphereMeshBuilder}};
+use bevy::{
+    prelude::*,
+    render::mesh::{SphereKind, SphereMeshBuilder},
+};
 use bevy_hanabi::prelude::*;
 use serde::{Deserialize, Serialize};
 
@@ -7,6 +10,15 @@ use network::prelude::*;
 
 pub mod prelude {
     pub use super::ParticleEffectsPlugin;
+}
+
+#[derive(Component, Clone, Debug, Deref, DerefMut)]
+struct DespawnAfter(Timer);
+
+impl DespawnAfter {
+    pub fn new(time: f32) -> Self {
+        Self(Timer::from_seconds(time, TimerMode::Once))
+    }
 }
 
 #[derive(Resource)]
@@ -25,14 +37,11 @@ impl Plugin for ParticleEffectsPlugin {
         app.add_systems(Startup, setup);
         app.add_systems(
             Update,
-            (
-                play_cannon_fired,
-                play_shell_impact,
-                play_player_died,
-            )
+            (play_cannon_fired, play_shell_impact, play_player_died)
                 .run_if(in_state(GameStates::Playing))
                 .run_if(resource_exists::<ParticleSystems>),
         );
+        app.add_systems(Update, despawn_after);
     }
 }
 
@@ -138,31 +147,28 @@ fn setup(
     let explosion_handle = effects.add(effect);
 
     // Smoke
-    let mesh = meshes.add(SphereMeshBuilder::new(0.5, SphereKind::Ico { subdivisions: 4 }).build());
+    let mesh = meshes.add(SphereMeshBuilder::new(0.2, SphereKind::Ico { subdivisions: 4 }).build());
 
     let writer = ExprWriter::new();
 
-    // Position the particle laterally within a small radius.
     let init_xz_pos = SetPositionCircleModifier {
         center: writer.lit(Vec3::ZERO).expr(),
         axis: writer.lit(Vec3::Z).expr(),
-        radius: writer.lit(1.0).expr(),
+        radius: writer.lit(0.2).expr(),
         dimension: ShapeDimension::Volume,
     };
 
-    // Position the particle vertically. Jiggle it a little bit for variety's
-    // sake.
     let init_y_pos = SetAttributeModifier::new(
         Attribute::POSITION,
         writer
             .attr(Attribute::POSITION)
-            .add(writer.rand(VectorType::VEC3F) * writer.lit(Vec3::new(0.0, 1.0, 0.0)))
+            .add(writer.rand(VectorType::VEC3F) * writer.lit(Vec3::new(0.25, 0.25, 0.0)))
             .expr(),
     );
 
     // Set up the age and lifetime.
     let init_age = SetAttributeModifier::new(Attribute::AGE, writer.lit(0.0).expr());
-    let init_lifetime = SetAttributeModifier::new(Attribute::LIFETIME, writer.lit(3.0).expr());
+    let init_lifetime = SetAttributeModifier::new(Attribute::LIFETIME, writer.lit(1.0).expr());
 
     // Vary the size a bit.
     let init_size = SetAttributeModifier::new(
@@ -170,11 +176,10 @@ fn setup(
         (writer.rand(ScalarType::Float) * writer.lit(2.0) + writer.lit(0.5)).expr(),
     );
 
-    // Make the particles move backwards at a constant speed.
-    let init_velocity = SetAttributeModifier::new(
-        Attribute::VELOCITY,
-        writer.lit(Vec3::new(0.0, 0.0, -20.0)).expr(),
-    );
+    // Make the particles move forward at a constant speed.
+    let velocity_handle = writer.add_property("velocity", Vec3::ZERO.into());
+    let init_velocity =
+        SetAttributeModifier::new(Attribute::VELOCITY, writer.prop(velocity_handle).expr());
 
     // Make the particles shrink over time.
     let update_size = SetAttributeModifier::new(
@@ -206,12 +211,10 @@ fn setup(
     // Add the effect.
     let smoke_handle = effects.add(effect);
 
-    commands.insert_resource(
-        ParticleSystems {
-            explosion: explosion_handle,
-            smoke: smoke_handle,
-        }
-    );
+    commands.insert_resource(ParticleSystems {
+        explosion: explosion_handle,
+        smoke: smoke_handle,
+    });
 }
 
 fn play_cannon_fired(
@@ -224,29 +227,25 @@ fn play_cannon_fired(
             Name::new("Smoke"),
             ParticleEffectBundle {
                 effect: ParticleEffect::new(particle_systems.smoke.clone()),
-                transform: Transform::from_translation(**event),
+                effect_properties: EffectProperties::default().with_properties(vec![(
+                    "velocity".to_string(),
+                    (event.rotation * Vec3::new(0.0, 5.0, 0.0)).into(),
+                )]),
+                transform: Transform::from_translation(event.position)
+                    .with_rotation(event.rotation),
                 ..Default::default()
             },
+            DespawnAfter::new(2.0),
         ));
     }
 }
 
 fn play_shell_impact(
-    mut commands: Commands,
     mut impacts: EventReader<ShellImpactEvent>,
-    particle_systems: Res<ParticleSystems>,
+    _particle_systems: Res<ParticleSystems>,
 ) {
-    for event in impacts.read() {
-        /*
-        commands.spawn((
-            Name::new("firework"),
-            ParticleEffectBundle {
-                effect: ParticleEffect::new(particle_systems.explosion.clone()),
-                transform: Transform::from_translation(**event),
-                ..Default::default()
-            },
-        ));
-        */
+    for _ in impacts.read() {
+        // TODO
     }
 }
 
@@ -263,6 +262,19 @@ fn play_player_died(
                 transform: Transform::from_translation(event.position),
                 ..Default::default()
             },
+            DespawnAfter::new(2.0),
         ));
+    }
+}
+
+fn despawn_after(
+    time: Res<Time>,
+    mut commands: Commands,
+    mut query: Query<(Entity, &mut DespawnAfter)>,
+) {
+    for (entity, mut despawn_after) in query.iter_mut() {
+        if despawn_after.tick(time.delta()).just_finished() {
+            commands.entity(entity).despawn_recursive();
+        }
     }
 }

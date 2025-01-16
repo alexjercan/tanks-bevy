@@ -33,8 +33,11 @@ pub struct Player {
 #[derive(Component, Clone, Debug, Serialize, Deserialize)]
 pub struct Shell;
 
-#[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
-pub struct CannonFiredEvent(pub Vec3);
+#[derive(Debug, Default, Deserialize, Event, Serialize)]
+pub struct CannonFiredEvent{
+    pub position: Vec3,
+    pub rotation: Quat,
+}
 
 #[derive(Debug, Default, Deserialize, Event, Serialize, Deref, DerefMut)]
 pub struct ShellImpactEvent(pub Vec3);

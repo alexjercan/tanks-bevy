@@ -125,12 +125,13 @@ fn cannon_fire(
 
             let shell = TankCannonShell::default();
             let point = transform.translation + transform.rotation * cannon.offset;
+            let rotation = transform.rotation * Quat::from_rotation_x(FRAC_PI_2);
 
             commands.spawn((
                 Replicated,
                 Name::new("TankCannonShell"),
                 Transform::from_translation(point)
-                .with_rotation(transform.rotation * Quat::from_rotation_x(FRAC_PI_2)),
+                .with_rotation(rotation),
                 NetworkEntity,
                 Shell,
                 Collider::cylinder(0.1, 0.1),
@@ -150,7 +151,7 @@ fn cannon_fire(
 
             fired.send(ToClients {
                 mode: SendMode::Broadcast,
-                event: CannonFiredEvent(point),
+                event: CannonFiredEvent { position: point, rotation },
             });
         }
 

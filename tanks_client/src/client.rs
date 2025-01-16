@@ -38,6 +38,9 @@ impl Plugin for ClientPlugin {
         app.add_plugins(TankInputPlugin);
         app.add_plugins(GameGuiPlugin);
         app.add_plugins(AudioEffectsPlugin);
+
+        // FIXME: For now we disable particle effects on wasm because it's not working
+        #[cfg(not(target_family = "wasm"))]
         app.add_plugins(ParticleEffectsPlugin);
 
         #[cfg(feature = "debug")]
