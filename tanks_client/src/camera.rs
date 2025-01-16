@@ -1,4 +1,7 @@
-use bevy::{core_pipeline::{bloom::Bloom, tonemapping::Tonemapping}, prelude::*};
+use bevy::{
+    core_pipeline::{bloom::Bloom, tonemapping::Tonemapping},
+    prelude::*,
+};
 use bevy_kira_audio::prelude::*;
 
 use crate::prelude::*;

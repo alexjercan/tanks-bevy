@@ -294,9 +294,7 @@ fn handle_player_dead(
     }
 }
 
-fn handle_player_throttle(
-    mut q_player: Query<(&TankControllerInput, &mut Throttle)>,
-) {
+fn handle_player_throttle(mut q_player: Query<(&TankControllerInput, &mut Throttle)>) {
     for (input, mut throttle) in q_player.iter_mut() {
         throttle.value = input.forward.abs();
     }

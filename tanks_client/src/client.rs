@@ -1,9 +1,9 @@
 use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_asset_loader::prelude::*;
 
-use utils::prelude::*;
 use crate::prelude::*;
 use network::prelude::*;
+use utils::prelude::*;
 
 pub mod prelude {
     pub use super::ClientPlugin;
@@ -138,8 +138,8 @@ fn handle_state_scoped(
     q_entity: Query<Entity, (With<NetworkEntity>, Without<StateScoped<GameStates>>)>,
 ) {
     for entity in q_entity.iter() {
-        commands.entity(entity).insert((
-            StateScoped(GameStates::Playing),
-        ));
+        commands
+            .entity(entity)
+            .insert((StateScoped(GameStates::Playing),));
     }
 }

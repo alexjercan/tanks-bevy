@@ -130,8 +130,7 @@ fn cannon_fire(
             commands.spawn((
                 Replicated,
                 Name::new("TankCannonShell"),
-                Transform::from_translation(point)
-                .with_rotation(rotation),
+                Transform::from_translation(point).with_rotation(rotation),
                 NetworkEntity,
                 Shell,
                 Collider::cylinder(0.1, 0.1),
@@ -151,7 +150,10 @@ fn cannon_fire(
 
             fired.send(ToClients {
                 mode: SendMode::Broadcast,
-                event: CannonFiredEvent { position: point, rotation },
+                event: CannonFiredEvent {
+                    position: point,
+                    rotation,
+                },
             });
         }
 

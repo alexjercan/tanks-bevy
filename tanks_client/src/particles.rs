@@ -5,9 +5,9 @@ use bevy::{
 use bevy_hanabi::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use utils::prelude::*;
 use crate::prelude::*;
 use network::prelude::*;
+use utils::prelude::*;
 
 pub mod prelude {
     pub use super::ParticleEffectsPlugin;

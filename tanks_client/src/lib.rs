@@ -5,15 +5,15 @@
 use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
 
+pub mod audio;
 pub mod camera;
 pub mod client;
 pub mod gui;
 pub mod input;
 pub mod main_menu;
+pub mod particles;
 pub mod protocol;
 pub mod renderer;
-pub mod audio;
-pub mod particles;
 
 #[cfg(feature = "debug")]
 pub mod debug;
@@ -57,19 +57,19 @@ pub struct GameAssets {
 }
 
 pub mod prelude {
+    pub use super::audio::prelude::*;
     pub use super::camera::prelude::*;
     pub use super::client::prelude::*;
     pub use super::gui::prelude::*;
     pub use super::input::prelude::*;
     pub use super::main_menu::prelude::*;
+    pub use super::particles::prelude::*;
     pub use super::protocol::prelude::*;
     pub use super::renderer::prelude::*;
-    pub use super::audio::prelude::*;
-    pub use super::particles::prelude::*;
 
     #[cfg(feature = "debug")]
     pub use super::debug::prelude::*;
 
-    pub use super::GameStates;
     pub use super::GameAssets;
+    pub use super::GameStates;
 }

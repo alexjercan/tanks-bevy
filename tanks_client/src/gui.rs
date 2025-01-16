@@ -41,8 +41,18 @@ struct GuiChat;
 #[derive(Component, Clone, Copy, Debug)]
 struct GuiChatEntry;
 
-fn setup_gui(mut commands: Commands, mut player_info_map: ResMut<PlayerInfoMap>, local_player: Res<LocalPlayer>, client_info: Res<ClientInfo>) {
-    player_info_map.insert(**local_player, PlayerInfo { name: client_info.name.clone() });
+fn setup_gui(
+    mut commands: Commands,
+    mut player_info_map: ResMut<PlayerInfoMap>,
+    local_player: Res<LocalPlayer>,
+    client_info: Res<ClientInfo>,
+) {
+    player_info_map.insert(
+        **local_player,
+        PlayerInfo {
+            name: client_info.name.clone(),
+        },
+    );
 
     commands
         .spawn((
@@ -82,7 +92,7 @@ fn handle_player_joined(
             continue;
         }
 
-        if let Some(entity) = q_chat.get_single().ok() {
+        if let Ok(entity) = q_chat.get_single() {
             let child = commands
                 .spawn((
                     Name::new("GuiChatEntry"),
@@ -112,7 +122,7 @@ fn handle_player_died(
 ) {
     for event in died.read() {
         if let Some(player_info) = player_info_map.get(&event.client_id) {
-            if let Some(entity) = q_chat.get_single().ok() {
+            if let Ok(entity) = q_chat.get_single() {
                 let child = commands
                     .spawn((
                         Name::new("GuiChatEntry"),
@@ -136,7 +146,7 @@ fn handle_player_left(
 ) {
     for event in left.read() {
         if let Some(player_info) = player_info_map.remove(&event.client_id) {
-            if let Some(entity) = q_chat.get_single().ok() {
+            if let Ok(entity) = q_chat.get_single() {
                 let child = commands
                     .spawn((
                         Name::new("GuiChatEntry"),

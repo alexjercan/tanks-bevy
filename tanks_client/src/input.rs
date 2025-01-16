@@ -48,8 +48,7 @@ impl Plugin for TankInputPlugin {
         );
         app.add_systems(
             Update,
-            (update_player_leave)
-                .run_if(in_state(GameStates::Playing))
+            (update_player_leave).run_if(in_state(GameStates::Playing)),
         );
     }
 }
@@ -93,7 +92,10 @@ fn update_player_spawn(
     }
 }
 
-fn update_player_leave(mut next_state: ResMut<NextState<GameStates>>, q_input: Query<&ActionState<PlayerInputAction>>) {
+fn update_player_leave(
+    mut next_state: ResMut<NextState<GameStates>>,
+    q_input: Query<&ActionState<PlayerInputAction>>,
+) {
     for action in q_input.iter() {
         if action.just_pressed(&PlayerInputAction::Leave) {
             next_state.set(GameStates::MainMenu);
