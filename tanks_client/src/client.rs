@@ -71,7 +71,7 @@ impl Plugin for ClientPlugin {
         app.add_systems(OnEnter(GameStates::Playing), setup_game);
         app.add_systems(
             Update,
-            (handle_player_died).run_if(in_state(GameStates::Playing)),
+            (handle_player_died, handle_state_scoped).run_if(in_state(GameStates::Playing)),
         );
     }
 }
@@ -130,5 +130,16 @@ fn handle_player_died(
         if event.client_id == **local_player {
             commands.remove_resource::<LocalPlayerEntity>();
         }
+    }
+}
+
+fn handle_state_scoped(
+    mut commands: Commands,
+    q_entity: Query<Entity, (With<NetworkEntity>, Without<StateScoped<GameStates>>)>,
+) {
+    for entity in q_entity.iter() {
+        commands.entity(entity).insert((
+            StateScoped(GameStates::Playing),
+        ));
     }
 }

@@ -10,6 +10,7 @@ use bevy_replicon_renet2::{
 };
 use serde::{Deserialize, Serialize};
 
+use crate::prelude::*;
 use network::prelude::*;
 
 #[cfg(not(target_family = "wasm"))]
@@ -74,6 +75,13 @@ impl Plugin for ClientProtocolPlugin {
                 .run_if(not(resource_exists::<LocalPlayerEntity>))
                 .run_if(resource_exists::<LocalPlayer>),
         );
+
+        app.add_systems(
+            OnExit(GameStates::Playing),
+            (disconnect_client)
+                .in_set(ClientProtocolSet)
+                .run_if(resource_exists::<LocalPlayer>),
+        );
     }
 }
 
@@ -111,6 +119,7 @@ pub fn generate_connect_task(
 fn handle_connect_task(mut commands: Commands, mut task: ResMut<ConnectTask>) {
     if let Some(mut commands_queue) = block_on(future::poll_once(&mut task.0)) {
         commands.append(&mut commands_queue);
+        commands.remove_resource::<ConnectTask>();
     }
 }
 
@@ -124,4 +133,11 @@ fn update_local_player_entity(
             commands.insert_resource(LocalPlayerEntity(entity));
         }
     }
+}
+
+fn disconnect_client(mut commands: Commands, mut client: ResMut<RenetClient>) {
+    client.disconnect();
+    commands.remove_resource::<LocalPlayer>();
+    commands.remove_resource::<LocalPlayerEntity>();
+    commands.remove_resource::<RenetClient>();
 }

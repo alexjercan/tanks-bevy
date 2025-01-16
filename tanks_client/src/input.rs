@@ -13,6 +13,7 @@ enum PlayerInputAction {
     #[actionlike(DualAxis)]
     Move,
     Fire,
+    Leave,
 }
 
 impl PlayerInputAction {
@@ -20,6 +21,7 @@ impl PlayerInputAction {
         InputMap::default()
             .with_dual_axis(PlayerInputAction::Move, VirtualDPad::wasd())
             .with(Self::Fire, KeyCode::Space)
+            .with(Self::Leave, KeyCode::Escape)
     }
 }
 
@@ -43,6 +45,11 @@ impl Plugin for TankInputPlugin {
             (update_player_spawn)
                 .run_if(in_state(GameStates::Playing))
                 .run_if(not(resource_exists::<LocalPlayerEntity>)),
+        );
+        app.add_systems(
+            Update,
+            (update_player_leave)
+                .run_if(in_state(GameStates::Playing))
         );
     }
 }
@@ -82,6 +89,14 @@ fn update_player_spawn(
     for action in q_input.iter_mut() {
         if action.just_pressed(&PlayerInputAction::Fire) {
             spawn.send(PlayerSpawnEvent);
+        }
+    }
+}
+
+fn update_player_leave(mut next_state: ResMut<NextState<GameStates>>, q_input: Query<&ActionState<PlayerInputAction>>) {
+    for action in q_input.iter() {
+        if action.just_pressed(&PlayerInputAction::Leave) {
+            next_state.set(GameStates::MainMenu);
         }
     }
 }
