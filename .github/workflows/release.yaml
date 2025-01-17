@@ -49,7 +49,7 @@ jobs:
           targets: aarch64-apple-darwin
       - name: Build release for Apple Silicon
         run: |
-          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build -p tanks_client --profile dist --target=aarch64-apple-darwin
+          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build --bin tanks_client --no-default-features --features="client" --profile dist --target=aarch64-apple-darwin
       - name: Install rust toolchain for Apple x86
         uses: dtolnay/rust-toolchain@master
         with:
@@ -57,7 +57,7 @@ jobs:
           targets: x86_64-apple-darwin
       - name: Build release for x86 Apple
         run: |
-          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build -p tanks_client --profile dist --target=x86_64-apple-darwin
+          SDKROOT=$(xcrun -sdk macosx --show-sdk-path) cargo build --bin tanks_client --no-default-features --features="client" --profile dist --target=x86_64-apple-darwin
       - name: Create Universal Binary
         run: |
           lipo -create -output target/dist/${{ env.GAME_EXECUTABLE_CLIENT_NAME }} target/aarch64-apple-darwin/dist/${{ env.GAME_EXECUTABLE_CLIENT_NAME }} target/x86_64-apple-darwin/dist/${{ env.GAME_EXECUTABLE_CLIENT_NAME }}
@@ -96,7 +96,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev
       - name: Build release
         run: |
-          cargo build -p tanks_server --profile dist
+          cargo build --bin tanks_server --no-default-features --features="server" --profile dist
       - name: Prepare release
         run: |
           # mkdir target/dist/assets && cp -r assets target/dist/assets
@@ -132,7 +132,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install pkg-config libx11-dev libasound2-dev libudev-dev
       - name: Build release
         run: |
-          cargo build -p tanks_client --profile dist
+          cargo build --bin tanks_client --no-default-features --features="client" --profile dist
       - name: Prepare release
         run: |
           mkdir target/dist/assets && cp -r assets target/dist/assets
@@ -167,7 +167,7 @@ jobs:
           toolchain: stable
       - name: Build release
         run: |
-          cargo build -p tanks_client --profile dist
+          cargo build --bin tanks_client --no-default-features --features="client" --profile dist
       - name: Prepare release
         run: |
           mkdir target/dist/assets && cp -r assets target/dist/assets
