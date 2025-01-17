@@ -5,7 +5,6 @@ use bevy::{
 use bevy_kira_audio::prelude::*;
 
 use crate::prelude::*;
-use network::prelude::*;
 use utils::prelude::*;
 
 pub mod prelude {

@@ -11,7 +11,6 @@ use bevy_replicon::prelude::*;
 use utils::prelude::*;
 
 use crate::prelude::*;
-use network::prelude::*;
 
 pub mod prelude {
     pub use super::ServerPlugin;

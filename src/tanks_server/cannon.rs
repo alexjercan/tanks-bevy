@@ -6,7 +6,7 @@ use bevy::prelude::*;
 use bevy_rapier3d::prelude::*;
 use bevy_replicon::prelude::*;
 
-use network::prelude::*;
+use crate::prelude::*;
 use utils::prelude::*;
 
 pub mod prelude {

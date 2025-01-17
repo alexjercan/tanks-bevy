@@ -6,7 +6,6 @@ use bevy_hanabi::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
-use network::prelude::*;
 use utils::prelude::*;
 
 pub mod prelude {

@@ -11,10 +11,15 @@ use bevy_replicon_renet2::{
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
-use network::prelude::*;
+
+#[cfg(not(target_family = "wasm"))]
+mod protocol_native;
 
 #[cfg(not(target_family = "wasm"))]
 use protocol_native::create_client;
+
+#[cfg(target_family = "wasm")]
+mod protocol_wasm;
 
 #[cfg(target_family = "wasm")]
 use protocol_wasm::create_client;

@@ -17,7 +17,7 @@ use bevy_replicon_renet2::{
 };
 use serde::{Deserialize, Serialize};
 
-use network::prelude::*;
+use crate::prelude::*;
 
 pub mod prelude {
     pub use super::{

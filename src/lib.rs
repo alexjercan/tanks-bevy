@@ -5,18 +5,13 @@
 use bevy::prelude::*;
 use bevy_asset_loader::prelude::*;
 
-pub mod audio;
-pub mod camera;
-pub mod client;
-pub mod gui;
-pub mod input;
-pub mod main_menu;
-pub mod particles;
-pub mod protocol;
-pub mod renderer;
+#[cfg(feature = "server")]
+pub mod tanks_server;
 
-#[cfg(feature = "debug")]
-pub mod debug;
+#[cfg(feature = "client")]
+pub mod tanks_client;
+
+pub mod network;
 
 #[derive(Clone, Eq, PartialEq, Debug, Hash, Default, States)]
 pub enum GameStates {
@@ -57,18 +52,13 @@ pub struct GameAssets {
 }
 
 pub mod prelude {
-    pub use super::audio::prelude::*;
-    pub use super::camera::prelude::*;
-    pub use super::client::prelude::*;
-    pub use super::gui::prelude::*;
-    pub use super::input::prelude::*;
-    pub use super::main_menu::prelude::*;
-    pub use super::particles::prelude::*;
-    pub use super::protocol::prelude::*;
-    pub use super::renderer::prelude::*;
+    #[cfg(feature = "server")]
+    pub use super::tanks_server::prelude::*;
 
-    #[cfg(feature = "debug")]
-    pub use super::debug::prelude::*;
+    #[cfg(feature = "client")]
+    pub use super::tanks_client::prelude::*;
+
+    pub use super::network::prelude::*;
 
     pub use super::GameAssets;
     pub use super::GameStates;

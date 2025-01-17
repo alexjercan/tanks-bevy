@@ -1,9 +1,9 @@
 use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_asset_loader::prelude::*;
 
+use blenvy::*;
 use crate::prelude::*;
-use network::prelude::*;
-use utils::prelude::*;
+use ::utils::prelude::*;
 
 pub mod prelude {
     pub use super::ClientPlugin;
@@ -28,11 +28,11 @@ impl Plugin for ClientPlugin {
                     ..default()
                 })
                 .set(AssetPlugin {
-                    file_path: "../assets".to_string(),
                     meta_check: AssetMetaCheck::Never,
                     ..default()
                 }),
         );
+        // app.add_plugins(BlenvyPlugin::default());
         app.add_plugins(ClientProtocolPlugin);
         app.add_plugins(RendererPlugin);
         app.add_plugins(MainMenuPlugin);

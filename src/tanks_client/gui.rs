@@ -4,7 +4,6 @@ use bevy::prelude::*;
 use bevy_replicon::prelude::*;
 
 use crate::prelude::*;
-use network::prelude::*;
 use utils::prelude::*;
 
 pub mod prelude {

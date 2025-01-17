@@ -2,7 +2,6 @@ use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
 use crate::prelude::*;
-use network::prelude::*;
 
 pub mod prelude {
     pub use super::RendererPlugin;
