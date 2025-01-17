@@ -1,4 +1,4 @@
-use bevy::{asset::AssetMetaCheck, prelude::*};
+use bevy::{asset::AssetMetaCheck, prelude::*, window::{CursorGrabMode, PrimaryWindow}};
 use bevy_asset_loader::prelude::*;
 
 use crate::prelude::*;
@@ -67,12 +67,29 @@ impl Plugin for ClientPlugin {
                 .run_if(in_state(GameStates::Connecting))
                 .run_if(client_just_connected),
         );
-        app.add_systems(OnEnter(GameStates::Playing), setup_game);
+        app.add_systems(OnEnter(GameStates::Playing), (setup_game, hide_cursor));
         app.add_systems(
             Update,
             (handle_player_died, handle_state_scoped).run_if(in_state(GameStates::Playing)),
         );
+        app.add_systems(OnExit(GameStates::Playing), show_cursor);
     }
+}
+
+pub fn hide_cursor(
+    mut primary_window: Query<&mut Window, With<PrimaryWindow>>,
+) {
+    let window = &mut primary_window.single_mut();
+    window.cursor_options.visible = false;
+    window.cursor_options.grab_mode = CursorGrabMode::Locked;
+}
+
+pub fn show_cursor(
+    mut primary_window: Query<&mut Window, With<PrimaryWindow>>,
+) {
+    let window = &mut primary_window.single_mut();
+    window.cursor_options.visible = true;
+    window.cursor_options.grab_mode = CursorGrabMode::None;
 }
 
 fn spawn_loading_ui(mut commands: Commands) {
