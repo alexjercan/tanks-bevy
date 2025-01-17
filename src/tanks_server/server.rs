@@ -71,6 +71,7 @@ impl Plugin for ServerPlugin {
                 handle_player_fire,
                 handle_player_dead,
                 handle_player_throttle,
+                handle_player_outside_world,
             ),
         );
     }
@@ -304,5 +305,37 @@ fn handle_player_dead(
 fn handle_player_throttle(mut q_player: Query<(&TankControllerInput, &mut Throttle)>) {
     for (input, mut throttle) in q_player.iter_mut() {
         throttle.value = input.forward.abs();
+    }
+}
+
+fn handle_player_outside_world(
+    mut commands: Commands,
+    q_player: Query<(Entity, &Transform, &Player), Without<Dead>>,
+    mut player_entity_map: ResMut<PlayerEntityMap>,
+    mut died: EventWriter<ToClients<PlayerDiedEvent>>,
+) {
+    for (
+        entity,
+        transform,
+        Player {
+            client_id, name, ..
+        },
+    ) in q_player.iter()
+    {
+        if transform.translation.y < -10. {
+            println!("Player {} fell out of the world", name);
+
+            player_entity_map.remove(client_id);
+
+            commands.entity(entity).despawn_recursive();
+
+            died.send(ToClients {
+                mode: SendMode::Broadcast,
+                event: PlayerDiedEvent {
+                    client_id: *client_id,
+                    position: transform.translation,
+                },
+            });
+        }
     }
 }
