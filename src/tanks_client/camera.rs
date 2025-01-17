@@ -1,7 +1,4 @@
-use bevy::{
-    core_pipeline::{bloom::Bloom, tonemapping::Tonemapping},
-    prelude::*,
-};
+use bevy::prelude::*;
 use bevy_kira_audio::prelude::*;
 
 use crate::prelude::*;
@@ -40,7 +37,7 @@ fn spawn_camera(mut commands: Commands) {
         .spawn((
             Name::new("CameraRoot"),
             SmoothTransform::default(),
-            Transform::from_xyz(0.0, 0.0, 0.0),
+            Transform::from_xyz(0.0, 1.0, 0.0),
             Visibility::default(),
             StateScoped(GameStates::Playing),
         ))
@@ -48,16 +45,10 @@ fn spawn_camera(mut commands: Commands) {
             Name::new("Camera3d"),
             OrbiterTransform::default(),
             Camera {
-                hdr: true,
                 clear_color: Color::BLACK.into(),
                 ..default()
             },
             Camera3d::default(),
-            Tonemapping::None,
-            Bloom {
-                intensity: 0.2,
-                ..default()
-            },
             Transform::from_xyz(15.0, 15.0, 15.0).looking_at(Vec3::ZERO, Vec3::Y),
             SpatialAudioReceiver,
         ));

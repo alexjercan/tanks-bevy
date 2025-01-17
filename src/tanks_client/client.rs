@@ -1,7 +1,6 @@
 use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_asset_loader::prelude::*;
 
-use blenvy::*;
 use crate::prelude::*;
 use ::utils::prelude::*;
 
@@ -32,7 +31,6 @@ impl Plugin for ClientPlugin {
                     ..default()
                 }),
         );
-        // app.add_plugins(BlenvyPlugin::default());
         app.add_plugins(ClientProtocolPlugin);
         app.add_plugins(RendererPlugin);
         app.add_plugins(MainMenuPlugin);

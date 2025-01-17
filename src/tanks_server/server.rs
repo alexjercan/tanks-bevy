@@ -1,5 +1,6 @@
 use std::{collections::HashMap, time::Duration};
 
+use blenvy::*;
 use bevy::{
     app::ScheduleRunnerPlugin,
     log::{Level, LogPlugin},
@@ -8,7 +9,7 @@ use bevy::{
 };
 use bevy_rapier3d::prelude::*;
 use bevy_replicon::prelude::*;
-use utils::prelude::*;
+use ::utils::prelude::*;
 
 use crate::prelude::*;
 
@@ -43,6 +44,10 @@ impl Plugin for ServerPlugin {
                 }),
             ScheduleRunnerPlugin::run_loop(Duration::from_secs_f64(1.0 / 60.0)),
         ));
+        app.add_plugins(BlenvyPlugin {
+            export_registry: true,
+            ..default()
+        });
         app.add_plugins(ServerProtocolPlugin);
         app.add_plugins(RapierPhysicsPlugin::<NoUserData>::default());
         app.add_plugins(CollisionPlugin);
@@ -57,6 +62,7 @@ impl Plugin for ServerPlugin {
         app.add_systems(
             Update,
             (
+                handle_collider_mapping,
                 handle_client_connected,
                 handle_client_disconnected,
                 handle_player_join,
@@ -73,7 +79,7 @@ impl Plugin for ServerPlugin {
 fn spawn_player(commands: &mut Commands, client_id: &ClientId, info: &PlayerInfo) -> Entity {
     let position = Vec3::new(
         rand::random::<f32>() * 20. - 10.,
-        0.5,
+        5.0,
         rand::random::<f32>() * 20. - 10.,
     );
     let rotation = Quat::IDENTITY;
@@ -121,19 +127,21 @@ fn spawn_player(commands: &mut Commands, client_id: &ClientId, info: &PlayerInfo
 }
 
 fn setup_game(mut commands: Commands) {
-    let size = 100.0;
-
     commands.spawn((
-        Name::new("Ground"),
-        Replicated,
-        Transform::default(),
-        NetworkEntity,
-        Ground {
-            width: size,
-            height: size,
-        },
-        Collider::cuboid(size / 2.0, f32::EPSILON, size / 2.0),
+        BlueprintInfo::from_path("levels/World.glb"), // all we need is a Blueprint info...
+        SpawnBlueprint, // and spawnblueprint to tell blenvy to spawn the blueprint now
+        HideUntilReady, // only reveal the level once it is ready
+        GameWorldTag,
     ));
+}
+
+fn handle_collider_mapping(
+    mut commands: Commands,
+    q_collider: Query<(Entity, &BoxCollider), Without<Collider>>,
+) {
+    for (entity, BoxCollider(hx, hy, hz)) in q_collider.iter() {
+        commands.entity(entity).insert(Collider::cuboid(*hx, *hy, *hz));
+    }
 }
 
 fn handle_client_connected(

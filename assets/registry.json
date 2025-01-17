@@ -31,48 +31,6 @@
       "type": "array",
       "typeInfo": "Tuple"
     },
-    "(f32, f32)": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "(f32, f32)",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      ],
-      "short_name": "(f32, f32)",
-      "type": "array",
-      "typeInfo": "Tuple"
-    },
-    "(u16, u16)": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "(u16, u16)",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/u16"
-          }
-        },
-        {
-          "type": {
-            "$ref": "#/$defs/u16"
-          }
-        }
-      ],
-      "short_name": "(u16, u16)",
-      "type": "array",
-      "typeInfo": "Tuple"
-    },
     "(u8, u8)": {
       "isComponent": false,
       "isResource": false,
@@ -114,32 +72,6 @@
       "short_name": "(usize, usize)",
       "type": "array",
       "typeInfo": "Tuple"
-    },
-    "[f32; 16]": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/f32"
-        }
-      },
-      "long_name": "[f32; 16]",
-      "short_name": "[f32; 16]",
-      "type": "array",
-      "typeInfo": "Array"
-    },
-    "[u32; 4]": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/u32"
-        }
-      },
-      "long_name": "[u32; 4]",
-      "short_name": "[u32; 4]",
-      "type": "array",
-      "typeInfo": "Array"
     },
     "alloc::borrow::Cow<str>": {
       "isComponent": false,
@@ -227,71 +159,6 @@
       },
       "long_name": "alloc::vec::Vec<bevy_ecs::entity::Entity>",
       "short_name": "Vec<Entity>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<bevy_hanabi::TextureSlot>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/bevy_hanabi::TextureSlot"
-        }
-      },
-      "long_name": "alloc::vec::Vec<bevy_hanabi::TextureSlot>",
-      "short_name": "Vec<TextureSlot>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<bevy_hanabi::graph::expr::Expr>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/bevy_hanabi::graph::expr::Expr"
-        }
-      },
-      "long_name": "alloc::vec::Vec<bevy_hanabi::graph::expr::Expr>",
-      "short_name": "Vec<Expr>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<bevy_hanabi::properties::Property>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/bevy_hanabi::properties::Property"
-        }
-      },
-      "long_name": "alloc::vec::Vec<bevy_hanabi::properties::Property>",
-      "short_name": "Vec<Property>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<bevy_hanabi::properties::PropertyInstance>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/bevy_hanabi::properties::PropertyInstance"
-        }
-      },
-      "long_name": "alloc::vec::Vec<bevy_hanabi::properties::PropertyInstance>",
-      "short_name": "Vec<PropertyInstance>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<bevy_hanabi::spawn::Initializer>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/bevy_hanabi::spawn::Initializer"
-        }
-      },
-      "long_name": "alloc::vec::Vec<bevy_hanabi::spawn::Initializer>",
-      "short_name": "Vec<Initializer>",
       "type": "array",
       "typeInfo": "List"
     },
@@ -438,32 +305,6 @@
       "type": "array",
       "typeInfo": "List"
     },
-    "alloc::vec::Vec<leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor"
-        }
-      },
-      "long_name": "alloc::vec::Vec<leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor>",
-      "short_name": "Vec<DualAxisProcessor>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<leafwing_input_manager::input_processing::single_axis::AxisProcessor>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::AxisProcessor"
-        }
-      },
-      "long_name": "alloc::vec::Vec<leafwing_input_manager::input_processing::single_axis::AxisProcessor>",
-      "short_name": "Vec<AxisProcessor>",
-      "type": "array",
-      "typeInfo": "List"
-    },
     "alloc::vec::Vec<petgraph::graph::NodeIndex>": {
       "isComponent": false,
       "isResource": false,
@@ -474,58 +315,6 @@
       },
       "long_name": "alloc::vec::Vec<petgraph::graph::NodeIndex>",
       "short_name": "Vec<NodeIndex>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>"
-        }
-      },
-      "long_name": "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>",
-      "short_name": "Vec<Box<dyn Axislike>>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-        }
-      },
-      "long_name": "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>",
-      "short_name": "Vec<Box<dyn Buttonlike>>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>"
-        }
-      },
-      "long_name": "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>",
-      "short_name": "Vec<Box<dyn DualAxislike>>",
-      "type": "array",
-      "typeInfo": "List"
-    },
-    "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>"
-        }
-      },
-      "long_name": "alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>",
-      "short_name": "Vec<Box<dyn TripleAxislike>>",
       "type": "array",
       "typeInfo": "List"
     },
@@ -1508,44 +1297,6 @@
       "type": "object",
       "typeInfo": "Enum"
     },
-    "bevy_asset::handle::Handle<bevy_hanabi::asset::EffectAsset>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_asset::handle::Handle<bevy_hanabi::asset::EffectAsset>",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Strong",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/alloc::sync::Arc<bevy_asset::handle::StrongHandle>"
-              }
-            }
-          ],
-          "short_name": "Strong",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Weak",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_asset::id::AssetId<bevy_hanabi::asset::EffectAsset>"
-              }
-            }
-          ],
-          "short_name": "Weak",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Handle<EffectAsset>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
     "bevy_asset::handle::Handle<bevy_image::image::Image>": {
       "isComponent": false,
       "isResource": false,
@@ -1581,82 +1332,6 @@
         }
       ],
       "short_name": "Handle<Image>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_asset::handle::Handle<bevy_kira_audio::instance::AudioInstance>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_asset::handle::Handle<bevy_kira_audio::instance::AudioInstance>",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Strong",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/alloc::sync::Arc<bevy_asset::handle::StrongHandle>"
-              }
-            }
-          ],
-          "short_name": "Strong",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Weak",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_asset::id::AssetId<bevy_kira_audio::instance::AudioInstance>"
-              }
-            }
-          ],
-          "short_name": "Weak",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Handle<AudioInstance>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_asset::handle::Handle<bevy_kira_audio::source::AudioSource>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_asset::handle::Handle<bevy_kira_audio::source::AudioSource>",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Strong",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/alloc::sync::Arc<bevy_asset::handle::StrongHandle>"
-              }
-            }
-          ],
-          "short_name": "Strong",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Weak",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_asset::id::AssetId<bevy_kira_audio::source::AudioSource>"
-              }
-            }
-          ],
-          "short_name": "Weak",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Handle<AudioSource>",
       "type": "object",
       "typeInfo": "Enum"
     },
@@ -2676,52 +2351,6 @@
       "type": "object",
       "typeInfo": "Enum"
     },
-    "bevy_asset::id::AssetId<bevy_hanabi::asset::EffectAsset>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_asset::id::AssetId<bevy_hanabi::asset::EffectAsset>",
-      "oneOf": [
-        {
-          "additionalProperties": false,
-          "long_name": "Index",
-          "properties": {
-            "index": {
-              "long_name": "index",
-              "type": {
-                "$ref": "#/$defs/bevy_asset::assets::AssetIndex"
-              }
-            }
-          },
-          "required": [
-            "index"
-          ],
-          "short_name": "Index",
-          "type": "object",
-          "typeInfo": "Struct"
-        },
-        {
-          "additionalProperties": false,
-          "long_name": "Uuid",
-          "properties": {
-            "uuid": {
-              "long_name": "uuid",
-              "type": {
-                "$ref": "#/$defs/uuid::Uuid"
-              }
-            }
-          },
-          "required": [
-            "uuid"
-          ],
-          "short_name": "Uuid",
-          "type": "object",
-          "typeInfo": "Struct"
-        }
-      ],
-      "short_name": "AssetId<EffectAsset>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
     "bevy_asset::id::AssetId<bevy_image::image::Image>": {
       "isComponent": false,
       "isResource": false,
@@ -2765,98 +2394,6 @@
         }
       ],
       "short_name": "AssetId<Image>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_asset::id::AssetId<bevy_kira_audio::instance::AudioInstance>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_asset::id::AssetId<bevy_kira_audio::instance::AudioInstance>",
-      "oneOf": [
-        {
-          "additionalProperties": false,
-          "long_name": "Index",
-          "properties": {
-            "index": {
-              "long_name": "index",
-              "type": {
-                "$ref": "#/$defs/bevy_asset::assets::AssetIndex"
-              }
-            }
-          },
-          "required": [
-            "index"
-          ],
-          "short_name": "Index",
-          "type": "object",
-          "typeInfo": "Struct"
-        },
-        {
-          "additionalProperties": false,
-          "long_name": "Uuid",
-          "properties": {
-            "uuid": {
-              "long_name": "uuid",
-              "type": {
-                "$ref": "#/$defs/uuid::Uuid"
-              }
-            }
-          },
-          "required": [
-            "uuid"
-          ],
-          "short_name": "Uuid",
-          "type": "object",
-          "typeInfo": "Struct"
-        }
-      ],
-      "short_name": "AssetId<AudioInstance>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_asset::id::AssetId<bevy_kira_audio::source::AudioSource>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_asset::id::AssetId<bevy_kira_audio::source::AudioSource>",
-      "oneOf": [
-        {
-          "additionalProperties": false,
-          "long_name": "Index",
-          "properties": {
-            "index": {
-              "long_name": "index",
-              "type": {
-                "$ref": "#/$defs/bevy_asset::assets::AssetIndex"
-              }
-            }
-          },
-          "required": [
-            "index"
-          ],
-          "short_name": "Index",
-          "type": "object",
-          "typeInfo": "Struct"
-        },
-        {
-          "additionalProperties": false,
-          "long_name": "Uuid",
-          "properties": {
-            "uuid": {
-              "long_name": "uuid",
-              "type": {
-                "$ref": "#/$defs/uuid::Uuid"
-              }
-            }
-          },
-          "required": [
-            "uuid"
-          ],
-          "short_name": "Uuid",
-          "type": "object",
-          "typeInfo": "Struct"
-        }
-      ],
-      "short_name": "AssetId<AudioSource>",
       "type": "object",
       "typeInfo": "Enum"
     },
@@ -4893,1292 +4430,6 @@
         "value"
       ],
       "short_name": "GltfSceneExtras",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::ParticleEffect": {
-      "additionalProperties": false,
-      "isComponent": true,
-      "isResource": false,
-      "long_name": "bevy_hanabi::ParticleEffect",
-      "properties": {
-        "handle": {
-          "type": {
-            "$ref": "#/$defs/bevy_asset::handle::Handle<bevy_hanabi::asset::EffectAsset>"
-          }
-        }
-      },
-      "required": [
-        "handle"
-      ],
-      "short_name": "ParticleEffect",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::SimulationSpace": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::SimulationSpace",
-      "oneOf": [
-        "Global",
-        "Local"
-      ],
-      "short_name": "SimulationSpace",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::TextureLayout": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::TextureLayout",
-      "properties": {
-        "layout": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<bevy_hanabi::TextureSlot>"
-          }
-        }
-      },
-      "required": [
-        "layout"
-      ],
-      "short_name": "TextureLayout",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::TextureSlot": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::TextureSlot",
-      "properties": {
-        "name": {
-          "type": {
-            "$ref": "#/$defs/alloc::string::String"
-          }
-        }
-      },
-      "required": [
-        "name"
-      ],
-      "short_name": "TextureSlot",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::asset::AlphaMode": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::asset::AlphaMode",
-      "oneOf": [
-        {
-          "long_name": "Blend"
-        },
-        {
-          "long_name": "Premultiply"
-        },
-        {
-          "long_name": "Add"
-        },
-        {
-          "long_name": "Multiply"
-        },
-        {
-          "items": false,
-          "long_name": "Mask",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            }
-          ],
-          "short_name": "Mask",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "long_name": "Opaque"
-        }
-      ],
-      "short_name": "AlphaMode",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::asset::EffectAsset": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::asset::EffectAsset",
-      "properties": {
-        "alpha_mode": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::asset::AlphaMode"
-          }
-        },
-        "capacities": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<u32>"
-          }
-        },
-        "init": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<bevy_hanabi::spawn::Initializer>"
-          }
-        },
-        "mesh": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<bevy_asset::handle::Handle<bevy_mesh::mesh::Mesh>>"
-          }
-        },
-        "module": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::expr::Module"
-          }
-        },
-        "motion_integration": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::asset::MotionIntegration"
-          }
-        },
-        "name": {
-          "type": {
-            "$ref": "#/$defs/alloc::string::String"
-          }
-        },
-        "ribbon_group": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<usize>"
-          }
-        },
-        "simulation_condition": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::asset::SimulationCondition"
-          }
-        },
-        "simulation_space": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::SimulationSpace"
-          }
-        },
-        "z_layer_2d": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "capacities",
-        "init",
-        "z_layer_2d",
-        "simulation_space",
-        "simulation_condition",
-        "motion_integration",
-        "module",
-        "alpha_mode"
-      ],
-      "short_name": "EffectAsset",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::asset::MotionIntegration": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::asset::MotionIntegration",
-      "oneOf": [
-        "None",
-        "PreUpdate",
-        "PostUpdate"
-      ],
-      "short_name": "MotionIntegration",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::asset::SimulationCondition": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::asset::SimulationCondition",
-      "oneOf": [
-        "WhenVisible",
-        "Always"
-      ],
-      "short_name": "SimulationCondition",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::attribute::Attribute": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::attribute::Attribute",
-      "properties": {
-        "default_value": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::Value"
-          }
-        },
-        "name": {
-          "type": {
-            "$ref": "#/$defs/alloc::borrow::Cow<str>"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "default_value"
-      ],
-      "short_name": "Attribute",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::attributes::MatrixType": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::attributes::MatrixType",
-      "properties": {
-        "cols": {
-          "type": {
-            "$ref": "#/$defs/u8"
-          }
-        },
-        "rows": {
-          "type": {
-            "$ref": "#/$defs/u8"
-          }
-        }
-      },
-      "required": [
-        "rows",
-        "cols"
-      ],
-      "short_name": "MatrixType",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::attributes::ScalarType": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::attributes::ScalarType",
-      "oneOf": [
-        "Bool",
-        "Float",
-        "Int",
-        "Uint"
-      ],
-      "short_name": "ScalarType",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::attributes::ValueType": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::attributes::ValueType",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Scalar",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::attributes::ScalarType"
-              }
-            }
-          ],
-          "short_name": "Scalar",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Vector",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::attributes::VectorType"
-              }
-            }
-          ],
-          "short_name": "Vector",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Matrix",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::attributes::MatrixType"
-              }
-            }
-          ],
-          "short_name": "Matrix",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "ValueType",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::attributes::VectorType": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::attributes::VectorType",
-      "properties": {
-        "count": {
-          "type": {
-            "$ref": "#/$defs/u8"
-          }
-        },
-        "elem_type": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::attributes::ScalarType"
-          }
-        }
-      },
-      "required": [
-        "elem_type",
-        "count"
-      ],
-      "short_name": "VectorType",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::MatrixValue": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::MatrixValue",
-      "properties": {
-        "matrix_type": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::attributes::MatrixType"
-          }
-        },
-        "storage": {
-          "type": {
-            "$ref": "#/$defs/[f32; 16]"
-          }
-        }
-      },
-      "required": [
-        "matrix_type",
-        "storage"
-      ],
-      "short_name": "MatrixValue",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::ScalarValue": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::ScalarValue",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Bool",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bool"
-              }
-            }
-          ],
-          "short_name": "Bool",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Float",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/f32"
-              }
-            }
-          ],
-          "short_name": "Float",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Int",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/i32"
-              }
-            }
-          ],
-          "short_name": "Int",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Uint",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/u32"
-              }
-            }
-          ],
-          "short_name": "Uint",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "ScalarValue",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::graph::Value": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::Value",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Scalar",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::ScalarValue"
-              }
-            }
-          ],
-          "short_name": "Scalar",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Vector",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::VectorValue"
-              }
-            }
-          ],
-          "short_name": "Vector",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Matrix",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::MatrixValue"
-              }
-            }
-          ],
-          "short_name": "Matrix",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Value",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::graph::VectorValue": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::VectorValue",
-      "properties": {
-        "storage": {
-          "type": {
-            "$ref": "#/$defs/[u32; 4]"
-          }
-        },
-        "vector_type": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::attributes::VectorType"
-          }
-        }
-      },
-      "required": [
-        "vector_type",
-        "storage"
-      ],
-      "short_name": "VectorValue",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::AttributeExpr": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::AttributeExpr",
-      "properties": {
-        "attr": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::attribute::Attribute"
-          }
-        }
-      },
-      "required": [
-        "attr"
-      ],
-      "short_name": "AttributeExpr",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::BinaryOperator": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::BinaryOperator",
-      "oneOf": [
-        "Add",
-        "Cross",
-        "Distance",
-        "Div",
-        "Dot",
-        "GreaterThan",
-        "GreaterThanOrEqual",
-        "LessThan",
-        "LessThanOrEqual",
-        "Max",
-        "Min",
-        "Mul",
-        "Remainder",
-        "Step",
-        "Sub",
-        "UniformRand",
-        "NormalRand",
-        "Vec2"
-      ],
-      "short_name": "BinaryOperator",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::graph::expr::BuiltInExpr": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::BuiltInExpr",
-      "properties": {
-        "operator": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::expr::BuiltInOperator"
-          }
-        }
-      },
-      "required": [
-        "operator"
-      ],
-      "short_name": "BuiltInExpr",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::BuiltInOperator": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::BuiltInOperator",
-      "oneOf": [
-        {
-          "long_name": "Time"
-        },
-        {
-          "long_name": "DeltaTime"
-        },
-        {
-          "long_name": "VirtualTime"
-        },
-        {
-          "long_name": "VirtualDeltaTime"
-        },
-        {
-          "long_name": "RealTime"
-        },
-        {
-          "long_name": "RealDeltaTime"
-        },
-        {
-          "items": false,
-          "long_name": "Rand",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::attributes::ValueType"
-              }
-            }
-          ],
-          "short_name": "Rand",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "long_name": "AlphaCutoff"
-        },
-        {
-          "long_name": "IsAlive"
-        }
-      ],
-      "short_name": "BuiltInOperator",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::graph::expr::CastExpr": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::CastExpr",
-      "properties": {
-        "inner": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-          }
-        },
-        "target": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::attributes::ValueType"
-          }
-        }
-      },
-      "required": [
-        "inner",
-        "target"
-      ],
-      "short_name": "CastExpr",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::Expr": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::Expr",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "BuiltIn",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::BuiltInExpr"
-              }
-            }
-          ],
-          "short_name": "BuiltIn",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Literal",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::LiteralExpr"
-              }
-            }
-          ],
-          "short_name": "Literal",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Property",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::PropertyExpr"
-              }
-            }
-          ],
-          "short_name": "Property",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Attribute",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::AttributeExpr"
-              }
-            }
-          ],
-          "short_name": "Attribute",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "additionalProperties": false,
-          "long_name": "Unary",
-          "properties": {
-            "expr": {
-              "long_name": "expr",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            },
-            "op": {
-              "long_name": "op",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::UnaryOperator"
-              }
-            }
-          },
-          "required": [
-            "op",
-            "expr"
-          ],
-          "short_name": "Unary",
-          "type": "object",
-          "typeInfo": "Struct"
-        },
-        {
-          "additionalProperties": false,
-          "long_name": "Binary",
-          "properties": {
-            "left": {
-              "long_name": "left",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            },
-            "op": {
-              "long_name": "op",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::BinaryOperator"
-              }
-            },
-            "right": {
-              "long_name": "right",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            }
-          },
-          "required": [
-            "op",
-            "left",
-            "right"
-          ],
-          "short_name": "Binary",
-          "type": "object",
-          "typeInfo": "Struct"
-        },
-        {
-          "additionalProperties": false,
-          "long_name": "Ternary",
-          "properties": {
-            "first": {
-              "long_name": "first",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            },
-            "op": {
-              "long_name": "op",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::TernaryOperator"
-              }
-            },
-            "second": {
-              "long_name": "second",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            },
-            "third": {
-              "long_name": "third",
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-              }
-            }
-          },
-          "required": [
-            "op",
-            "first",
-            "second",
-            "third"
-          ],
-          "short_name": "Ternary",
-          "type": "object",
-          "typeInfo": "Struct"
-        },
-        {
-          "items": false,
-          "long_name": "Cast",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::CastExpr"
-              }
-            }
-          ],
-          "short_name": "Cast",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "TextureSample",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::graph::expr::TextureSampleExpr"
-              }
-            }
-          ],
-          "short_name": "TextureSample",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Expr",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::graph::expr::ExprHandle": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::ExprHandle",
-      "properties": {
-        "id": {
-          "type": {
-            "$ref": "#/$defs/core::num::NonZeroU32"
-          }
-        }
-      },
-      "required": [
-        "id"
-      ],
-      "short_name": "ExprHandle",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::LiteralExpr": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::LiteralExpr",
-      "properties": {
-        "value": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::Value"
-          }
-        }
-      },
-      "required": [
-        "value"
-      ],
-      "short_name": "LiteralExpr",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::Module": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::Module",
-      "properties": {
-        "expressions": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<bevy_hanabi::graph::expr::Expr>"
-          }
-        },
-        "properties": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<bevy_hanabi::properties::Property>"
-          }
-        },
-        "texture_layout": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::TextureLayout"
-          }
-        }
-      },
-      "required": [
-        "expressions",
-        "properties",
-        "texture_layout"
-      ],
-      "short_name": "Module",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::PropertyExpr": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::PropertyExpr",
-      "properties": {
-        "property": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::expr::PropertyHandle"
-          }
-        }
-      },
-      "required": [
-        "property"
-      ],
-      "short_name": "PropertyExpr",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::PropertyHandle": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::PropertyHandle",
-      "properties": {
-        "id": {
-          "type": {
-            "$ref": "#/$defs/core::num::NonZeroU32"
-          }
-        }
-      },
-      "required": [
-        "id"
-      ],
-      "short_name": "PropertyHandle",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::TernaryOperator": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::TernaryOperator",
-      "oneOf": [
-        "Mix",
-        "SmoothStep",
-        "Vec3"
-      ],
-      "short_name": "TernaryOperator",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::graph::expr::TextureSampleExpr": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::TextureSampleExpr",
-      "properties": {
-        "coordinates": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-          }
-        },
-        "image": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::expr::ExprHandle"
-          }
-        }
-      },
-      "required": [
-        "image",
-        "coordinates"
-      ],
-      "short_name": "TextureSampleExpr",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::graph::expr::UnaryOperator": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::graph::expr::UnaryOperator",
-      "oneOf": [
-        "Abs",
-        "All",
-        "Any",
-        "Ceil",
-        "Cos",
-        "Exp",
-        "Exp2",
-        "Floor",
-        "Fract",
-        "InvSqrt",
-        "Length",
-        "Log",
-        "Log2",
-        "Normalize",
-        "Pack4x8snorm",
-        "Pack4x8unorm",
-        "Saturate",
-        "Sign",
-        "Sin",
-        "Sqrt",
-        "Tan",
-        "Unpack4x8snorm",
-        "Unpack4x8unorm",
-        "W",
-        "X",
-        "Y",
-        "Z"
-      ],
-      "short_name": "UnaryOperator",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::properties::EffectProperties": {
-      "additionalProperties": false,
-      "isComponent": true,
-      "isResource": false,
-      "long_name": "bevy_hanabi::properties::EffectProperties",
-      "properties": {
-        "properties": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<bevy_hanabi::properties::PropertyInstance>"
-          }
-        }
-      },
-      "required": [
-        "properties"
-      ],
-      "short_name": "EffectProperties",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::properties::Property": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::properties::Property",
-      "properties": {
-        "default_value": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::Value"
-          }
-        },
-        "name": {
-          "type": {
-            "$ref": "#/$defs/alloc::string::String"
-          }
-        }
-      },
-      "required": [
-        "name",
-        "default_value"
-      ],
-      "short_name": "Property",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::properties::PropertyInstance": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::properties::PropertyInstance",
-      "properties": {
-        "def": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::properties::Property"
-          }
-        },
-        "value": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::graph::Value"
-          }
-        }
-      },
-      "required": [
-        "def",
-        "value"
-      ],
-      "short_name": "PropertyInstance",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::spawn::Cloner": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::spawn::Cloner",
-      "properties": {
-        "lifetime": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "period": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::spawn::CpuValue<f32>"
-          }
-        },
-        "src_group_index": {
-          "type": {
-            "$ref": "#/$defs/u32"
-          }
-        },
-        "starts_active": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        }
-      },
-      "required": [
-        "src_group_index",
-        "period",
-        "lifetime",
-        "starts_active"
-      ],
-      "short_name": "Cloner",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::spawn::CpuValue<f32>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::spawn::CpuValue<f32>",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Single",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/f32"
-              }
-            }
-          ],
-          "short_name": "Single",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Uniform",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/(f32, f32)"
-              }
-            }
-          ],
-          "short_name": "Uniform",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "CpuValue<f32>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::spawn::Initializer": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::spawn::Initializer",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Spawner",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::spawn::Spawner"
-              }
-            }
-          ],
-          "short_name": "Spawner",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Cloner",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_hanabi::spawn::Cloner"
-              }
-            }
-          ],
-          "short_name": "Cloner",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Initializer",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_hanabi::spawn::Spawner": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::spawn::Spawner",
-      "properties": {
-        "count": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::spawn::CpuValue<f32>"
-          }
-        },
-        "period": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::spawn::CpuValue<f32>"
-          }
-        },
-        "spawn_duration": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::spawn::CpuValue<f32>"
-          }
-        },
-        "starts_active": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        },
-        "starts_immediately": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        }
-      },
-      "required": [
-        "count",
-        "spawn_duration",
-        "period",
-        "starts_active",
-        "starts_immediately"
-      ],
-      "short_name": "Spawner",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_hanabi::time::EffectSimulation": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_hanabi::time::EffectSimulation",
-      "properties": {
-        "effective_speed": {
-          "type": {
-            "$ref": "#/$defs/f64"
-          }
-        },
-        "paused": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        },
-        "relative_speed": {
-          "type": {
-            "$ref": "#/$defs/f64"
-          }
-        }
-      },
-      "required": [
-        "paused",
-        "relative_speed",
-        "effective_speed"
-      ],
-      "short_name": "EffectSimulation",
       "type": "object",
       "typeInfo": "Struct"
     },
@@ -10738,6 +8989,624 @@
       "type": "object",
       "typeInfo": "Struct"
     },
+    "bevy_rapier3d::dynamics::CoefficientCombineRule": {
+      "isComponent": false,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::CoefficientCombineRule",
+      "oneOf": [
+        "Average",
+        "Min",
+        "Multiply",
+        "Max"
+      ],
+      "short_name": "CoefficientCombineRule",
+      "type": "string",
+      "typeInfo": "Enum"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::AdditionalMassProperties": {
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::AdditionalMassProperties",
+      "oneOf": [
+        {
+          "items": false,
+          "long_name": "Mass",
+          "prefixItems": [
+            {
+              "type": {
+                "$ref": "#/$defs/f32"
+              }
+            }
+          ],
+          "short_name": "Mass",
+          "type": "array",
+          "typeInfo": "Tuple"
+        },
+        {
+          "items": false,
+          "long_name": "MassProperties",
+          "prefixItems": [
+            {
+              "type": {
+                "$ref": "#/$defs/bevy_rapier3d::dynamics::rigid_body::MassProperties"
+              }
+            }
+          ],
+          "short_name": "MassProperties",
+          "type": "array",
+          "typeInfo": "Tuple"
+        }
+      ],
+      "short_name": "AdditionalMassProperties",
+      "type": "object",
+      "typeInfo": "Enum"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::Ccd": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::Ccd",
+      "properties": {
+        "enabled": {
+          "type": {
+            "$ref": "#/$defs/bool"
+          }
+        }
+      },
+      "required": [
+        "enabled"
+      ],
+      "short_name": "Ccd",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::Damping": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::Damping",
+      "properties": {
+        "angular_damping": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        "linear_damping": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
+      },
+      "required": [
+        "linear_damping",
+        "angular_damping"
+      ],
+      "short_name": "Damping",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::Dominance": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::Dominance",
+      "properties": {
+        "groups": {
+          "type": {
+            "$ref": "#/$defs/i8"
+          }
+        }
+      },
+      "required": [
+        "groups"
+      ],
+      "short_name": "Dominance",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::ExternalForce": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::ExternalForce",
+      "properties": {
+        "force": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        },
+        "torque": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        }
+      },
+      "required": [
+        "force",
+        "torque"
+      ],
+      "short_name": "ExternalForce",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::ExternalImpulse": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::ExternalImpulse",
+      "properties": {
+        "impulse": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        },
+        "torque_impulse": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        }
+      },
+      "required": [
+        "impulse",
+        "torque_impulse"
+      ],
+      "short_name": "ExternalImpulse",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::GravityScale": {
+      "isComponent": true,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::GravityScale",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
+      ],
+      "short_name": "GravityScale",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::LockedAxes": {
+      "isComponent": true,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::LockedAxes",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/u8"
+          }
+        }
+      ],
+      "short_name": "LockedAxes",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::MassProperties": {
+      "additionalProperties": false,
+      "isComponent": false,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::MassProperties",
+      "properties": {
+        "local_center_of_mass": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        },
+        "mass": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        "principal_inertia": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        },
+        "principal_inertia_local_frame": {
+          "type": {
+            "$ref": "#/$defs/glam::Quat"
+          }
+        }
+      },
+      "required": [
+        "local_center_of_mass",
+        "mass",
+        "principal_inertia_local_frame",
+        "principal_inertia"
+      ],
+      "short_name": "MassProperties",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::RigidBody": {
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::RigidBody",
+      "oneOf": [
+        "Dynamic",
+        "Fixed",
+        "KinematicPositionBased",
+        "KinematicVelocityBased"
+      ],
+      "short_name": "RigidBody",
+      "type": "string",
+      "typeInfo": "Enum"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::Sleeping": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::Sleeping",
+      "properties": {
+        "angular_threshold": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        "normalized_linear_threshold": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        "sleeping": {
+          "type": {
+            "$ref": "#/$defs/bool"
+          }
+        }
+      },
+      "required": [
+        "normalized_linear_threshold",
+        "angular_threshold",
+        "sleeping"
+      ],
+      "short_name": "Sleeping",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::SoftCcd": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::SoftCcd",
+      "properties": {
+        "prediction": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
+      },
+      "required": [
+        "prediction"
+      ],
+      "short_name": "SoftCcd",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::dynamics::rigid_body::Velocity": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::dynamics::rigid_body::Velocity",
+      "properties": {
+        "angvel": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        },
+        "linvel": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        }
+      },
+      "required": [
+        "linvel",
+        "angvel"
+      ],
+      "short_name": "Velocity",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::geometry::collider::CollidingEntities": {
+      "isComponent": true,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::geometry::collider::CollidingEntities",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/bevy_utils::hashbrown::HashSet<bevy_ecs::entity::Entity, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
+          }
+        }
+      ],
+      "short_name": "CollidingEntities",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::geometry::collider::CollisionGroups": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::geometry::collider::CollisionGroups",
+      "properties": {
+        "filters": {
+          "type": {
+            "$ref": "#/$defs/bevy_rapier3d::geometry::collider::Group"
+          }
+        },
+        "memberships": {
+          "type": {
+            "$ref": "#/$defs/bevy_rapier3d::geometry::collider::Group"
+          }
+        }
+      },
+      "required": [
+        "memberships",
+        "filters"
+      ],
+      "short_name": "CollisionGroups",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::geometry::collider::ContactForceEventThreshold": {
+      "isComponent": true,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::geometry::collider::ContactForceEventThreshold",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
+      ],
+      "short_name": "ContactForceEventThreshold",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::geometry::collider::ContactSkin": {
+      "isComponent": true,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::geometry::collider::ContactSkin",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
+      ],
+      "short_name": "ContactSkin",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::geometry::collider::Friction": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::geometry::collider::Friction",
+      "properties": {
+        "coefficient": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        "combine_rule": {
+          "type": {
+            "$ref": "#/$defs/bevy_rapier3d::dynamics::CoefficientCombineRule"
+          }
+        }
+      },
+      "required": [
+        "coefficient",
+        "combine_rule"
+      ],
+      "short_name": "Friction",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::geometry::collider::Group": {
+      "isComponent": true,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::geometry::collider::Group",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/u32"
+          }
+        }
+      ],
+      "short_name": "Group",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::geometry::collider::Restitution": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::geometry::collider::Restitution",
+      "properties": {
+        "coefficient": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        "combine_rule": {
+          "type": {
+            "$ref": "#/$defs/bevy_rapier3d::dynamics::CoefficientCombineRule"
+          }
+        }
+      },
+      "required": [
+        "coefficient",
+        "combine_rule"
+      ],
+      "short_name": "Restitution",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::geometry::collider::Sensor": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::geometry::collider::Sensor",
+      "properties": {},
+      "required": [],
+      "short_name": "Sensor",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::geometry::collider::SolverGroups": {
+      "additionalProperties": false,
+      "isComponent": true,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::geometry::collider::SolverGroups",
+      "properties": {
+        "filters": {
+          "type": {
+            "$ref": "#/$defs/bevy_rapier3d::geometry::collider::Group"
+          }
+        },
+        "memberships": {
+          "type": {
+            "$ref": "#/$defs/bevy_rapier3d::geometry::collider::Group"
+          }
+        }
+      },
+      "required": [
+        "memberships",
+        "filters"
+      ],
+      "short_name": "SolverGroups",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::plugin::configuration::RapierConfiguration": {
+      "additionalProperties": false,
+      "isComponent": false,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::plugin::configuration::RapierConfiguration",
+      "properties": {
+        "force_update_from_transform_changes": {
+          "type": {
+            "$ref": "#/$defs/bool"
+          }
+        },
+        "gravity": {
+          "type": {
+            "$ref": "#/$defs/glam::Vec3"
+          }
+        },
+        "physics_pipeline_active": {
+          "type": {
+            "$ref": "#/$defs/bool"
+          }
+        },
+        "query_pipeline_active": {
+          "type": {
+            "$ref": "#/$defs/bool"
+          }
+        },
+        "scaled_shape_subdivision": {
+          "type": {
+            "$ref": "#/$defs/u32"
+          }
+        }
+      },
+      "required": [
+        "gravity",
+        "physics_pipeline_active",
+        "query_pipeline_active",
+        "scaled_shape_subdivision",
+        "force_update_from_transform_changes"
+      ],
+      "short_name": "RapierConfiguration",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::plugin::configuration::SimulationToRenderTime": {
+      "additionalProperties": false,
+      "isComponent": false,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::plugin::configuration::SimulationToRenderTime",
+      "properties": {
+        "diff": {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
+      },
+      "required": [
+        "diff"
+      ],
+      "short_name": "SimulationToRenderTime",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::plugin::context::DefaultRapierContext": {
+      "additionalProperties": false,
+      "isComponent": false,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::plugin::context::DefaultRapierContext",
+      "properties": {},
+      "required": [],
+      "short_name": "DefaultRapierContext",
+      "type": "object",
+      "typeInfo": "Struct"
+    },
+    "bevy_rapier3d::plugin::context::RapierContextEntityLink": {
+      "isComponent": false,
+      "isResource": false,
+      "items": false,
+      "long_name": "bevy_rapier3d::plugin::context::RapierContextEntityLink",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/bevy_ecs::entity::Entity"
+          }
+        }
+      ],
+      "short_name": "RapierContextEntityLink",
+      "type": "array",
+      "typeInfo": "TupleStruct"
+    },
+    "bevy_rapier3d::plugin::plugin::RapierContextInitialization": {
+      "isComponent": false,
+      "isResource": false,
+      "long_name": "bevy_rapier3d::plugin::plugin::RapierContextInitialization",
+      "oneOf": [
+        {
+          "long_name": "NoAutomaticRapierContext"
+        },
+        {
+          "additionalProperties": false,
+          "long_name": "InitializeDefaultRapierContext",
+          "properties": {
+            "length_unit": {
+              "long_name": "length_unit",
+              "type": {
+                "$ref": "#/$defs/f32"
+              }
+            }
+          },
+          "required": [
+            "length_unit"
+          ],
+          "short_name": "InitializeDefaultRapierContext",
+          "type": "object",
+          "typeInfo": "Struct"
+        }
+      ],
+      "short_name": "RapierContextInitialization",
+      "type": "object",
+      "typeInfo": "Enum"
+    },
     "bevy_render::alpha::AlphaMode": {
       "isComponent": false,
       "isResource": false,
@@ -11810,175 +10679,6 @@
       "type": "array",
       "typeInfo": "TupleStruct"
     },
-    "bevy_simple_text_input::TextInputCursorPos": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "bevy_simple_text_input::TextInputCursorPos",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/usize"
-          }
-        }
-      ],
-      "short_name": "TextInputCursorPos",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "bevy_simple_text_input::TextInputCursorTimer": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_simple_text_input::TextInputCursorTimer",
-      "properties": {
-        "should_reset": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        },
-        "timer": {
-          "type": {
-            "$ref": "#/$defs/bevy_time::timer::Timer"
-          }
-        }
-      },
-      "required": [
-        "timer",
-        "should_reset"
-      ],
-      "short_name": "TextInputCursorTimer",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_simple_text_input::TextInputInactive": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "bevy_simple_text_input::TextInputInactive",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        }
-      ],
-      "short_name": "TextInputInactive",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "bevy_simple_text_input::TextInputInner": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_simple_text_input::TextInputInner",
-      "properties": {},
-      "required": [],
-      "short_name": "TextInputInner",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_simple_text_input::TextInputPlaceholder": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_simple_text_input::TextInputPlaceholder",
-      "properties": {
-        "text_color": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<bevy_text::text::TextColor>"
-          }
-        },
-        "text_font": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<bevy_text::text::TextFont>"
-          }
-        },
-        "value": {
-          "type": {
-            "$ref": "#/$defs/alloc::string::String"
-          }
-        }
-      },
-      "required": [
-        "value"
-      ],
-      "short_name": "TextInputPlaceholder",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_simple_text_input::TextInputSettings": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_simple_text_input::TextInputSettings",
-      "properties": {
-        "mask_character": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<char>"
-          }
-        },
-        "retain_on_submit": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        }
-      },
-      "required": [
-        "retain_on_submit"
-      ],
-      "short_name": "TextInputSettings",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_simple_text_input::TextInputTextColor": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "bevy_simple_text_input::TextInputTextColor",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/bevy_text::text::TextColor"
-          }
-        }
-      ],
-      "short_name": "TextInputTextColor",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "bevy_simple_text_input::TextInputTextFont": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "bevy_simple_text_input::TextInputTextFont",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/bevy_text::text::TextFont"
-          }
-        }
-      ],
-      "short_name": "TextInputTextFont",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "bevy_simple_text_input::TextInputValue": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "bevy_simple_text_input::TextInputValue",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/alloc::string::String"
-          }
-        }
-      ],
-      "short_name": "TextInputValue",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
     "bevy_sprite::SpriteSource": {
       "additionalProperties": false,
       "isComponent": true,
@@ -12890,85 +11590,6 @@
         "elapsed_secs_wrapped_f64"
       ],
       "short_name": "Time<()>",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "bevy_time::time::Time<bevy_hanabi::time::EffectSimulation>": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": true,
-      "long_name": "bevy_time::time::Time<bevy_hanabi::time::EffectSimulation>",
-      "properties": {
-        "context": {
-          "type": {
-            "$ref": "#/$defs/bevy_hanabi::time::EffectSimulation"
-          }
-        },
-        "delta": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::Duration"
-          }
-        },
-        "delta_secs": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "delta_secs_f64": {
-          "type": {
-            "$ref": "#/$defs/f64"
-          }
-        },
-        "elapsed": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::Duration"
-          }
-        },
-        "elapsed_secs": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "elapsed_secs_f64": {
-          "type": {
-            "$ref": "#/$defs/f64"
-          }
-        },
-        "elapsed_secs_wrapped": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "elapsed_secs_wrapped_f64": {
-          "type": {
-            "$ref": "#/$defs/f64"
-          }
-        },
-        "elapsed_wrapped": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::Duration"
-          }
-        },
-        "wrap_period": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::Duration"
-          }
-        }
-      },
-      "required": [
-        "context",
-        "wrap_period",
-        "delta",
-        "delta_secs",
-        "delta_secs_f64",
-        "elapsed",
-        "elapsed_secs",
-        "elapsed_secs_f64",
-        "elapsed_wrapped",
-        "elapsed_secs_wrapped",
-        "elapsed_secs_wrapped_f64"
-      ],
-      "short_name": "Time<EffectSimulation>",
       "type": "object",
       "typeInfo": "Struct"
     },
@@ -15142,24 +13763,6 @@
         }
       }
     },
-    "bevy_utils::hashbrown::HashMap<core::any::TypeId, leafwing_input_manager::user_input::updating::UpdatedValues, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/core::any::TypeId"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<core::any::TypeId, leafwing_input_manager::user_input::updating::UpdatedValues, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<TypeId, UpdatedValues, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/leafwing_input_manager::user_input::updating::UpdatedValues"
-        }
-      }
-    },
     "bevy_utils::hashbrown::HashMap<petgraph::graph::NodeIndex, bevy_animation::ActiveAnimation, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
       "isComponent": false,
       "isResource": false,
@@ -15196,168 +13799,6 @@
         }
       }
     },
-    "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>, f32, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>, f32, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<Box<dyn Axislike>, f32, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/f32"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>, leafwing_input_manager::buttonlike::ButtonValue, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>, leafwing_input_manager::buttonlike::ButtonValue, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<Box<dyn Buttonlike>, ButtonValue, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/leafwing_input_manager::buttonlike::ButtonValue"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>, glam::Vec2, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>, glam::Vec2, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<Box<dyn DualAxislike>, Vec2, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/glam::Vec2"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>, glam::Vec3, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>, glam::Vec3, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<Box<dyn TripleAxislike>, Vec3, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/glam::Vec3"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/tanks_client::input::PlayerInputAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<PlayerInputAction, Vec<Box<dyn Axislike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/tanks_client::input::PlayerInputAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<PlayerInputAction, Vec<Box<dyn Buttonlike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/tanks_client::input::PlayerInputAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<PlayerInputAction, Vec<Box<dyn DualAxislike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/tanks_client::input::PlayerInputAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<PlayerInputAction, Vec<Box<dyn TripleAxislike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, leafwing_input_manager::action_state::action_data::ActionData, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/tanks_client::input::PlayerInputAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, leafwing_input_manager::action_state::action_data::ActionData, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<PlayerInputAction, ActionData, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::ActionData"
-        }
-      }
-    },
     "bevy_utils::hashbrown::HashMap<u32, alloc::vec::Vec<alloc::string::String>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
       "isComponent": false,
       "isResource": false,
@@ -15376,95 +13817,18 @@
         }
       }
     },
-    "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
+    "bevy_utils::hashbrown::HashSet<bevy_ecs::entity::Entity, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
       "isComponent": false,
       "isResource": false,
-      "keyType": {
+      "items": {
         "type": {
-          "$ref": "#/$defs/utils::controller::orbiter::OrbiterTransformAction"
+          "$ref": "#/$defs/bevy_ecs::entity::Entity"
         }
       },
-      "long_name": "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<OrbiterTransformAction, Vec<Box<dyn Axislike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/utils::controller::orbiter::OrbiterTransformAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<OrbiterTransformAction, Vec<Box<dyn Buttonlike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/utils::controller::orbiter::OrbiterTransformAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<OrbiterTransformAction, Vec<Box<dyn DualAxislike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/utils::controller::orbiter::OrbiterTransformAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<OrbiterTransformAction, Vec<Box<dyn TripleAxislike>>, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>"
-        }
-      }
-    },
-    "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, leafwing_input_manager::action_state::action_data::ActionData, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "keyType": {
-        "type": {
-          "$ref": "#/$defs/utils::controller::orbiter::OrbiterTransformAction"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, leafwing_input_manager::action_state::action_data::ActionData, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashMap<OrbiterTransformAction, ActionData, DefaultHashBuilder>",
-      "type": "object",
-      "typeInfo": "Map",
-      "valueType": {
-        "type": {
-          "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::ActionData"
-        }
-      }
+      "long_name": "bevy_utils::hashbrown::HashSet<bevy_ecs::entity::Entity, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
+      "short_name": "HashSet<Entity, DefaultHashBuilder>",
+      "type": "set",
+      "typeInfo": "Set"
     },
     "bevy_utils::hashbrown::HashSet<bevy_input::gamepad::GamepadButton, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
       "isComponent": false,
@@ -15476,19 +13840,6 @@
       },
       "long_name": "bevy_utils::hashbrown::HashSet<bevy_input::gamepad::GamepadButton, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
       "short_name": "HashSet<GamepadButton, DefaultHashBuilder>",
-      "type": "set",
-      "typeInfo": "Set"
-    },
-    "bevy_utils::hashbrown::HashSet<core::any::TypeId, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>": {
-      "isComponent": false,
-      "isResource": false,
-      "items": {
-        "type": {
-          "$ref": "#/$defs/core::any::TypeId"
-        }
-      },
-      "long_name": "bevy_utils::hashbrown::HashSet<core::any::TypeId, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>",
-      "short_name": "HashSet<TypeId, DefaultHashBuilder>",
       "type": "set",
       "typeInfo": "Set"
     },
@@ -16514,50 +14865,6 @@
       "type": "object",
       "typeInfo": "Struct"
     },
-    "bevy_window::system_cursor::SystemCursorIcon": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_window::system_cursor::SystemCursorIcon",
-      "oneOf": [
-        "Default",
-        "ContextMenu",
-        "Help",
-        "Pointer",
-        "Progress",
-        "Wait",
-        "Cell",
-        "Crosshair",
-        "Text",
-        "VerticalText",
-        "Alias",
-        "Copy",
-        "Move",
-        "NoDrop",
-        "NotAllowed",
-        "Grab",
-        "Grabbing",
-        "EResize",
-        "NResize",
-        "NeResize",
-        "NwResize",
-        "SResize",
-        "SeResize",
-        "SwResize",
-        "WResize",
-        "EwResize",
-        "NsResize",
-        "NeswResize",
-        "NwseResize",
-        "ColResize",
-        "RowResize",
-        "AllScroll",
-        "ZoomIn",
-        "ZoomOut"
-      ],
-      "short_name": "SystemCursorIcon",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
     "bevy_window::window::CompositeAlphaMode": {
       "isComponent": false,
       "isResource": false,
@@ -17203,79 +15510,6 @@
       "type": "string",
       "typeInfo": "Enum"
     },
-    "bevy_winit::cursor::CursorIcon": {
-      "isComponent": true,
-      "isResource": false,
-      "long_name": "bevy_winit::cursor::CursorIcon",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Custom",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_winit::cursor::CustomCursor"
-              }
-            }
-          ],
-          "short_name": "Custom",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "System",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_window::system_cursor::SystemCursorIcon"
-              }
-            }
-          ],
-          "short_name": "System",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "CursorIcon",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "bevy_winit::cursor::CustomCursor": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "bevy_winit::cursor::CustomCursor",
-      "oneOf": [
-        {
-          "additionalProperties": false,
-          "long_name": "Image",
-          "properties": {
-            "handle": {
-              "long_name": "handle",
-              "type": {
-                "$ref": "#/$defs/bevy_asset::handle::Handle<bevy_image::image::Image>"
-              }
-            },
-            "hotspot": {
-              "long_name": "hotspot",
-              "type": {
-                "$ref": "#/$defs/(u16, u16)"
-              }
-            }
-          },
-          "required": [
-            "handle",
-            "hotspot"
-          ],
-          "short_name": "Image",
-          "type": "object",
-          "typeInfo": "Struct"
-        }
-      ],
-      "short_name": "CustomCursor",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
     "blenvy::blueprints::animation::AnimationInfo": {
       "additionalProperties": false,
       "isComponent": false,
@@ -17731,14 +15965,6 @@
       "long_name": "char",
       "short_name": "char",
       "type": "string",
-      "typeInfo": "Value"
-    },
-    "core::any::TypeId": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "core::any::TypeId",
-      "short_name": "TypeId",
-      "type": "object",
       "typeInfo": "Value"
     },
     "core::num::NonZeroI16": {
@@ -18213,60 +16439,6 @@
       "type": "object",
       "typeInfo": "Enum"
     },
-    "core::option::Option<bevy_text::text::TextColor>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "core::option::Option<bevy_text::text::TextColor>",
-      "oneOf": [
-        {
-          "long_name": "None"
-        },
-        {
-          "items": false,
-          "long_name": "Some",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_text::text::TextColor"
-              }
-            }
-          ],
-          "short_name": "Some",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Option<TextColor>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "core::option::Option<bevy_text::text::TextFont>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "core::option::Option<bevy_text::text::TextFont>",
-      "oneOf": [
-        {
-          "long_name": "None"
-        },
-        {
-          "items": false,
-          "long_name": "Some",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_text::text::TextFont"
-              }
-            }
-          ],
-          "short_name": "Some",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Option<TextFont>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
     "core::option::Option<bevy_utils::Instant>": {
       "isComponent": false,
       "isResource": false,
@@ -18669,33 +16841,6 @@
         }
       ],
       "short_name": "Option<u32>",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "core::option::Option<usize>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "core::option::Option<usize>",
-      "oneOf": [
-        {
-          "long_name": "None"
-        },
-        {
-          "items": false,
-          "long_name": "Some",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/usize"
-              }
-            }
-          ],
-          "short_name": "Some",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "Option<usize>",
       "type": "object",
       "typeInfo": "Enum"
     },
@@ -19173,1470 +17318,6 @@
       "type": "int",
       "typeInfo": "Value"
     },
-    "leafwing_input_manager::action_state::ActionState<tanks_client::input::PlayerInputAction>": {
-      "additionalProperties": false,
-      "isComponent": true,
-      "isResource": true,
-      "long_name": "leafwing_input_manager::action_state::ActionState<tanks_client::input::PlayerInputAction>",
-      "properties": {
-        "action_data": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, leafwing_input_manager::action_state::action_data::ActionData, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "disabled": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        }
-      },
-      "required": [
-        "disabled",
-        "action_data"
-      ],
-      "short_name": "ActionState<PlayerInputAction>",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::action_state::ActionState<utils::controller::orbiter::OrbiterTransformAction>": {
-      "additionalProperties": false,
-      "isComponent": true,
-      "isResource": true,
-      "long_name": "leafwing_input_manager::action_state::ActionState<utils::controller::orbiter::OrbiterTransformAction>",
-      "properties": {
-        "action_data": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, leafwing_input_manager::action_state::action_data::ActionData, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "disabled": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        }
-      },
-      "required": [
-        "disabled",
-        "action_data"
-      ],
-      "short_name": "ActionState<OrbiterTransformAction>",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::action_state::action_data::ActionData": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::action_state::action_data::ActionData",
-      "properties": {
-        "disabled": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        },
-        "kind_data": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::ActionKindData"
-          }
-        }
-      },
-      "required": [
-        "disabled",
-        "kind_data"
-      ],
-      "short_name": "ActionData",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::action_state::action_data::ActionKindData": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::action_state::action_data::ActionKindData",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Button",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::ButtonData"
-              }
-            }
-          ],
-          "short_name": "Button",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Axis",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::AxisData"
-              }
-            }
-          ],
-          "short_name": "Axis",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "DualAxis",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::DualAxisData"
-              }
-            }
-          ],
-          "short_name": "DualAxis",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "TripleAxis",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::action_state::action_data::TripleAxisData"
-              }
-            }
-          ],
-          "short_name": "TripleAxis",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "ActionKindData",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::action_state::action_data::AxisData": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::action_state::action_data::AxisData",
-      "properties": {
-        "fixed_update_value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "update_value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "value",
-        "update_value",
-        "fixed_update_value"
-      ],
-      "short_name": "AxisData",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::action_state::action_data::ButtonData": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::action_state::action_data::ButtonData",
-      "properties": {
-        "fixed_update_state": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::buttonlike::ButtonState"
-          }
-        },
-        "fixed_update_value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "state": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::buttonlike::ButtonState"
-          }
-        },
-        "update_state": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::buttonlike::ButtonState"
-          }
-        },
-        "update_value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "state",
-        "update_state",
-        "fixed_update_state",
-        "value",
-        "update_value",
-        "fixed_update_value"
-      ],
-      "short_name": "ButtonData",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::action_state::action_data::DualAxisData": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::action_state::action_data::DualAxisData",
-      "properties": {
-        "fixed_update_pair": {
-          "type": {
-            "$ref": "#/$defs/glam::Vec2"
-          }
-        },
-        "pair": {
-          "type": {
-            "$ref": "#/$defs/glam::Vec2"
-          }
-        },
-        "update_pair": {
-          "type": {
-            "$ref": "#/$defs/glam::Vec2"
-          }
-        }
-      },
-      "required": [
-        "pair",
-        "update_pair",
-        "fixed_update_pair"
-      ],
-      "short_name": "DualAxisData",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::action_state::action_data::TripleAxisData": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::action_state::action_data::TripleAxisData",
-      "properties": {
-        "fixed_update_triple": {
-          "type": {
-            "$ref": "#/$defs/glam::Vec3"
-          }
-        },
-        "triple": {
-          "type": {
-            "$ref": "#/$defs/glam::Vec3"
-          }
-        },
-        "update_triple": {
-          "type": {
-            "$ref": "#/$defs/glam::Vec3"
-          }
-        }
-      },
-      "required": [
-        "triple",
-        "update_triple",
-        "fixed_update_triple"
-      ],
-      "short_name": "TripleAxisData",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::axislike::AxisDirection": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::axislike::AxisDirection",
-      "oneOf": [
-        "Negative",
-        "Positive"
-      ],
-      "short_name": "AxisDirection",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::axislike::DualAxisDirection": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::axislike::DualAxisDirection",
-      "oneOf": [
-        "Up",
-        "Down",
-        "Left",
-        "Right"
-      ],
-      "short_name": "DualAxisDirection",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::axislike::DualAxisType": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::axislike::DualAxisType",
-      "oneOf": [
-        "X",
-        "Y"
-      ],
-      "short_name": "DualAxisType",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::buttonlike::ButtonState": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::buttonlike::ButtonState",
-      "oneOf": [
-        "JustPressed",
-        "Pressed",
-        "JustReleased",
-        "Released"
-      ],
-      "short_name": "ButtonState",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::buttonlike::ButtonValue": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::buttonlike::ButtonValue",
-      "properties": {
-        "pressed": {
-          "type": {
-            "$ref": "#/$defs/bool"
-          }
-        },
-        "value": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "pressed",
-        "value"
-      ],
-      "short_name": "ButtonValue",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_map::InputMap<tanks_client::input::PlayerInputAction>": {
-      "additionalProperties": false,
-      "isComponent": true,
-      "isResource": true,
-      "long_name": "leafwing_input_manager::input_map::InputMap<tanks_client::input::PlayerInputAction>",
-      "properties": {
-        "associated_gamepad": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<bevy_ecs::entity::Entity>"
-          }
-        },
-        "axislike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "buttonlike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "dual_axislike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "triple_axislike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<tanks_client::input::PlayerInputAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        }
-      },
-      "required": [
-        "buttonlike_map",
-        "axislike_map",
-        "dual_axislike_map",
-        "triple_axislike_map"
-      ],
-      "short_name": "InputMap<PlayerInputAction>",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_map::InputMap<utils::controller::orbiter::OrbiterTransformAction>": {
-      "additionalProperties": false,
-      "isComponent": true,
-      "isResource": true,
-      "long_name": "leafwing_input_manager::input_map::InputMap<utils::controller::orbiter::OrbiterTransformAction>",
-      "properties": {
-        "associated_gamepad": {
-          "type": {
-            "$ref": "#/$defs/core::option::Option<bevy_ecs::entity::Entity>"
-          }
-        },
-        "axislike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "buttonlike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "dual_axislike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "triple_axislike_map": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<utils::controller::orbiter::OrbiterTransformAction, alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>>, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        }
-      },
-      "required": [
-        "buttonlike_map",
-        "axislike_map",
-        "dual_axislike_map",
-        "triple_axislike_map"
-      ],
-      "short_name": "InputMap<OrbiterTransformAction>",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::DualAxisInverted": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::DualAxisInverted",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/glam::Vec2"
-          }
-        }
-      ],
-      "short_name": "DualAxisInverted",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor",
-      "oneOf": [
-        {
-          "long_name": "Digital"
-        },
-        {
-          "items": false,
-          "long_name": "Inverted",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::DualAxisInverted"
-              }
-            }
-          ],
-          "short_name": "Inverted",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Sensitivity",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::DualAxisSensitivity"
-              }
-            }
-          ],
-          "short_name": "Sensitivity",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "ValueBounds",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::range::DualAxisBounds"
-              }
-            }
-          ],
-          "short_name": "ValueBounds",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Exclusion",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::range::DualAxisExclusion"
-              }
-            }
-          ],
-          "short_name": "Exclusion",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "DeadZone",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::range::DualAxisDeadZone"
-              }
-            }
-          ],
-          "short_name": "DeadZone",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "CircleBounds",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::circle::CircleBounds"
-              }
-            }
-          ],
-          "short_name": "CircleBounds",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "CircleExclusion",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::circle::CircleExclusion"
-              }
-            }
-          ],
-          "short_name": "CircleExclusion",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "CircleDeadZone",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::dual_axis::circle::CircleDeadZone"
-              }
-            }
-          ],
-          "short_name": "CircleDeadZone",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Custom",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::input_processing::dual_axis::custom::CustomDualAxisProcessor>"
-              }
-            }
-          ],
-          "short_name": "Custom",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "DualAxisProcessor",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::DualAxisSensitivity": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::DualAxisSensitivity",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/glam::Vec2"
-          }
-        }
-      ],
-      "short_name": "DualAxisSensitivity",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::circle::CircleBounds": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::circle::CircleBounds",
-      "properties": {
-        "radius": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "radius"
-      ],
-      "short_name": "CircleBounds",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::circle::CircleDeadZone": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::circle::CircleDeadZone",
-      "properties": {
-        "livezone_recip": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "radius": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "radius",
-        "livezone_recip"
-      ],
-      "short_name": "CircleDeadZone",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::circle::CircleExclusion": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::circle::CircleExclusion",
-      "properties": {
-        "radius_squared": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "radius_squared"
-      ],
-      "short_name": "CircleExclusion",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::range::DualAxisBounds": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::range::DualAxisBounds",
-      "properties": {
-        "bounds_x": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisBounds"
-          }
-        },
-        "bounds_y": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisBounds"
-          }
-        }
-      },
-      "required": [
-        "bounds_x",
-        "bounds_y"
-      ],
-      "short_name": "DualAxisBounds",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::range::DualAxisDeadZone": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::range::DualAxisDeadZone",
-      "properties": {
-        "deadzone_x": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisDeadZone"
-          }
-        },
-        "deadzone_y": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisDeadZone"
-          }
-        }
-      },
-      "required": [
-        "deadzone_x",
-        "deadzone_y"
-      ],
-      "short_name": "DualAxisDeadZone",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::dual_axis::range::DualAxisExclusion": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::dual_axis::range::DualAxisExclusion",
-      "properties": {
-        "exclusion_x": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisExclusion"
-          }
-        },
-        "exclusion_y": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisExclusion"
-          }
-        }
-      },
-      "required": [
-        "exclusion_x",
-        "exclusion_y"
-      ],
-      "short_name": "DualAxisExclusion",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::single_axis::AxisProcessor": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::single_axis::AxisProcessor",
-      "oneOf": [
-        {
-          "long_name": "Digital"
-        },
-        {
-          "long_name": "Inverted"
-        },
-        {
-          "items": false,
-          "long_name": "Sensitivity",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/f32"
-              }
-            }
-          ],
-          "short_name": "Sensitivity",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "ValueBounds",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisBounds"
-              }
-            }
-          ],
-          "short_name": "ValueBounds",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Exclusion",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisExclusion"
-              }
-            }
-          ],
-          "short_name": "Exclusion",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "DeadZone",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisDeadZone"
-              }
-            }
-          ],
-          "short_name": "DeadZone",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Custom",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::input_processing::single_axis::custom::CustomAxisProcessor>"
-              }
-            }
-          ],
-          "short_name": "Custom",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "AxisProcessor",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::input_processing::single_axis::range::AxisBounds": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::single_axis::range::AxisBounds",
-      "properties": {
-        "max": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "min": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "min",
-        "max"
-      ],
-      "short_name": "AxisBounds",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::single_axis::range::AxisDeadZone": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::single_axis::range::AxisDeadZone",
-      "properties": {
-        "exclusion": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::input_processing::single_axis::range::AxisExclusion"
-          }
-        },
-        "livezone_lower_recip": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "livezone_upper_recip": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "exclusion",
-        "livezone_lower_recip",
-        "livezone_upper_recip"
-      ],
-      "short_name": "AxisDeadZone",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::input_processing::single_axis::range::AxisExclusion": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::input_processing::single_axis::range::AxisExclusion",
-      "properties": {
-        "negative_max": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        },
-        "positive_min": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "negative_max",
-        "positive_min"
-      ],
-      "short_name": "AxisExclusion",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::chord::AxislikeChord": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::chord::AxislikeChord",
-      "properties": {
-        "axis": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>"
-          }
-        },
-        "button": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        }
-      },
-      "required": [
-        "button",
-        "axis"
-      ],
-      "short_name": "AxislikeChord",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::chord::ButtonlikeChord": {
-      "isComponent": false,
-      "isResource": false,
-      "items": false,
-      "long_name": "leafwing_input_manager::user_input::chord::ButtonlikeChord",
-      "prefixItems": [
-        {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>>"
-          }
-        }
-      ],
-      "short_name": "ButtonlikeChord",
-      "type": "array",
-      "typeInfo": "TupleStruct"
-    },
-    "leafwing_input_manager::user_input::chord::DualAxislikeChord": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::chord::DualAxislikeChord",
-      "properties": {
-        "button": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "dual_axis": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>"
-          }
-        }
-      },
-      "required": [
-        "button",
-        "dual_axis"
-      ],
-      "short_name": "DualAxislikeChord",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::chord::TripleAxislikeChord": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::chord::TripleAxislikeChord",
-      "properties": {
-        "button": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "triple_axis": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>"
-          }
-        }
-      },
-      "required": [
-        "button",
-        "triple_axis"
-      ],
-      "short_name": "TripleAxislikeChord",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::gamepad::GamepadControlAxis": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::gamepad::GamepadControlAxis",
-      "properties": {
-        "axis": {
-          "type": {
-            "$ref": "#/$defs/bevy_input::gamepad::GamepadAxis"
-          }
-        },
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::single_axis::AxisProcessor>"
-          }
-        }
-      },
-      "required": [
-        "axis",
-        "processors"
-      ],
-      "short_name": "GamepadControlAxis",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::gamepad::GamepadControlDirection": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::gamepad::GamepadControlDirection",
-      "properties": {
-        "axis": {
-          "type": {
-            "$ref": "#/$defs/bevy_input::gamepad::GamepadAxis"
-          }
-        },
-        "direction": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::axislike::AxisDirection"
-          }
-        },
-        "threshold": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "axis",
-        "direction",
-        "threshold"
-      ],
-      "short_name": "GamepadControlDirection",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::gamepad::GamepadStick": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::gamepad::GamepadStick",
-      "properties": {
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor>"
-          }
-        },
-        "x": {
-          "type": {
-            "$ref": "#/$defs/bevy_input::gamepad::GamepadAxis"
-          }
-        },
-        "y": {
-          "type": {
-            "$ref": "#/$defs/bevy_input::gamepad::GamepadAxis"
-          }
-        }
-      },
-      "required": [
-        "x",
-        "y",
-        "processors"
-      ],
-      "short_name": "GamepadStick",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::keyboard::ModifierKey": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::keyboard::ModifierKey",
-      "oneOf": [
-        "Alt",
-        "Control",
-        "Shift",
-        "Super"
-      ],
-      "short_name": "ModifierKey",
-      "type": "string",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::user_input::mouse::MouseMove": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::mouse::MouseMove",
-      "properties": {
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor>"
-          }
-        }
-      },
-      "required": [
-        "processors"
-      ],
-      "short_name": "MouseMove",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::mouse::MouseMoveAxis": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::mouse::MouseMoveAxis",
-      "properties": {
-        "axis": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::axislike::DualAxisType"
-          }
-        },
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::single_axis::AxisProcessor>"
-          }
-        }
-      },
-      "required": [
-        "axis",
-        "processors"
-      ],
-      "short_name": "MouseMoveAxis",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::mouse::MouseMoveDirection": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::mouse::MouseMoveDirection",
-      "properties": {
-        "direction": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::axislike::DualAxisDirection"
-          }
-        },
-        "threshold": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "direction",
-        "threshold"
-      ],
-      "short_name": "MouseMoveDirection",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::mouse::MouseScroll": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::mouse::MouseScroll",
-      "properties": {
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor>"
-          }
-        }
-      },
-      "required": [
-        "processors"
-      ],
-      "short_name": "MouseScroll",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::mouse::MouseScrollAxis": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::mouse::MouseScrollAxis",
-      "properties": {
-        "axis": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::axislike::DualAxisType"
-          }
-        },
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::single_axis::AxisProcessor>"
-          }
-        }
-      },
-      "required": [
-        "axis",
-        "processors"
-      ],
-      "short_name": "MouseScrollAxis",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::mouse::MouseScrollDirection": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::mouse::MouseScrollDirection",
-      "properties": {
-        "direction": {
-          "type": {
-            "$ref": "#/$defs/leafwing_input_manager::axislike::DualAxisDirection"
-          }
-        },
-        "threshold": {
-          "type": {
-            "$ref": "#/$defs/f32"
-          }
-        }
-      },
-      "required": [
-        "direction",
-        "threshold"
-      ],
-      "short_name": "MouseScrollDirection",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::updating::CentralInputStore": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::updating::CentralInputStore",
-      "properties": {
-        "registered_input_kinds": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashSet<core::any::TypeId, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        },
-        "updated_values": {
-          "type": {
-            "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<core::any::TypeId, leafwing_input_manager::user_input::updating::UpdatedValues, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-          }
-        }
-      },
-      "required": [
-        "updated_values",
-        "registered_input_kinds"
-      ],
-      "short_name": "CentralInputStore",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::updating::UpdatedValues": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::updating::UpdatedValues",
-      "oneOf": [
-        {
-          "items": false,
-          "long_name": "Buttonlike",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>, leafwing_input_manager::buttonlike::ButtonValue, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-              }
-            }
-          ],
-          "short_name": "Buttonlike",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Axislike",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>, f32, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-              }
-            }
-          ],
-          "short_name": "Axislike",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Dualaxislike",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>, glam::Vec2, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-              }
-            }
-          ],
-          "short_name": "Dualaxislike",
-          "type": "array",
-          "typeInfo": "Tuple"
-        },
-        {
-          "items": false,
-          "long_name": "Tripleaxislike",
-          "prefixItems": [
-            {
-              "type": {
-                "$ref": "#/$defs/bevy_utils::hashbrown::HashMap<std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>, glam::Vec3, bevy_utils::hashbrown::hash_map::DefaultHashBuilder>"
-              }
-            }
-          ],
-          "short_name": "Tripleaxislike",
-          "type": "array",
-          "typeInfo": "Tuple"
-        }
-      ],
-      "short_name": "UpdatedValues",
-      "type": "object",
-      "typeInfo": "Enum"
-    },
-    "leafwing_input_manager::user_input::virtual_axial::VirtualAxis": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::virtual_axial::VirtualAxis",
-      "properties": {
-        "negative": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "positive": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::single_axis::AxisProcessor>"
-          }
-        }
-      },
-      "required": [
-        "negative",
-        "positive",
-        "processors"
-      ],
-      "short_name": "VirtualAxis",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::virtual_axial::VirtualDPad": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::virtual_axial::VirtualDPad",
-      "properties": {
-        "down": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "left": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "processors": {
-          "type": {
-            "$ref": "#/$defs/alloc::vec::Vec<leafwing_input_manager::input_processing::dual_axis::DualAxisProcessor>"
-          }
-        },
-        "right": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "up": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        }
-      },
-      "required": [
-        "up",
-        "down",
-        "left",
-        "right",
-        "processors"
-      ],
-      "short_name": "VirtualDPad",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
-    "leafwing_input_manager::user_input::virtual_axial::VirtualDPad3D": {
-      "additionalProperties": false,
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "leafwing_input_manager::user_input::virtual_axial::VirtualDPad3D",
-      "properties": {
-        "backward": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "down": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "forward": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "left": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "right": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        },
-        "up": {
-          "type": {
-            "$ref": "#/$defs/std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>"
-          }
-        }
-      },
-      "required": [
-        "up",
-        "down",
-        "left",
-        "right",
-        "forward",
-        "backward"
-      ],
-      "short_name": "VirtualDPad3D",
-      "type": "object",
-      "typeInfo": "Struct"
-    },
     "petgraph::graph::DiGraph<bevy_animation::graph::AnimationGraphNode, (), u32>": {
       "isComponent": false,
       "isResource": false,
@@ -20713,54 +17394,6 @@
       "type": "object",
       "typeInfo": "Value"
     },
-    "std::boxed::Box<dyn leafwing_input_manager::input_processing::dual_axis::custom::CustomDualAxisProcessor>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "std::boxed::Box<dyn leafwing_input_manager::input_processing::dual_axis::custom::CustomDualAxisProcessor>",
-      "short_name": "Box<dyn CustomDualAxisProcessor>",
-      "type": "object",
-      "typeInfo": "Value"
-    },
-    "std::boxed::Box<dyn leafwing_input_manager::input_processing::single_axis::custom::CustomAxisProcessor>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "std::boxed::Box<dyn leafwing_input_manager::input_processing::single_axis::custom::CustomAxisProcessor>",
-      "short_name": "Box<dyn CustomAxisProcessor>",
-      "type": "object",
-      "typeInfo": "Value"
-    },
-    "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::axislike::Axislike>",
-      "short_name": "Box<dyn Axislike>",
-      "type": "object",
-      "typeInfo": "Value"
-    },
-    "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::buttonlike::Buttonlike>",
-      "short_name": "Box<dyn Buttonlike>",
-      "type": "object",
-      "typeInfo": "Value"
-    },
-    "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::dualaxislike::DualAxislike>",
-      "short_name": "Box<dyn DualAxislike>",
-      "type": "object",
-      "typeInfo": "Value"
-    },
-    "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "std::boxed::Box<dyn leafwing_input_manager::user_input::trait_reflection::tripleaxislike::TripleAxislike>",
-      "short_name": "Box<dyn TripleAxislike>",
-      "type": "object",
-      "typeInfo": "Value"
-    },
     "std::path::PathBuf": {
       "isComponent": false,
       "isResource": false,
@@ -20769,18 +17402,31 @@
       "type": "object",
       "typeInfo": "Value"
     },
-    "tanks_client::input::PlayerInputAction": {
-      "isComponent": false,
+    "tanks::network::BoxCollider": {
+      "isComponent": true,
       "isResource": false,
-      "long_name": "tanks_client::input::PlayerInputAction",
-      "oneOf": [
-        "Move",
-        "Fire",
-        "Leave"
+      "items": false,
+      "long_name": "tanks::network::BoxCollider",
+      "prefixItems": [
+        {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        },
+        {
+          "type": {
+            "$ref": "#/$defs/f32"
+          }
+        }
       ],
-      "short_name": "PlayerInputAction",
-      "type": "string",
-      "typeInfo": "Enum"
+      "short_name": "BoxCollider",
+      "type": "array",
+      "typeInfo": "TupleStruct"
     },
     "u128": {
       "isComponent": false,
@@ -20829,18 +17475,6 @@
       "short_name": "usize",
       "type": "uint",
       "typeInfo": "Value"
-    },
-    "utils::controller::orbiter::OrbiterTransformAction": {
-      "isComponent": false,
-      "isResource": false,
-      "long_name": "utils::controller::orbiter::OrbiterTransformAction",
-      "oneOf": [
-        "Pan",
-        "Zoom"
-      ],
-      "short_name": "OrbiterTransformAction",
-      "type": "string",
-      "typeInfo": "Enum"
     },
     "uuid::Uuid": {
       "isComponent": false,

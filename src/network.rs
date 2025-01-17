@@ -5,9 +5,9 @@ use bevy::prelude::*;
 
 pub mod prelude {
     pub use super::{
-        CannonFiredEvent, Ground, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent,
+        CannonFiredEvent, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent,
         PlayerFireEvent, PlayerInputEvent, PlayerJoinEvent, PlayerJoinedEvent, PlayerLeftEvent,
-        PlayerSpawnEvent, Shell, ShellImpactEvent, Throttle, PROTOCOL_ID,
+        PlayerSpawnEvent, Shell, ShellImpactEvent, Throttle, PROTOCOL_ID, BoxCollider,
     };
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }
@@ -16,12 +16,6 @@ pub const PROTOCOL_ID: u64 = 8;
 
 #[derive(Component, Clone, Copy, Debug, Serialize, Deserialize)]
 pub struct NetworkEntity;
-
-#[derive(Component, Clone, Copy, Debug, Serialize, Deserialize)]
-pub struct Ground {
-    pub width: f32,
-    pub height: f32,
-}
 
 #[derive(Component, Clone, Debug, Serialize, Deserialize)]
 pub struct Player {
@@ -79,6 +73,10 @@ pub struct PlayerDiedEvent {
     pub position: Vec3,
 }
 
+#[derive(Debug, Clone, Component, Reflect, Deserialize, Serialize)]
+#[reflect(Component)]
+pub struct BoxCollider(pub f32, pub f32, pub f32);
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct NetworkPlugin;
 
@@ -100,10 +98,11 @@ impl Plugin for NetworkPlugin {
 
         app.replicate::<Name>();
         app.replicate::<NetworkEntity>();
-        app.replicate::<Ground>();
         app.replicate::<Player>();
         app.replicate::<Shell>();
         app.replicate::<Throttle>();
         app.replicate_group::<(Transform, NetworkEntity)>(); // NetworkTransform
+
+        app.register_type::<BoxCollider>();
     }
 }

@@ -7,6 +7,9 @@ pub mod prelude {
     pub use super::{DebugPlugin, DebugSet};
 }
 
+#[derive(Debug, Resource, Default, Clone, Deref, DerefMut)]
+struct ShowAxes(pub bool);
+
 /// System set for the debug plugin
 #[derive(SystemSet, Debug, Clone, PartialEq, Eq, Hash)]
 pub struct DebugSet;
@@ -21,6 +24,7 @@ impl Plugin for DebugPlugin {
             .add_plugins(bevy::diagnostic::FrameTimeDiagnosticsPlugin)
             .add_plugins(bevy::diagnostic::EntityCountDiagnosticsPlugin)
             .add_plugins(bevy::diagnostic::SystemInformationDiagnosticsPlugin)
+            .init_resource::<ShowAxes>()
             .add_plugins(PerfUiPlugin)
             // Bevy egui inspector
             .add_plugins(WorldInspectorPlugin::new())
@@ -45,6 +49,7 @@ fn toggle(
     mut commands: Commands,
     q_root: Query<Entity, With<PerfUiRoot>>,
     kbd: Res<ButtonInput<KeyCode>>,
+    mut show_axes: ResMut<ShowAxes>,
 ) {
     if kbd.just_pressed(KeyCode::F12) {
         if let Ok(e) = q_root.get_single() {
@@ -55,12 +60,18 @@ fn toggle(
             // and all entries provided by the crate:
             commands.spawn((Name::new("PerfUI"), PerfUiAllEntries::default()));
         }
+
+        show_axes.0 = !show_axes.0;
     }
 }
 
 // This system draws the axes based on the cube's transform, with length based on the size of
 // the entity's axis-aligned bounding box (AABB).
-fn draw_axes(mut gizmos: Gizmos, query: Query<&Transform>) {
+fn draw_axes(mut gizmos: Gizmos, query: Query<&Transform>, show_axes: Res<ShowAxes>) {
+    if !show_axes.0 {
+        return;
+    }
+
     for &transform in &query {
         let length = 3.0;
         gizmos.axes(transform, length);

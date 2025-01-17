@@ -1,6 +1,7 @@
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
+use blenvy::*;
 use crate::prelude::*;
 
 pub mod prelude {
@@ -15,11 +16,15 @@ pub struct RendererPlugin;
 
 impl Plugin for RendererPlugin {
     fn build(&self, app: &mut App) {
+        app.add_plugins(BlenvyPlugin {
+            export_registry: false,
+            ..default()
+        });
+
         app.add_systems(OnEnter(GameStates::Playing), spawn_renderer);
         app.add_systems(
             Update,
             (
-                add_ground_cosmetics,
                 add_player_cosmetics,
                 add_shell_cosmetics,
             )
@@ -35,28 +40,14 @@ fn spawn_renderer(mut commands: Commands) {
         Transform::from_translation(Vec3::ONE).looking_at(Vec3::ZERO, Vec3::Y),
         StateScoped(GameStates::Playing),
     ));
-}
 
-fn add_ground_cosmetics(
-    mut commands: Commands,
-    mut meshes: ResMut<Assets<Mesh>>,
-    mut materials: ResMut<Assets<StandardMaterial>>,
-    q_ground: Query<(Entity, &Ground), Without<ClientRenderer>>,
-    game_assets: Res<GameAssets>,
-) {
-    for (entity, Ground { width, height }) in q_ground.iter() {
-        let mesh = Plane3d::default().mesh().size(*width, *height).build();
-        let material = StandardMaterial {
-            base_color_texture: Some(game_assets.prototype_textures[0].clone_weak()),
-            unlit: true,
-            ..Default::default()
-        };
-        commands.entity(entity).insert((
-            Mesh3d(meshes.add(mesh)),
-            MeshMaterial3d(materials.add(material)),
-            ClientRenderer,
-        ));
-    }
+    // here we actually spawn our game world/level
+    commands.spawn((
+        BlueprintInfo::from_path("levels/World.glb"), // all we need is a Blueprint info...
+        SpawnBlueprint, // and spawnblueprint to tell blenvy to spawn the blueprint now
+        HideUntilReady, // only reveal the level once it is ready
+        GameWorldTag,
+    ));
 }
 
 fn add_player_cosmetics(
