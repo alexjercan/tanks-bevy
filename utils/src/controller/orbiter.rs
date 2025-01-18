@@ -38,8 +38,8 @@ impl Default for OrbiterTransform {
     fn default() -> Self {
         Self {
             focus: Vec3::ZERO,
-            orbit_sensitivity: 0.01,
-            zoom_sensitivity: 2.5,
+            orbit_sensitivity: 0.002,
+            zoom_sensitivity: 1.0,
             min_zoom: 5.0,
             max_zoom: 20.0,
             min_pitch: 0.0,

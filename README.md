@@ -8,13 +8,13 @@ The game is split into two parts: the server and the client.
 ### Server
 
 ```console
-cargo run -p tanks_server
+cargo run --bin tanks_server --no-default-features --features="server"
 ```
 
 ### Client Native
 
 ```console
-cargo run -p tanks_client
+cargo run --bin tanks_client --no-default-features --features="client"
 ```
 
 ### Client Wasm
