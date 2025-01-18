@@ -99,7 +99,7 @@ jobs:
           cargo build --bin tanks_server --no-default-features --features="server" --profile dist
       - name: Prepare release
         run: |
-          # mkdir target/dist/assets && cp -r assets target/dist/assets
+          mkdir target/dist/assets && cp -r assets target/dist/assets
           mkdir target/dist/credits && cp -r credits target/dist/credits
           chmod +x target/dist/${{ env.GAME_EXECUTABLE_SERVER_NAME }}
       - name: Bundle release
