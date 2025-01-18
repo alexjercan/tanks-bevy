@@ -29,8 +29,7 @@ jobs:
         if: runner.os == 'linux'
       - name: Build & run tests
         run: |
-          cargo test -p tanks_server --all-features
-          cargo test -p tanks_client --all-features
+          cargo test --all-features
   all-doc-tests:
     runs-on: ubuntu-latest
     steps:
@@ -51,8 +50,7 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run doc tests with all features (this also compiles README examples)
         run: |
-          cargo test -p tanks_server --doc --all-features
-          cargo test -p tanks_client --doc --all-features
+          cargo test --doc --all-features
   lint:
     runs-on: ubuntu-latest
     steps:
@@ -74,7 +72,6 @@ jobs:
         run: sudo apt-get update; sudo apt-get install --no-install-recommends libasound2-dev libudev-dev
       - name: Run clippy
         run: |
-          cargo clippy -p tanks_server --all-targets --all-features -- -Dwarnings
-          cargo clippy -p tanks_client --all-targets --all-features -- -Dwarnings
+          cargo clippy --all-targets --all-features -- -Dwarnings
       - name: Check format
         run: cargo fmt --all -- --check
