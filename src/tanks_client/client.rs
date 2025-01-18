@@ -1,4 +1,8 @@
-use bevy::{asset::AssetMetaCheck, prelude::*, window::{CursorGrabMode, PrimaryWindow}};
+use bevy::{
+    asset::AssetMetaCheck,
+    prelude::*,
+    window::{CursorGrabMode, PrimaryWindow},
+};
 use bevy_asset_loader::prelude::*;
 
 use crate::prelude::*;
@@ -76,28 +80,48 @@ impl Plugin for ClientPlugin {
     }
 }
 
-pub fn hide_cursor(
-    mut primary_window: Query<&mut Window, With<PrimaryWindow>>,
-) {
+pub fn hide_cursor(mut primary_window: Query<&mut Window, With<PrimaryWindow>>) {
     let window = &mut primary_window.single_mut();
     window.cursor_options.visible = false;
     window.cursor_options.grab_mode = CursorGrabMode::Locked;
 }
 
-pub fn show_cursor(
-    mut primary_window: Query<&mut Window, With<PrimaryWindow>>,
-) {
+pub fn show_cursor(mut primary_window: Query<&mut Window, With<PrimaryWindow>>) {
     let window = &mut primary_window.single_mut();
     window.cursor_options.visible = true;
     window.cursor_options.grab_mode = CursorGrabMode::None;
 }
 
-fn spawn_loading_ui(mut commands: Commands) {
+fn spawn_loading_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
+    let icon = asset_server.load("branding/icon.png");
+
     commands.spawn((
         Name::new("CameraUI"),
         Camera2d,
         StateScoped(GameStates::AssetLoading),
     ));
+
+    commands
+        .spawn((
+            Node {
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                ..default()
+            },
+            StateScoped(GameStates::AssetLoading),
+        ))
+        .with_children(|parent| {
+            parent.spawn((
+                ImageNode::new(icon),
+                Node {
+                    // This will set the logo to be 200px wide, and auto adjust its height
+                    width: Val::Px(200.0),
+                    ..default()
+                },
+            ));
+        });
 }
 
 fn handle_play_button_pressed(
@@ -118,12 +142,36 @@ fn handle_play_button_pressed(
     }
 }
 
-fn spawn_connecting_ui(mut commands: Commands) {
+fn spawn_connecting_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
+    let icon = asset_server.load("branding/icon.png");
+
     commands.spawn((
         Name::new("CameraUI"),
         Camera2d,
         StateScoped(GameStates::Connecting),
     ));
+
+    commands
+        .spawn((
+            Node {
+                align_items: AlignItems::Center,
+                justify_content: JustifyContent::Center,
+                width: Val::Percent(100.0),
+                height: Val::Percent(100.0),
+                ..default()
+            },
+            StateScoped(GameStates::Connecting),
+        ))
+        .with_children(|parent| {
+            parent.spawn((
+                ImageNode::new(icon),
+                Node {
+                    // This will set the logo to be 200px wide, and auto adjust its height
+                    width: Val::Px(200.0),
+                    ..default()
+                },
+            ));
+        });
 }
 
 fn handle_connecting_done(mut next_state: ResMut<NextState<GameStates>>) {

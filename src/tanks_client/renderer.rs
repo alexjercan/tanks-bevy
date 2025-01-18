@@ -1,8 +1,8 @@
 use bevy::prelude::*;
 use serde::{Deserialize, Serialize};
 
-use blenvy::*;
 use crate::prelude::*;
+use blenvy::*;
 
 pub mod prelude {
     pub use super::RendererPlugin;
@@ -24,11 +24,7 @@ impl Plugin for RendererPlugin {
         app.add_systems(OnEnter(GameStates::Playing), spawn_renderer);
         app.add_systems(
             Update,
-            (
-                add_player_cosmetics,
-                add_shell_cosmetics,
-            )
-                .run_if(in_state(GameStates::Playing)),
+            (add_player_cosmetics, add_shell_cosmetics).run_if(in_state(GameStates::Playing)),
         );
     }
 }

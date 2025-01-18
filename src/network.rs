@@ -5,9 +5,9 @@ use bevy::prelude::*;
 
 pub mod prelude {
     pub use super::{
-        CannonFiredEvent, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent,
+        BoxCollider, CannonFiredEvent, NetworkEntity, NetworkPlugin, Player, PlayerDiedEvent,
         PlayerFireEvent, PlayerInputEvent, PlayerJoinEvent, PlayerJoinedEvent, PlayerLeftEvent,
-        PlayerSpawnEvent, Shell, ShellImpactEvent, Throttle, PROTOCOL_ID, BoxCollider,
+        PlayerSpawnEvent, Shell, ShellImpactEvent, Throttle, PROTOCOL_ID,
     };
     pub use bevy_replicon::prelude::{client_connected, client_just_connected};
 }

@@ -1,6 +1,6 @@
 use std::{collections::HashMap, time::Duration};
 
-use blenvy::*;
+use ::utils::prelude::*;
 use bevy::{
     app::ScheduleRunnerPlugin,
     log::{Level, LogPlugin},
@@ -9,7 +9,7 @@ use bevy::{
 };
 use bevy_rapier3d::prelude::*;
 use bevy_replicon::prelude::*;
-use ::utils::prelude::*;
+use blenvy::*;
 
 use crate::prelude::*;
 
@@ -141,7 +141,9 @@ fn handle_collider_mapping(
     q_collider: Query<(Entity, &BoxCollider), Without<Collider>>,
 ) {
     for (entity, BoxCollider(hx, hy, hz)) in q_collider.iter() {
-        commands.entity(entity).insert(Collider::cuboid(*hx, *hy, *hz));
+        commands
+            .entity(entity)
+            .insert(Collider::cuboid(*hx, *hy, *hz));
     }
 }
 
