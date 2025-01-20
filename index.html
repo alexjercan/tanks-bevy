@@ -5,9 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
         <title>Tanks</title>
         
-<script type="module" nonce="KePL96vYxj4GR8NXwQg1Hw==">
-import init, * as bindings from './tanks_client-875ed0296ee86f0.js';
-const wasm = await init({ module_or_path: './tanks_client-875ed0296ee86f0_bg.wasm' });
+<script type="module" nonce="{{__TRUNK NONCE__}}">
+import init, * as bindings from './tanks_client-f782180e0c8d3b7c.js';
+const wasm = await init({ module_or_path: './tanks_client-f782180e0c8d3b7c_bg.wasm' });
 
 
 window.wasmBindings = bindings;
@@ -20,7 +20,7 @@ dispatchEvent(new CustomEvent("TrunkApplicationStarted", {detail: {wasm}}));
         
         
         <link rel="icon" href="icon.ico">
-        <style nonce="PPMbhxfMlcvtH1C+1VfRxg==">body, html {
+        <style nonce="{{__TRUNK NONCE__}}">body, html {
     height: 100%;
 }
 
@@ -74,9 +74,9 @@ body {
     z-index: 2;
 }
 </style>
-    <link rel="modulepreload" href="./tanks_client-875ed0296ee86f0.js" crossorigin=anonymous integrity="sha384-33930+NWuO+MH66ujW9yd162CMdFdS8SeQcBWs9FYWFvDIrD12QT4dUYj5KCGxRy"><link rel="preload" href="./tanks_client-875ed0296ee86f0_bg.wasm" crossorigin=anonymous integrity="sha384-Sss0PTpNEpC6AP224kBV0bMPhQh+pSjAOCyt2S4CBV84kjKs7Gh0MQqrASg9Ld4p" as="fetch" type="application/wasm"></head>
+    <link rel="modulepreload" nonce="{{__TRUNK NONCE__}}" href="./tanks_client-f782180e0c8d3b7c.js" crossorigin="anonymous" integrity="sha384-O30y4MS2GSBEHAqPKcPm55jSdWQdB2DuMmBRXlHvghvjlBWMLNQBn877pi/dQ4Fy"><link rel="preload" nonce="{{__TRUNK NONCE__}}" href="./tanks_client-f782180e0c8d3b7c_bg.wasm" crossorigin="anonymous" integrity="sha384-YjX5wH17C2i5ORKWy/VstV32XYrXEezmicRKvh/vaBesV0AWkllVdjyPiBkm2pt3" as="fetch" type="application/wasm"></head>
     <body>
-        <script nonce="GFQbhcK4C9RY8yhEoyp86A==">// Insert hack to make sound autoplay on Chrome as soon as the user interacts with the tab:
+        <script nonce="{{__TRUNK NONCE__}}">// Insert hack to make sound autoplay on Chrome as soon as the user interacts with the tab:
 // https://developers.google.com/web/updates/2018/11/web-audio-autoplay#moving-forward
 
 // the following function keeps track of all AudioContexts and resumes them on the first user
