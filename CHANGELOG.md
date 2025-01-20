@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- @alexjercan Added bushes in the game scene
+
+### Changed
+
+- @alexjercan Improved Main Menu scene
+
 ## [0.1.4] - 2025-01-18
 
 ### Added
